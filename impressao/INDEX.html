@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morte alla Villa Meridiana — Materiais</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #0d0c0a;
+            color: #c8b89a;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+        }
+        .page {
+            width: 100%;
+            max-width: 560px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .header-top {
+            font-family: 'Courier New', monospace;
+            font-size: 9px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #6a5a3a;
+            margin-bottom: 10px;
+        }
+        h1 {
+            font-size: 22px;
+            letter-spacing: 2px;
+            color: #c8a84a;
+            text-transform: uppercase;
+            line-height: 1.3;
+            margin-bottom: 6px;
+        }
+        .subtitle {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: #6a5a3a;
+            letter-spacing: 2px;
+        }
+        .sep {
+            text-align: center;
+            color: #4a3a1a;
+            font-size: 12px;
+            letter-spacing: 6px;
+            margin: 20px 0;
+        }
+
+        /* SECÇÕES */
+        .section { margin-bottom: 28px; }
+        .section-label {
+            font-family: 'Courier New', monospace;
+            font-size: 9px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #6a5a3a;
+            border-bottom: 1px solid #2a2010;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+        }
+
+        /* CARDS DE LINK */
+        .link-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: #131109;
+            border: 1px solid #2a2010;
+            padding: 14px 16px;
+            margin-bottom: 8px;
+            text-decoration: none;
+            color: inherit;
+            transition: border-color 0.2s, background 0.2s;
+            cursor: pointer;
+        }
+        .link-card:hover {
+            border-color: #c8a84a;
+            background: #1a1608;
+        }
+        .link-card.destaque {
+            border-color: #4a3a1a;
+        }
+        .link-card.destaque:hover {
+            border-color: #c8a84a;
+        }
+        .card-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+            width: 28px;
+            text-align: center;
+            opacity: 0.8;
+        }
+        .card-body { flex: 1; }
+        .card-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: #e0d0b0;
+            letter-spacing: 0.5px;
+            margin-bottom: 3px;
+        }
+        .card-desc {
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            color: #6a5a3a;
+            line-height: 1.5;
+        }
+        .card-tag {
+            font-family: 'Courier New', monospace;
+            font-size: 8px;
+            letter-spacing: 2px;
+            color: #c8a84a;
+            border: 1px solid #4a3a1a;
+            padding: 2px 6px;
+            flex-shrink: 0;
+            text-transform: uppercase;
+        }
+
+        /* SUSPECTO CARDS — cor individual */
+        .link-card.marco  { border-left: 3px solid #5a7a5a; }
+        .link-card.giulia { border-left: 3px solid #7a5a7a; }
+        .link-card.elena  { border-left: 3px solid #7a6a3a; }
+        .link-card.luca   { border-left: 3px solid #3a5a7a; }
+
+        .footer {
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 9px;
+            color: #3a2e1a;
+            letter-spacing: 2px;
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px solid #1a1608;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <div class="header">
+        <div class="header-top">Carabinieri di Como · Giugno 1953</div>
+        <h1>Morte alla<br>Villa Meridiana</h1>
+        <div class="subtitle">&#9670; &nbsp; Materiais de Investigação &nbsp; &#9670;</div>
+    </div>
+
+    <div class="sep">&#9670; &nbsp; &#9670; &nbsp; &#9670;</div>
+
+    <!-- FICHAS INDIVIDUAIS DOS SUSPEITOS -->
+    <div class="section">
+        <div class="section-label">&#9670; Fichas dos Suspeitos — abra a sua</div>
+
+        <a class="link-card marco" href="FICHA_MARCO_CONTI.html" target="_blank">
+            <div class="card-icon">🕴</div>
+            <div class="card-body">
+                <div class="card-title">Marco Conti</div>
+                <div class="card-desc">55 anos · Sócio Fundador · Ficha secreta do personagem</div>
+            </div>
+            <div class="card-tag">Imprimir</div>
+        </a>
+
+        <a class="link-card giulia" href="FICHA_GIULIA_FERRARI.html" target="_blank">
+            <div class="card-icon">🕴</div>
+            <div class="card-body">
+                <div class="card-title">Giulia Ferrari</div>
+                <div class="card-desc">32 anos · Esposa de Carlo · Ficha secreta do personagem</div>
+            </div>
+            <div class="card-tag">Imprimir</div>
+        </a>
+
+        <a class="link-card elena" href="FICHA_ELENA_RUSSO.html" target="_blank">
+            <div class="card-icon">🕴</div>
+            <div class="card-body">
+                <div class="card-title">Elena Russo</div>
+                <div class="card-desc">44 anos · Ex-Secretária · Ficha secreta do personagem</div>
+            </div>
+            <div class="card-tag">Imprimir</div>
+        </a>
+
+        <a class="link-card luca" href="FICHA_LUCA_FERRARI.html" target="_blank">
+            <div class="card-icon">🕴</div>
+            <div class="card-body">
+                <div class="card-title">Luca Ferrari</div>
+                <div class="card-desc">24 anos · Sobrinho · Ficha secreta do personagem</div>
+            </div>
+            <div class="card-tag">Imprimir</div>
+        </a>
+    </div>
+
+    <!-- MATERIAL COLETIVO -->
+    <div class="section">
+        <div class="section-label">&#9670; Material Coletivo — todos imprimem</div>
+
+        <a class="link-card destaque" href="FICHA_JOGADOR.html" target="_blank">
+            <div class="card-icon">📋</div>
+            <div class="card-body">
+                <div class="card-title">Ficha do Jogador</div>
+                <div class="card-desc">Anotações, evidências e progresso — uma por jogador</div>
+            </div>
+            <div class="card-tag">1 por pessoa</div>
+        </a>
+
+        <a class="link-card destaque" href="PERSONAGENS_PUBLICOS.html" target="_blank">
+            <div class="card-icon">👥</div>
+            <div class="card-body">
+                <div class="card-title">Personagens &amp; Testemunhas</div>
+                <div class="card-desc">Retratos e perfis públicos de todos os presentes na villa</div>
+            </div>
+            <div class="card-tag">1 cópia</div>
+        </a>
+
+        <a class="link-card destaque" href="MAPA_VILLA.html" target="_blank">
+            <div class="card-icon">🗺</div>
+            <div class="card-body">
+                <div class="card-title">Mapa da Villa Meridiana</div>
+                <div class="card-desc">Planta dos aposentos + planta realista + corredor interior</div>
+            </div>
+            <div class="card-tag">1 cópia</div>
+        </a>
+    </div>
+
+    <!-- REFERÊNCIA DO MESTRE -->
+    <div class="section">
+        <div class="section-label">&#9670; Referência do Mestre</div>
+
+        <a class="link-card" href="EXPLICACAO_JOGO.html" target="_blank">
+            <div class="card-icon">📖</div>
+            <div class="card-body">
+                <div class="card-title">Explicação do Jogo</div>
+                <div class="card-desc">Regras, mecânicas e condução da sessão</div>
+            </div>
+            <div class="card-tag">Mestre</div>
+        </a>
+
+        <a class="link-card" href="APRESENTACAO_RAPIDA.html" target="_blank">
+            <div class="card-icon">⚡</div>
+            <div class="card-body">
+                <div class="card-title">Apresentação Rápida</div>
+                <div class="card-desc">Resumo para leitura em voz alta no início da sessão</div>
+            </div>
+            <div class="card-tag">Mestre</div>
+        </a>
+    </div>
+
+    <div class="sep">&#9670; &nbsp; &#9670; &nbsp; &#9670;</div>
+
+    <div class="footer">Villa Meridiana · Lago di Como · 14 Giugno 1953 · RISERVATO</div>
+
+</div>
+</body>
+</html>
