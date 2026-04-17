@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha do Personagem — Luca Ferrari</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        @page { size: A4 portrait; margin: 12mm 15mm; }
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            color: #1a1005;
+            background: #ffffff;
+            font-size: 12px;
+            line-height: 1.6;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .page { max-width: 180mm; margin: 0 auto; overflow: visible; page-break-after: always; }
+        .page:last-child { page-break-after: auto; }
+        .header { text-align: center; border-bottom: 3px double #1a1005; padding-bottom: 10px; margin-bottom: 15px; }
+        .header-top { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #5a4a2a; margin-bottom: 4px; }
+        .header h1 { font-size: 20px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+        .header h2 { font-size: 13px; font-weight: normal; font-style: italic; color: #4a4a4a; }
+        .confidential-stamp {
+            border: 3px solid #4a7a2a; display: inline-block; padding: 6px 16px;
+            font-size: 11px; letter-spacing: 3px; color: #4a7a2a; font-weight: bold;
+            transform: rotate(-2deg); margin: 8px 0; background: rgba(74,122,42,0.03);
+        }
+        .portrait-block { float: right; margin: 0 0 15px 15px; border: 3px double #1a1005; padding: 6px; width: 120px; text-align: center; }
+        .portrait-block img { width: 100px; height: 130px; display: block; background: #f0ede5; object-fit: cover; object-position: top; }
+        .portrait-block p { font-size: 9px; margin-top: 5px; font-style: italic; font-weight: bold; }
+        .clearfix::after { content: ''; display: table; clear: both; }
+        .section { margin: 14px 0; overflow: visible; clear: both; }
+        .section h3 { font-size: 13px; border-left: 5px solid #1a1005; padding: 5px 12px; margin-bottom: 8px; background: #f5f2ea; text-transform: uppercase; letter-spacing: 1px; }
+        .section p { margin: 6px 0; text-align: justify; line-height: 1.55; }
+        .secret-box { border: 2px solid #4a7a2a; border-left: 6px solid #4a7a2a; padding: 12px 14px; margin: 12px 0; background: rgba(74,122,42,0.05); }
+        .secret-box strong { color: #4a7a2a; text-transform: uppercase; font-size: 10px; letter-spacing: 2px; display: block; margin-bottom: 6px; }
+        .timeline { border-left: 2px solid #1a1005; padding-left: 14px; margin: 10px 0 10px 4px; }
+        .timeline-item { margin: 8px 0; position: relative; padding-top: 2px; }
+        .timeline-item::before { content: '◆'; position: absolute; left: -20px; font-size: 8px; top: 5px; color: #1a1005; }
+        .timeline-time { font-weight: bold; font-size: 11px; font-family: 'Courier New', monospace; color: #2c2c2c; }
+        .warning-box { border: 2px solid #5a8a3a; border-left: 6px solid #7aaa5a; padding: 10px 14px; margin: 10px 0; background: rgba(122,170,90,0.05); font-size: 11px; }
+        .warning-box strong { color: #7aaa5a; display: block; margin-bottom: 4px; text-transform: uppercase; font-size: 10px; letter-spacing: 1px; }
+        ul, ol { margin-left: 16px; margin-top: 6px; margin-bottom: 6px; }
+        li { margin: 3px 0; line-height: 1.5; }
+        .object-card { border: 1px solid #1a1005; padding: 8px 12px; margin: 7px 0; background: #fefdfb; }
+        .object-card .code { font-family: 'Courier New', monospace; font-size: 10px; color: #4a7a2a; font-weight: bold; float: right; }
+        .footer { border-top: 1px solid #d4c4b0; margin-top: 16px; padding-top: 8px; font-size: 10px; color: #6a6a6a; text-align: center; font-style: italic; }
+        @media print { body { font-size: 11px; } .page { page-break-after: always; } .section { overflow: visible !important; } }
+    </style>
+</head>
+<body>
+
+<!-- PÁGINA 1 -->
+<div class="page">
+    <div class="header">
+        <div class="header-top">Carabinieri di Como · Giugno 1953</div>
+        <h1>FICHA DO PERSONAGEM</h1>
+        <h2>Luca Ferrari</h2>
+    </div>
+    <div style="text-align:center; margin-bottom:12px;">
+        <div class="confidential-stamp">APENAS PARA LUCA FERRARI</div>
+    </div>
+
+    <div class="section clearfix">
+        <h3>Identidade Pessoal</h3>
+        <p>Nascido a 3 de agosto de 1929 em Milão, filho de Matteo Ferrari — irmão mais velho de Carlo. Seu pai morreu em 1942 durante a Segunda Guerra Mundial, e sua mãe em 1946 de tuberculose. Carlo o criou nominalmente — pago para educação em escolas privadas, mas sem afeto genuíno. Era uma transação: Luca teria segurança material em troca de obediência invisível.</p>
+        <p>Você trabalha na Ferrari Tessile como junior employee desde 1950, sem cargo importante mas com acesso a conhecimento operacional. Você esperava herdar algo — uma parte da empresa, talvez, ou um fundo que permitisse a você deixar a sombra de Carlo e criar sua própria vida. Você esperava que aos 24 anos, Carlo tivesse reconhecido seu trabalho, seu potencial, algo.</p>
+    </div>
+
+    <div class="section">
+        <h3>O Que Carlo Nunca Soube</h3>
+        <p>Em 1950, você conheceu Sofia Mancini na fábrica de tecelagem. Filha de um operário na linha de produção. Bonita, inteligente, com uma risada que parecia vir de algum lugar onde a vida não era limitada por dinheiro. Você a beijou uma primeira vez em uma das salas traseiras da fábrica — perto das máquinas ligadas, onde ninguém poderia ouvi-lo.</p>
+        <p>Você a amou. Secamente, inteiramente, de uma forma que Carlo descobriu em 1951 e proibiu absolutamente. Disse que se você continuasse, seria cortado. Herança. Trabalho. Tudo. Você concordou verbalmente. E então continuou encontrando Sofia em segredo.</p>
+        <p>Naquela noite de 14 de junho, você recebeu uma carta de Sofia — chegada à tarde. Ela pedia para encontrá-la em Bellagio, na Trattoria Belvedere, às 21h00.</p>
+    </div>
+
+    <div class="footer">Villa Meridiana · Lago di Como · Giugno 1953 · VERTRAULICH</div>
+</div>
+
+<!-- PÁGINA 2 -->
+<div class="page">
+    <div class="section">
+        <h3>Seu Segredo (Completamente Inocente)</h3>
+    </div>
+
+    <div class="secret-box">
+        <strong>Você estava fora da villa quando Carlo morreu. Seu alibi é verificável.</strong>
+        <p>Às 21h00, você desculpou-se do jantar, alegando uma dor de cabeça. Na realidade, saiu para encontrar Sofia em Bellagio — uma vila na costa oposta do Lago di Como. Você dirigiu seu carro (um Fiat pequeno que mantém em segredo). Chegou à Trattoria Belvedere às 21h10. Você e Sofia jantaram juntos, conversaram sobre o futuro, trocaram cartas que ela havia escrito.</p>
+        <p>Você saiu da trattoria às 22h55 — mais de uma hora depois da hora da morte de Carlo (22h42). Dirigiu de volta para Villa Meridiana, chegando por volta de 23h15, onde encontrou caos completo: o Commissario Lanza, policiais, Rosa gritando sobre o corpo.</p>
+        <p>O garçom da trattoria pode confirmar que você estava lá. Sofia pode confirmar. Há registros. Seu alibi é airtight.</p>
+    </div>
+
+    <div class="warning-box">
+        <strong>GUIA DE JOGO PARA LUCA</strong>
+        Você é COMPLETAMENTE INOCENTE. Você não estava na villa quando Carlo morreu. Mas você será suspeito: jovem, nervoso sobre a relação proibida com Sofia, possivelmente esperando uma herança. Você pode estar assustado — mas seu alibi é absolutamente sólido. Jogue isso. Jogue o nervosismo genuíno sobre Sofia sendo revelada, mas também a calma de saber que pode provar onde estava. Quando pressionado, você pode confessar o relacionamento com Sofia — o que a levará aos registros da trattoria, que o exonera completamente.
+    </div>
+
+    <div class="section">
+        <h3>Evidência na Ficha</h3>
+    </div>
+
+    <div class="object-card">
+        <div class="code">LUCA-01</div>
+        <div class="name">Cartas de Amor</div>
+        <p>Inseridas entre as páginas de um romance de Calvino no seu criado: uma série de cartas de amor. As mais recentes são de Sofia Mancini. A última carta, datada de 14 de junho, 18h00, diz: "Ti aspetto alla Trattoria Belvedere a Bellagio alle 21h00. Non fare tardi. — S." No verso da envelope, escrito por você: "Arrivato 21h10. Partito 22h55. Rosa ci ha visti."</p>
+        <p style="font-size:10px; margin-top:6px; color:#666;"><strong>Localização:</strong> Quarto de Luca Ferrari / Ambiente</p>
+    </div>
+
+    <div class="footer">Villa Meridiana · Lago di Como · Giugno 1953 · VERTRAULICH</div>
+</div>
+
+</body>
+</html>

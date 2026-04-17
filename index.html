@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Morte alla Villa Meridiana — Lago di Como, 1953</title>
+<style>
+/* ========== RESET & BASE ========== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: #0a0806;
+  color: #e8dcc0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image: radial-gradient(ellipse at center, rgba(255,255,255,0.01) 0%, transparent 70%);
+}
+:root {
+  --bg: #0a0806;
+  --text: #e8dcc0;
+  --gold: #a07828;
+  --red: #6a1010;
+  --blue: #1a2a4a;
+  --green: #2a5a3a;
+  --card: #14120e;
+  --border: #3a2e20;
+  --input-bg: #100e0a;
+}
+.font-title { font-family: 'Courier New', Courier, monospace; font-weight: 700; letter-spacing: 3px; }
+.font-mono { font-family: 'Courier New', Courier, monospace; }
+.tela { display: none !important; min-height: 100vh; padding: 20px; position: relative; }
+.tela.active { display: block !important; animation: fadeIn 0.5s ease; }
+.tela.fade-out { animation: fadeOut 0.5s ease forwards; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+.vinheta { pointer-events: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; box-shadow: inset 0 0 120px rgba(0,0,0,0.75); z-index: 1; }
+.btn { font-family: 'Courier New', Courier, monospace; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; background: transparent; color: var(--text); border: 2px solid var(--gold); padding: 12px 24px; cursor: pointer; transition: all 0.3s ease; }
+.btn:hover { background: var(--gold); color: var(--bg); }
+.btn:disabled, .btn.disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+.btn-red { border-color: var(--red); }
+.btn-red:hover { background: var(--red); color: var(--text); }
+.btn-green { border-color: var(--green); }
+.btn-green:hover { background: var(--green); color: var(--text); }
+.btn-small { font-size: 12px; padding: 8px 16px; }
+input[type="text"], input[type="password"], select, textarea { font-family: 'Courier New', Courier, monospace; font-size: 14px; color: var(--text); background: var(--input-bg); border: 1px solid var(--border); padding: 10px 12px; width: 100%; transition: border-color 0.3s; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--gold); }
+select { cursor: pointer; }
+select option { background: var(--bg); color: var(--text); }
+textarea { resize: vertical; min-height: 60px; }
+.card { background: var(--card); border: 1px solid var(--gold); padding: 16px; margin: 12px 0; }
+.sep { text-align: center; color: var(--gold); margin: 20px 0; font-size: 14px; letter-spacing: 8px; }
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.93); z-index: 100; justify-content: center; align-items: center; padding: 20px; }
+.modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+.modal-content { background: var(--bg); border: 2px solid var(--gold); padding: 30px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
+#notificacao { position: fixed; top: 0; left: 0; right: 0; background: var(--red); color: var(--text); font-family: 'Courier New', Courier, monospace; font-size: 16px; font-weight: 700; text-align: center; padding: 14px; z-index: 200; display: none; letter-spacing: 2px; }
+#notificacao.show { display: block; animation: fadeIn 0.3s ease; }
+#notificacao.hide { animation: fadeOut 0.5s ease forwards; }
+@keyframes pulso { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+.pulse { animation: pulso 1s ease-in-out infinite; }
+/* TELA 1 */
+#tela-setup.active { display: flex !important; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+#tela-setup .titulo { font-size: 28px; color: var(--gold); opacity: 0; animation: fadeIn 0.8s ease 0.2s forwards; }
+#tela-setup .subtitulo { font-size: 16px; color: var(--text); margin-top: 8px; opacity: 0; animation: fadeIn 0.6s ease 0.6s forwards; }
+#tela-setup .form-area { margin-top: 30px; width: 100%; max-width: 520px; opacity: 0; animation: fadeIn 0.8s ease 1s forwards; }
+.jogador-row { display: flex; gap: 10px; margin-bottom: 12px; align-items: center; }
+.jogador-row input { flex: 1; }
+.jogador-row select { flex: 1; }
+.erro-papel { color: var(--red); font-size: 12px; font-family: 'Courier New', monospace; margin-top: 2px; min-height: 16px; }
+/* TELA 2 */
+#tela-painel .header-painel { text-align: center; padding: 16px; border-top: 2px solid var(--gold); border-bottom: 1px solid var(--gold); margin-bottom: 20px; }
+#tela-painel .header-painel h1 { font-size: 20px; color: var(--gold); }
+#tela-painel .header-painel .fase-label { font-family: 'Courier New', monospace; font-size: 14px; margin-top: 6px; }
+.cronometro-section { text-align: center; margin-bottom: 24px; }
+.cronometro-section h2 { font-family: 'Courier New', monospace; font-size: 14px; color: var(--gold); margin-bottom: 12px; letter-spacing: 2px; }
+#timer-display { font-family: 'Courier New', monospace; font-size: 48px; font-weight: 700; margin-bottom: 16px; }
+.timer-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.cronograma-section { margin-bottom: 24px; }
+.cronograma-section h2 { font-family: 'Courier New', monospace; font-size: 13px; color: var(--gold); margin-bottom: 10px; letter-spacing: 2px; text-align: center; }
+.cronograma-lista { display: flex; flex-direction: column; gap: 4px; }
+.crono-item { display: flex; align-items: center; gap: 10px; font-family: 'Courier New', monospace; font-size: 11px; padding: 5px 10px; border: 1px solid var(--border); transition: border-color 0.4s, background 0.4s; }
+.crono-item.fired { border-color: var(--gold); background: rgba(160,120,40,0.08); color: var(--gold); }
+.crono-item .crono-check { width: 16px; text-align: center; color: var(--border); flex-shrink: 0; }
+.crono-item .crono-min { width: 52px; flex-shrink: 0; letter-spacing: 1px; }
+.crono-item .crono-label { flex: 1; text-transform: uppercase; letter-spacing: 0.5px; }
+.nav-bar { display: flex; gap: 10px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
+.tokens-bar { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 20px; font-family: 'Courier New', monospace; font-size: 12px; }
+.tokens-bar .tok-label { color: var(--border); letter-spacing: 1px; text-transform: uppercase; }
+.tokens-bar .tok-dots { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
+.tok-dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--gold); background: var(--gold); transition: all 0.3s; }
+.tok-dot.used { background: transparent; border-color: var(--border); }
+.busca-resultado { padding: 14px; border: 1px solid var(--border); margin-top: 14px; font-family: 'Courier New', monospace; font-size: 12px; line-height: 1.6; display: none; }
+.busca-resultado.found { border-color: var(--green); }
+.busca-resultado.empty { border-color: var(--border); color: var(--border); font-style: italic; }
+.busca-historico-item { font-family: 'Courier New', monospace; font-size: 11px; padding: 6px 0; border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: center; }
+.jogadores-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.jog-card { transition: border-color 0.3s; }
+.jog-card .jog-retrato { width: 60px; height: 60px; margin: 0 auto 8px; display: block; border-radius: 50%; border: 2px solid var(--gold); background: var(--border); overflow: hidden; }
+.jog-card .jog-nome { font-size: 14px; font-weight: 700; text-align: center; }
+.jog-card .jog-personagem { font-family: 'Courier New', monospace; font-size: 11px; color: var(--gold); text-align: center; margin-top: 2px; }
+.jog-card .jog-papel { font-family: 'Courier New', monospace; font-size: 10px; color: var(--border); text-align: center; margin-top: 2px; text-transform: uppercase; }
+.evidencias-section { margin-bottom: 24px; }
+.evidencias-section h2 { font-family: 'Courier New', monospace; font-size: 14px; color: var(--gold); margin-bottom: 12px; letter-spacing: 2px; }
+.evidencia-item { font-family: 'Courier New', monospace; font-size: 13px; padding: 10px 14px; margin-bottom: 8px; border-left: 3px solid var(--border); display: flex; align-items: center; gap: 10px; background: var(--card); flex-wrap: wrap; }
+.ev-badge { font-weight: 700; font-size: 11px; padding: 2px 8px; text-transform: uppercase; }
+.ev-desbloqueado { color: var(--green); }
+.evidencia-item .btn { margin-left: auto; }
+.npc-resumo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.npc-resumo-item { font-family: 'Courier New', monospace; font-size: 12px; display: flex; align-items: center; gap: 6px; padding: 4px 0; }
+.npc-resumo-item .npc-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.mural-section { margin-bottom: 24px; }
+.mural-section h2 { font-family: 'Courier New', monospace; font-size: 14px; color: var(--gold); margin-bottom: 12px; letter-spacing: 2px; }
+.pista-item { display: flex; align-items: flex-start; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+.pista-cat { font-family: 'Courier New', monospace; font-size: 9px; font-weight: 700; padding: 2px 6px; text-transform: uppercase; letter-spacing: 1px; flex-shrink: 0; margin-top: 2px; border: 1px solid; }
+.pista-cat-alibi { color: #5a8fd4; border-color: #5a8fd4; }
+.pista-cat-evidencia { color: var(--green); border-color: var(--green); }
+.pista-cat-testemunho { color: var(--gold); border-color: var(--gold); }
+.pista-cat-suspeita { color: var(--red); border-color: var(--red); }
+.pista-cat-outro { color: var(--border); border-color: var(--border); }
+.rodape-painel { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border); }
+#timer-display.timer-warning { color: #c0392b; animation: timerPulse 2s ease-in-out infinite; }
+@keyframes timerPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+/* TELA 3 TESTEMUNHAS */
+#tela-testemunhas .header-testemunhas { text-align: center; margin-bottom: 20px; }
+#tela-testemunhas .header-testemunhas h1 { font-size: 22px; color: var(--gold); }
+.testemunhas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.test-card { cursor: pointer; transition: all 0.3s; }
+.test-card:hover { border-color: var(--text); }
+.test-card .test-retrato { width: 80px; height: 80px; margin: 0 auto 10px; display: block; border-radius: 50%; border: 2px solid var(--gold); background: var(--border); overflow: hidden; }
+.test-card .test-retrato img { width: 100%; height: 100%; object-fit: cover; }
+.test-card .test-nome { font-size: 16px; font-weight: 700; text-align: center; }
+.test-card .test-desc { font-size: 13px; color: var(--gold); text-align: center; font-family: 'Courier New', monospace; margin-top: 4px; }
+.test-status-badge { display: inline-block; font-family: 'Courier New', monospace; font-size: 11px; padding: 3px 10px; margin-top: 8px; cursor: pointer; text-transform: uppercase; border: 1px solid; transition: all 0.3s; text-align: center; }
+.status-nao { color: var(--border); border-color: var(--border); }
+.status-entrevistado { color: var(--blue); border-color: var(--blue); background: rgba(26,42,74,0.15); }
+.status-chave { color: var(--gold); border-color: var(--gold); background: rgba(160,120,40,0.1); }
+.test-expandido { display: none; margin-top: 14px; border-top: 1px solid var(--border); padding-top: 14px; }
+.test-expandido.show { display: block; }
+.test-personalidade { font-style: italic; font-size: 13px; color: var(--gold); background: var(--input-bg); padding: 10px; margin-bottom: 12px; line-height: 1.6; }
+/* TELA 4 SUSPEITOS */
+#tela-suspeitos .header-suspeitos { text-align: center; margin-bottom: 20px; }
+#tela-suspeitos .header-suspeitos h1 { font-size: 22px; color: var(--gold); }
+.suspeitos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.susp-card { cursor: pointer; transition: all 0.3s; }
+.susp-card:hover { border-color: var(--text); }
+.susp-card .susp-retrato { width: 80px; height: 80px; margin: 0 auto 10px; display: block; border-radius: 50%; border: 2px solid var(--gold); background: var(--border); overflow: hidden; }
+.susp-card .susp-nome { font-size: 16px; font-weight: 700; text-align: center; }
+.susp-card .susp-desc { font-size: 13px; color: var(--gold); text-align: center; font-family: 'Courier New', monospace; margin-top: 4px; }
+.susp-status-badge { display: inline-block; font-family: 'Courier New', monospace; font-size: 11px; padding: 3px 10px; margin-top: 8px; cursor: pointer; text-transform: uppercase; border: 1px solid; transition: all 0.3s; text-align: center; }
+.status-interrogado { color: var(--blue); border-color: var(--blue); background: rgba(26,42,74,0.15); }
+.status-suspeito { color: var(--red); border-color: var(--red); background: rgba(106,16,16,0.15); }
+.susp-expandido { display: none; margin-top: 14px; border-top: 1px solid var(--border); padding-top: 14px; }
+.susp-expandido.show { display: block; }
+.susp-depoimento { font-style: italic; font-size: 13px; color: var(--gold); background: var(--input-bg); padding: 10px; margin-bottom: 12px; line-height: 1.6; }
+/* TELA 5 ACUSAÇÃO */
+#tela-acusacao.active { display: flex !important; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+#tela-acusacao .acus-titulo { font-size: 22px; color: var(--red); margin-bottom: 30px; min-height: 1.4em; }
+.acus-form { width: 100%; max-width: 500px; text-align: left; }
+.acus-form label { display: block; font-size: 14px; color: var(--gold); margin-bottom: 6px; margin-top: 16px; }
+/* MODO MESTRE */
+#modal-mestre .modal-content { border-color: var(--gold); max-width: 650px; }
+.mestre-header { font-family: 'Courier New', monospace; font-size: 18px; color: var(--gold); text-align: center; margin-bottom: 20px; letter-spacing: 2px; }
+.mestre-section { margin-bottom: 24px; padding: 16px; border: 1px solid var(--border); }
+.mestre-section h3 { font-family: 'Courier New', monospace; font-size: 14px; color: var(--gold); margin-bottom: 12px; letter-spacing: 1px; }
+.mestre-fase-nav { display: flex; align-items: center; gap: 12px; justify-content: center; }
+.mestre-fase-label { font-family: 'Courier New', monospace; font-size: 14px; }
+.mestre-guia { font-size: 12px; color: var(--text); line-height: 1.6; font-style: italic; margin-top: 12px; padding: 10px; background: var(--input-bg); border-left: 2px solid var(--gold); }
+.mestre-ev-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); font-family: 'Courier New', monospace; font-size: 12px; flex-wrap: wrap; }
+.mestre-ev-item:last-child { border-bottom: none; }
+.mestre-ev-item span { flex: 1; }
+#modal-senha .modal-content { max-width: 380px; text-align: center; }
+#modal-reveal .modal-content { max-width: 680px; padding: 24px 20px; }
+#modal-reveal h2 { font-family: 'Courier New', monospace; font-size: 15px; color: var(--gold); text-align: center; margin-bottom: 6px; }
+.reveal-location { font-family: 'Courier New', monospace; font-size: 11px; color: var(--border); text-align: center; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 1px; }
+.reveal-conteudo { font-size: 12px; line-height: 1.7; max-height: 65vh; overflow-y: auto; }
+#modal-combinacao .modal-content { max-width: 380px; text-align: center; }
+@media (max-width: 768px) {
+  .jogadores-grid { grid-template-columns: 1fr; }
+  .npc-resumo-grid { grid-template-columns: 1fr; }
+  .jogador-row { flex-direction: column; }
+  #timer-display { font-size: 36px; }
+  .nav-bar { flex-direction: column; align-items: center; }
+  .nav-bar .btn { width: 100%; max-width: 300px; }
+  .suspeitos-grid, .testemunhas-grid { grid-template-columns: 1fr; }
+}
+@media (min-width: 1200px) { .tela { max-width: 960px; margin: 0 auto; } #tela-acusacao { max-width: 100%; } }
+</style>
+</head>
+<body>
+<div class="vinheta"></div>
+<div id="notificacao"></div>
+
+<!-- TELA 1 — SETUP -->
+<div id="tela-setup" class="tela active">
+  <div style="width:100%;max-width:700px;margin:0 auto 20px;opacity:0;animation:fadeIn 1.2s ease 0.1s forwards;">
+    <img src="imagem_3.png" alt="Villa Meridiana — Lago di Como" style="width:100%;display:block;border:1px solid var(--gold);opacity:0.90;">
+  </div>
+  <h1 class="font-title titulo">MORTE ALLA VILLA MERIDIANA</h1>
+  <p class="font-title subtitulo" style="color: var(--gold); font-size: 14px; letter-spacing: 4px;">&#9670; LAGO DI COMO · GIUGNO 1953 &#9670;</p>
+  <p class="subtitulo">Uma Investigação de Assassinato &mdash; Carabinieri di Como</p>
+  <div class="form-area">
+    <div class="sep">&#9670; &#9670; &#9670;</div>
+    <div id="badge-teste" style="display:none; font-family:'Courier New',monospace; font-size:11px; color:var(--gold); border:1px solid var(--gold); padding:5px 12px; margin-bottom:12px; letter-spacing:2px; text-align:center; background:rgba(160,120,40,0.06);">&#9670; MODO TESTE ATIVO &mdash; Dados genéricos, solução ocultada &#9670;</div>
+    <button id="btn-toggle-teste" class="btn btn-small" onclick="toggleTestMode()" style="margin-bottom:16px; width:100%; border-color:var(--border); color:#888; font-size:11px;">&#9670; MODO TESTE</button>
+    <p class="font-mono" style="font-size:12px; margin-bottom:16px; color:var(--gold); letter-spacing:1px;">Cada jogador escolhe um suspeito para interpretar:</p>
+    <div id="setup-fields"></div>
+    <div id="setup-erro" class="erro-papel"></div>
+    <button id="btn-iniciar" class="btn disabled" disabled onclick="iniciarJogo()">INICIAR INVESTIGAÇÃO</button>
+  </div>
+</div>
+
+<!-- TELA 2 — PAINEL PRINCIPAL -->
+<div id="tela-painel" class="tela">
+  <div class="header-painel">
+    <h1 class="font-title">&#9670; MORTE ALLA VILLA MERIDIANA &mdash; LAGO DI COMO, 1953 &#9670;</h1>
+    <p class="fase-label">FASE ATUAL: <span id="fase-atual">Fase 1</span></p>
+  </div>
+  <div class="cronometro-section card">
+    <h2>&#9670; TEMPO DE INVESTIGAÇÃO &#9670;</h2>
+    <div id="timer-display">90:00</div>
+    <div class="timer-btns">
+      <button class="btn btn-small" onclick="timerIniciar()">INICIAR</button>
+      <button class="btn btn-small" id="btn-pausar" onclick="timerPausar()">PAUSAR</button>
+      <button class="btn btn-small btn-red" onclick="timerReiniciar()">REINICIAR</button>
+    </div>
+  </div>
+  <div class="cronograma-section card">
+    <h2>&#9670; CRONOGRAMA DE COMUNICADOS &#9670;</h2>
+    <div class="cronograma-lista" id="cronograma-lista"></div>
+  </div>
+  <div class="nav-bar">
+    <button class="btn btn-small" onclick="irParaSuspeitos()">&#9670; SUSPEITOS</button>
+    <button class="btn btn-small" onclick="irParaTestemunhas()">&#9670; TESTEMUNHAS</button>
+    <button class="btn btn-small btn-green" onclick="irParaBusca()">&#9670; BUSCAR APOSENTO</button>
+  </div>
+  <div class="tokens-bar" id="tokens-bar-painel" style="gap:20px; flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span class="tok-label">Interrogações:</span>
+      <div class="tok-dots" id="tok-dots-interrog-painel"></div>
+      <span id="tok-count-interrog-painel" style="color:var(--gold); font-weight:700;">4</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span class="tok-label">Buscas:</span>
+      <div class="tok-dots" id="tok-dots-painel"></div>
+      <span id="tok-count-painel" style="color:var(--gold); font-weight:700;">25</span>
+    </div>
+  </div>
+  <div class="card">
+    <h2 class="font-mono" style="font-size:14px; color:var(--gold); margin-bottom:12px; letter-spacing:2px;">&#9670; JOGADORES &amp; PERSONAGENS &#9670;</h2>
+    <div class="jogadores-grid" id="jogadores-grid"></div>
+  </div>
+  <div class="evidencias-section card">
+    <h2>&#9670; CÓDIGOS DE EVIDÊNCIA &#9670;</h2>
+    <button class="btn btn-small" onclick="abrirModalEvidencia()" style="margin-bottom:12px;">[+] INSERIR CÓDIGO</button>
+    <div id="evidencias-lista"></div>
+  </div>
+  <div class="card">
+    <h2 class="font-mono" style="font-size:14px; color:var(--gold); margin-bottom:12px; letter-spacing:2px;">&#9670; TESTEMUNHAS DO VILLA MERIDIANA &#9670;</h2>
+    <div class="npc-resumo-grid" id="npc-resumo"></div>
+  </div>
+  <div class="mural-section card">
+    <h2>&#9670; MURAL DE INVESTIGAÇÃO &#9670;</h2>
+    <button class="btn btn-small" onclick="abrirModalPista()" style="margin-bottom:12px;">[+] ADICIONAR PISTA</button>
+    <div id="pistas-lista"></div>
+    <div style="margin-bottom:24px;" id="log-section">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <h2 class="font-mono" style="font-size:14px;color:var(--gold);letter-spacing:2px;">&#9670; REGISTRO DA INVESTIGAÇÃO &#9670;</h2>
+        <button class="btn btn-small" style="font-size:10px;border-color:var(--border);color:var(--border);" onclick="limparLog()">LIMPAR</button>
+      </div>
+      <div id="log-lista" style="max-height:180px;overflow-y:auto;font-family:'Courier New',monospace;font-size:11px;"></div>
+      <div id="log-vazio" style="font-family:'Courier New',monospace;font-size:11px;color:var(--border);font-style:italic;">Nenhum evento registrado ainda.</div>
+    </div>
+  </div>
+  <div class="rodape-painel" style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+    <button class="btn btn-red" onclick="iniciarAcusacao()">&#9670; ACUSAÇÃO FINAL</button>
+    <button class="btn" onclick="abrirSenha('mestre')">&#128274; MODO MESTRE</button>
+    <button class="btn btn-small" style="border-color:var(--border); color:var(--border); font-size:11px;" onclick="exportarDiario()">&#8595; EXPORTAR DIÁRIO</button>
+  </div>
+</div>
+
+<!-- TELA 3 — TESTEMUNHAS -->
+<div id="tela-testemunhas" class="tela">
+  <div class="header-testemunhas">
+    <h1 class="font-title">&#9670; TESTEMUNHAS DA VILLA MERIDIANA &#9670;</h1>
+    <button class="btn btn-small" onclick="voltarPainel()" style="margin-top:12px;">&#8592; VOLTAR AO PAINEL</button>
+  </div>
+  <div class="tokens-bar" style="margin-bottom:10px;">
+    <span class="tok-label">Fichas de Interrogação:</span>
+    <div class="tok-dots" id="tok-dots-interrog"></div>
+    <span id="tok-count-interrog" style="color:var(--gold); font-weight:700;">4</span>
+  </div>
+  <div style="margin:0 0 20px 0;width:100%;max-width:700px;margin-left:auto;margin-right:auto;">
+    <img src="imagem_2.png" alt="Testemunhas da Villa Meridiana" style="width:100%;display:block;border:1px solid var(--border);opacity:0.88;">
+    <div style="font-family:'Courier New',monospace;font-size:10px;color:var(--border);text-align:center;margin-top:5px;letter-spacing:1px;">Rosa Marini &nbsp;·&nbsp; Dr. Antonio Ferretti &nbsp;·&nbsp; Aldo Bianchi &nbsp;·&nbsp; Concetta Mele</div>
+  </div>
+  <div class="testemunhas-grid" id="testemunhas-grid"></div>
+</div>
+
+<!-- TELA 4 — SUSPEITOS -->
+<div id="tela-suspeitos" class="tela">
+  <div class="header-suspeitos">
+    <h1 class="font-title">&#9670; SUSPEITOS &#9670;</h1>
+    <button class="btn btn-small" onclick="voltarPainel()" style="margin-top:12px;">&#8592; VOLTAR AO PAINEL</button>
+  </div>
+  <div style="margin:0 0 20px 0;width:100%;max-width:700px;margin-left:auto;margin-right:auto;">
+    <img src="imagem_1.png" alt="Suspeitos" style="width:100%;display:block;border:1px solid var(--border);opacity:0.88;">
+    <div style="font-family:'Courier New',monospace;font-size:10px;color:var(--border);text-align:center;margin-top:5px;letter-spacing:1px;">Marco Conti &nbsp;·&nbsp; Giulia Ferrari &nbsp;·&nbsp; Elena Russo &nbsp;·&nbsp; Luca Ferrari</div>
+  </div>
+  <div class="suspeitos-grid" id="suspeitos-grid"></div>
+</div>
+
+<!-- TELA 5 — ACUSAÇÃO -->
+<div id="tela-acusacao" class="tela">
+  <div class="sep" style="font-size:18px;">&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;</div>
+  <div class="acus-titulo font-title" id="acus-titulo"></div>
+  <div class="sep" style="font-size:18px;">&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;</div>
+  <div id="acus-form-area" class="acus-form">
+    <label>O assassino é:</label>
+    <select id="acus-suspeito" onchange="validarAcusacao()">
+      <option value="">-- Selecione o suspeito --</option>
+    </select>
+    <label>Método do crime:</label>
+    <textarea id="acus-metodo" placeholder="Como foi cometido o crime?" rows="3" oninput="validarAcusacao()"></textarea>
+    <label>Motivo:</label>
+    <textarea id="acus-motivo" placeholder="Qual era o motivo?" rows="3" oninput="validarAcusacao()"></textarea>
+    <div style="text-align:center; margin-top:20px;">
+      <button id="btn-acusar" class="btn btn-red disabled" disabled onclick="registrarAcusacao()">REGISTRAR ACUSAÇÃO</button>
+      <p id="acus-aviso-ev" style="font-family:'Courier New',monospace; font-size:11px; color:var(--border); margin-top:10px; display:none;">&#9671; Pelo menos uma evidência deve estar desbloqueada antes de acusar.</p>
+    </div>
+  </div>
+  <div id="acus-resultado" style="display:none;">
+    <div class="acus-msg" id="acus-msg" style="font-family:'Courier New',monospace; font-size:20px; color:var(--gold); min-height:1.4em;"></div>
+    <div class="acus-submsg" id="acus-submsg" style="font-family:'Courier New',monospace; font-size:16px; color:var(--text); margin-top:16px; min-height:1.4em;"></div>
+    <div style="margin-top:30px; display:none;" id="acus-voltar">
+      <button class="btn" onclick="voltarPainel()">VOLTAR AO PAINEL</button>
+    </div>
+  </div>
+</div>
+
+<!-- TELA 6 — BUSCA DE APOSENTOS -->
+<div id="tela-busca" class="tela">
+  <div style="text-align:center; padding:16px 16px 8px;">
+    <h1 class="font-title" style="font-size:18px; color:var(--gold); letter-spacing:3px;">&#9670; BUSCA DE APOSENTOS &#9670;</h1>
+    <button class="btn btn-small" onclick="voltarPainel()" style="margin-top:12px;">&#8592; VOLTAR AO PAINEL</button>
+  </div>
+  <div style="width:100%; max-width:700px; margin:0 auto 14px; padding:0 12px;">
+    <img src="imagem_6.png" alt="Planta — Villa Meridiana" style="width:100%; display:block; border:1px solid var(--border); opacity:0.88;">
+    <div style="font-family:'Courier New',monospace; font-size:9px; color:var(--border); text-align:center; margin-top:4px; letter-spacing:1px;">VILLA MERIDIANA — PLANTA DOS APOSENTOS</div>
+  </div>
+  <div style="max-width:600px; margin:0 auto; padding:0 12px 40px;">
+    <div class="card" style="margin-bottom:16px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+        <div>
+          <div style="font-family:'Courier New',monospace; font-size:10px; color:var(--border); letter-spacing:2px; text-transform:uppercase; margin-bottom:4px;">Fichas de Busca</div>
+          <div style="display:flex; align-items:baseline; gap:6px;">
+            <span id="busca-token-count" style="font-family:'Courier New',monospace; font-size:36px; font-weight:700; color:var(--gold); line-height:1;">25</span>
+            <span style="font-family:'Courier New',monospace; font-size:11px; color:var(--border);">/ 25</span>
+          </div>
+        </div>
+        <div style="font-family:'Courier New',monospace; font-size:10px; color:var(--border); text-align:right; line-height:1.8;">
+          <div>F1 &rarr; 1 ficha</div>
+          <div>F2 &rarr; 2 fichas</div>
+          <div>F3 &rarr; 3 fichas</div>
+        </div>
+      </div>
+      <div id="busca-token-dots" style="display:grid; grid-template-columns:repeat(5,14px); gap:5px; margin:0 auto; width:fit-content;"></div>
+    </div>
+    <div class="card" style="margin-bottom:16px;">
+      <h2 style="font-family:'Courier New',monospace; font-size:13px; color:var(--gold); margin-bottom:14px; letter-spacing:2px;">&#9670; DECLARAR BUSCA &#9670;</h2>
+      <p style="font-family:'Courier New',monospace; font-size:11px; color:var(--border); margin-bottom:16px; line-height:1.6;">Declarem o aposento e a categoria a examinar. O Commissario confirmará se uma evidência foi encontrada ou se o espaço está limpo.</p>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div>
+          <label style="font-family:'Courier New',monospace; font-size:10px; color:var(--border); text-transform:uppercase; letter-spacing:1px; display:block; margin-bottom:6px;">Aposento</label>
+          <select id="busca-comodo" onchange="atualizarCategoriasBusca(); resetarResultadoBusca();">
+            <option value="">-- Selecione o aposento --</option>
+            <optgroup label="▸ Fase 1 — 1 ficha">
+              <option value="terrazza">Terrazza (Cena do Crime)</option>
+              <option value="sala-grande">Sala Grande</option>
+            </optgroup>
+            <optgroup label="▸ Fase 2 — 2 fichas">
+              <option value="biblioteca">Biblioteca</option>
+              <option value="rimessa">Rimessa (Depósito)</option>
+              <option value="corredor">Corredor Interno</option>
+            </optgroup>
+            <optgroup label="▸ Fase 3 — 3 fichas">
+              <option value="quarto-marco">Quarto — Marco Conti</option>
+              <option value="quarto-giulia">Quarto — Giulia Ferrari</option>
+              <option value="quarto-elena">Quarto — Elena Russo</option>
+              <option value="quarto-luca">Quarto — Luca Ferrari</option>
+            </optgroup>
+          </select>
+        </div>
+        <div>
+          <label style="font-family:'Courier New',monospace; font-size:10px; color:var(--border); text-transform:uppercase; letter-spacing:1px; display:block; margin-bottom:6px;">Categoria</label>
+          <select id="busca-categoria" onchange="resetarResultadoBusca()">
+            <option value="">-- Selecione o aposento primeiro --</option>
+          </select>
+        </div>
+        <button class="btn btn-green" id="btn-executar-busca" onclick="executarBusca()">&#9670; EXECUTAR BUSCA</button>
+      </div>
+      <div class="busca-resultado" id="busca-resultado"></div>
+    </div>
+    <div class="card" id="busca-historico-card" style="display:none;">
+      <h2 style="font-family:'Courier New',monospace; font-size:13px; color:var(--gold); margin-bottom:12px; letter-spacing:2px;">&#9670; BUSCAS REALIZADAS &#9670;</h2>
+      <div id="busca-historico-lista"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: SENHA -->
+<div id="modal-senha" class="modal-overlay">
+  <div class="modal-content" style="max-width:380px; text-align:center;">
+    <h2 style="font-family:'Courier New',monospace; font-size:16px; color:var(--gold); margin-bottom:16px;">MODO MESTRE</h2>
+    <p style="font-size:13px; margin-bottom:12px;">Digite a senha do mestre:</p>
+    <input type="password" id="senha-input" placeholder="Senha..." onkeydown="if(event.key==='Enter')verificarSenha()">
+    <div id="senha-erro" style="color:var(--red); font-size:12px; font-family:'Courier New',monospace; min-height:18px; margin-top:8px;"></div>
+    <div style="display:flex; gap:10px; justify-content:center; margin-top:14px;">
+      <button class="btn btn-small" onclick="fecharModal('modal-senha')">CANCELAR</button>
+      <button class="btn btn-small" onclick="verificarSenha()">ENTRAR</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: MESTRE -->
+<div id="modal-mestre" class="modal-overlay">
+  <div class="modal-content">
+    <div class="mestre-header">CONTROLE DO MESTRE &mdash; MORTE ALLA VILLA MERIDIANA</div>
+    <div class="mestre-section">
+      <h3>&#9670; PROGRESSO DA INVESTIGAÇÃO &#9670;</h3>
+      <div class="mestre-fase-nav">
+        <button class="btn btn-small" onclick="mudarFase(-1)">&#8592; ANTERIOR</button>
+        <span class="mestre-fase-label" id="mestre-fase-label">Fase 1</span>
+        <button class="btn btn-small" onclick="mudarFase(1)">PRÓXIMA &#8594;</button>
+      </div>
+      <div class="mestre-guia" id="mestre-guia"></div>
+    </div>
+    <div class="mestre-section">
+      <h3>&#9670; CÓDIGOS DE EVIDÊNCIA &#9670;</h3>
+      <div id="mestre-evidencias"></div>
+    </div>
+    <div style="text-align:center; margin-top:20px;">
+      <button class="btn" onclick="fecharModal('modal-mestre')">FECHAR MODO MESTRE</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: EVIDENCIA -->
+<div id="modal-evidencia" class="modal-overlay">
+  <div class="modal-content" style="max-width:420px; text-align:center;">
+    <h2 style="font-family:'Courier New',monospace; font-size:16px; color:var(--gold); margin-bottom:16px;">INSERIR CÓDIGO DE EVIDÊNCIA</h2>
+    <p style="font-size:13px; margin-bottom:12px;">Digite o código encontrado durante a busca:</p>
+    <input type="text" id="evidencia-code-input" placeholder="Ex: CIAN-KB01" style="text-transform:uppercase;" onkeydown="if(event.key==='Enter')tentarDesbloquear()">
+    <div id="evidencia-erro" style="color:var(--red); font-size:12px; font-family:'Courier New',monospace; min-height:18px; margin-top:6px;"></div>
+    <div style="display:flex; gap:10px; justify-content:center; margin-top:14px;">
+      <button class="btn btn-small" onclick="fecharModal('modal-evidencia')">CANCELAR</button>
+      <button class="btn btn-small" onclick="tentarDesbloquear()">DESBLOQUEAR</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: REVEAL -->
+<div id="modal-reveal" class="modal-overlay">
+  <div class="modal-content">
+    <img src="imagem_4.png" alt="Cena do Crime" style="width:calc(100% + 60px);max-width:none;display:block;margin:-30px -30px 16px -30px;opacity:0.90;">
+    <h2 id="reveal-titulo"></h2>
+    <div class="reveal-location" id="reveal-location"></div>
+    <div class="sep">&#9670; &#9670; &#9670;</div>
+    <div class="reveal-conteudo" id="reveal-conteudo"></div>
+    <div class="sep">&#9670; &#9670; &#9670;</div>
+    <div style="text-align:center; margin-top:16px;">
+      <button class="btn" onclick="fecharModal('modal-reveal')">FECHAR</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: COMBINACAO -->
+<div id="modal-combinacao" class="modal-overlay">
+  <div class="modal-content" style="max-width:380px; text-align:center;">
+    <h2 style="font-family:'Courier New',monospace; font-size:16px; color:var(--gold); margin-bottom:16px;">ARQUIVO TRANCADO</h2>
+    <p style="font-size:13px; margin-bottom:12px;">Este arquivo requer uma combinação numérica:</p>
+    <input type="text" id="combinacao-input" placeholder="Digite a combinação..." maxlength="6" onkeydown="if(event.key==='Enter')verificarCombinacao()">
+    <div id="combinacao-erro" style="color:var(--red); font-size:12px; font-family:'Courier New',monospace; min-height:18px; margin-top:6px;"></div>
+    <div style="display:flex; gap:10px; justify-content:center; margin-top:14px;">
+      <button class="btn btn-small" onclick="fecharModal('modal-combinacao')">CANCELAR</button>
+      <button class="btn btn-small" onclick="verificarCombinacao()">ABRIR ARQUIVO</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: PISTA -->
+<div id="modal-pista" class="modal-overlay">
+  <div class="modal-content" style="max-width:420px; text-align:center;">
+    <h2 style="font-family:'Courier New',monospace; font-size:16px; color:var(--gold); margin-bottom:16px;">NOVA PISTA</h2>
+    <select id="pista-categoria" style="margin-bottom:12px;">
+      <option value="testemunho">Testemunho</option>
+      <option value="evidencia">Evidência Física</option>
+      <option value="alibi">Alibi</option>
+      <option value="suspeita">Suspeita</option>
+      <option value="outro">Outro</option>
+    </select>
+    <input type="text" id="pista-input" placeholder="Descreva a pista..." onkeydown="if(event.key==='Enter')adicionarPista()">
+    <div style="display:flex; gap:10px; justify-content:center; margin-top:14px;">
+      <button class="btn btn-small" onclick="fecharModal('modal-pista')">CANCELAR</button>
+      <button class="btn btn-small" onclick="adicionarPista()">ADICIONAR</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: INTERROGAÇÃO -->
+<div id="modal-interrogar" class="modal-overlay">
+  <div class="modal-content" style="max-width:560px;">
+    <div style="text-align:center; margin-bottom:16px;">
+      <div id="interrogar-retrato" style="width:80px;height:80px;border-radius:50%;border:2px solid var(--gold);background:var(--border);margin:0 auto 10px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--gold);">&#9670;</div>
+      <div id="interrogar-nome" class="font-title" style="font-size:16px;color:var(--gold);"></div>
+      <div id="interrogar-role" style="font-family:'Courier New',monospace;font-size:11px;margin-top:4px;"></div>
+    </div>
+    <div style="margin-bottom:14px;">
+      <label style="font-family:'Courier New',monospace;font-size:12px;color:var(--gold);display:block;margin-bottom:6px;">QUEM INTERROGA:</label>
+      <select id="interrogar-quem" style="width:100%;"></select>
+    </div>
+    <div id="interrogar-resultado" style="display:none;">
+      <div style="font-family:'Courier New',monospace;font-size:11px;color:var(--gold);margin-bottom:8px;letter-spacing:1px;">&#9670; DEPOIMENTO &#9670;</div>
+      <div id="interrogar-texto" style="font-size:13px;line-height:1.8;padding:14px;background:var(--input-bg);border-left:3px solid var(--gold);font-style:italic;"></div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;">
+      <button class="btn btn-small" onclick="executarInterrogatorio()" id="btn-interrogar-exec">&#9670; INTERROGAR</button>
+      <button class="btn btn-small btn-green" onclick="marcarEntrevistada()" id="btn-marcar-entrevistada" style="display:none;">&#10003; MARCAR ENTREVISTADA</button>
+      <button class="btn btn-small btn-red" onclick="fecharModal('modal-interrogar')">FECHAR</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: DCI EVENTS -->
+<div id="modal-dci" class="modal-overlay">
+  <div class="modal-content" style="max-width:600px;text-align:center;border-color:var(--gold);">
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;text-align:left;">
+      <img src="impressao/retratos/lanza.png" alt="Commissario Lanza" style="width:72px;height:90px;object-fit:cover;object-position:top;border:2px solid var(--gold);flex-shrink:0;">
+      <div>
+        <div style="font-family:'Courier New',monospace;font-size:10px;color:var(--border);letter-spacing:3px;margin-bottom:6px;">CARABINIERI DI COMO — COMUNICADO OFICIAL</div>
+        <div id="dci-titulo" class="font-title" style="font-size:16px;color:var(--gold);letter-spacing:2px;"></div>
+      </div>
+    </div>
+    <div style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:16px 0;margin-bottom:20px;">
+      <div id="dci-msg" style="font-size:14px;line-height:1.8;text-align:left;"></div>
+    </div>
+    <button class="btn" onclick="fecharModal('modal-dci')">&#9670; ENTENDIDO</button>
+  </div>
+</div>
+
+<!-- MODAL: DCI PRESSURE -->
+<div id="modal-pressao" class="modal-overlay">
+  <div class="modal-content" style="max-width:560px;">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+      <img src="impressao/retratos/lanza.png" alt="Commissario Lanza" style="width:56px;height:70px;object-fit:cover;object-position:top;border:2px solid var(--red);flex-shrink:0;">
+      <div>
+        <div style="font-family:'Courier New',monospace;font-size:10px;color:var(--border);letter-spacing:2px;margin-bottom:4px;">COMMISSARIO BRUNO LANZA — INTERROGATÓRIO DIRETO</div>
+        <div id="pressao-suspeito-nome" class="font-title" style="font-size:15px;color:var(--red);"></div>
+      </div>
+    </div>
+    <div style="padding:14px;background:var(--input-bg);border-left:3px solid var(--red);margin-bottom:16px;">
+      <div style="font-family:'Courier New',monospace;font-size:11px;color:var(--red);margin-bottom:8px;">COMMISSARIO BRUNO LANZA:</div>
+      <div id="pressao-texto" style="font-size:13px;line-height:1.8;font-style:italic;"></div>
+    </div>
+    <div style="text-align:center;">
+      <button class="btn btn-red" onclick="fecharModal('modal-pressao')">REGISTRAR DEPOIMENTO</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ========== CONSTANTES ========== */
+const SENHA_MESTRE = 'lanza1953';
+const TOTAL_TIME = 5400;
+const FASES = ['Fase 1 — Chegada e Primeiras Perguntas','Fase 2 — Contradições Emergem','Fase 3 — Evidências Críticas','Fase 4 — Confrontação Final'];
+let FASE_GUIA = [
+  'Fase 1 (0-30 min): Chegada de Lanza. Carlo Ferrari encontrado morto à base da Terrazza. Primeiras entrevistas — onde estava cada um entre 22h20 e 22h50? Tom: choque, formalidade, tensão familiar. Terrazza e Sala Grande disponíveis — 1 ficha por busca. TERR-01 pode ser encontrado na Terrazza (estrutura).',
+  'Fase 2 (30-60 min): Laudo confirma: empurrão deliberado, balaustrada sabotada. Biblioteca, Rimessa e Corredor agora acessíveis — 2 fichas por busca. Explorar CONT-01 (Sala Grande/documentos), TEST-01 (Biblioteca/documentos), FERR-01 (Rimessa/ferramentas), RASA-01 (Corredor/ambiente).',
+  'Fase 3 (60-90 min): Quartos dos suspeitos abertos — 3 fichas por busca. JACA-01 e NOTA-01 no quarto de Marco. CHAV-01 e DIAR-01 no quarto de Giulia. LUCA-01 no quarto de Luca. Confrontação com LUCA-01 como pilar central.',
+  'Fase 4 (90+ min): Todas as evidências disponíveis. Dois autores: Marco Conti empurrou; Giulia Ferrari sabotou a balaustrada. Confrontação direta possível. Fase de acusação final.'
+];
+
+let PERSONAGENS = [
+  { id: 'marco', name: 'Marco Conti', age: 55, role: 'Sócio Fundador',
+    desc: 'Co-fundador da Ferrari Tessile. Descobre que Carlo vai liquidar a empresa deixando-lhe apenas 4% do valor. Trinta anos de trabalho.',
+    trait: 'Alibi: Quarto pessoal. Janela 22h37–22h42 colocada por Rosa Marini no corredor.',
+    img: 'impressao/retratos/marco_conti.png', bgPos: 'center top' },
+  { id: 'giulia', name: 'Giulia Ferrari', age: 32, role: 'Esposa de Carlo',
+    desc: 'Segunda esposa confrontando divórcio humilhante. Carlo propõe termos que a deixariam praticamente sem nada.',
+    trait: 'Vista na varanda com Carlo às 22h20. Saiu às 22h25.',
+    img: 'impressao/retratos/giulia_ferrari.png', bgPos: 'center top' },
+  { id: 'elena', name: 'Elena Russo', age: 44, role: 'Ex-Secretária',
+    desc: 'Trabalhou para Carlo 16 anos. Descobriu documentos de expropriação de bens judeus. Foi demitida e ameaçada.',
+    trait: 'Última pessoa vista com Carlo na varanda — saiu às 22h35. Sem alibi confirmado depois disso.',
+    img: 'impressao/retratos/elena_russo.png', bgPos: 'center top' },
+  { id: 'luca', name: 'Luca Ferrari', age: 24, role: 'Sobrinho',
+    desc: 'Sobrinho de Carlo que esperava herdar parte da empresa. Tem romance proibido com Sofia Mancini, filha de operário.',
+    trait: 'Alibi externo: estava em Bellagio com Sofia (21h10–22h55). Testemunhas na trattoria.',
+    img: 'impressao/retratos/luca_ferrari.png', bgPos: 'center top' }
+];
+
+let TESTEMUNHAS = [
+  { id: 'rosa', name: 'Rosa Marini', age: 61, role: 'Governanta',
+    desc: '20 anos na Villa Meridiana. Observa tudo com precisão quase militar.',
+    personality: 'Discreta por profissão. Relata fatos sem especular. Mais aberta com quem demonstra autoridade gentil.',
+    img: 'impressao/retratos/rosa_marini.png', bgPos: 'center top' },
+  { id: 'ferretti', name: 'Dr. Antonio Ferretti', age: 49, role: 'Médico Local',
+    desc: 'Certificou a morte e examinou o corpo. Conhece a física da queda.',
+    personality: 'Profissional. Reservado. Hesita em especular além de suas descobertas técnicas até ser pressionado.',
+    img: 'impressao/retratos/ferretti.png', bgPos: 'center top' },
+  { id: 'aldo', name: 'Aldo Bianchi', age: 38, role: 'Jardineiro e Guarda',
+    desc: 'Encontrou o corpo às 22h50. Conhece cada ferramenta do galpão. Inspecionou a balaustrada em 12 de junho.',
+    personality: 'Direto, sem filtros. Conta o que viu sem rodeios.',
+    img: 'impressao/retratos/aldo_bianchi.png', bgPos: 'center top' },
+  { id: 'concetta', name: 'Concetta Mele', age: 23, role: 'Camareira',
+    desc: 'Jovem. Viu Marco no corredor às 22h35. Ouviu o estrondo às 22h42. Está dividida.',
+    personality: 'Ansiosa. Não quer prejudicar Marco (que foi gentil com ela). Mas não mente.',
+    img: 'impressao/retratos/concetta_mele.png', bgPos: 'center top' }
+];
+
+let EVIDENCIAS = {
+  'TERR-01': {
+    title: 'Perícia Estrutural da Balaustrada',
+    location: 'Terrazza / Estrutura',
+    shortDesc: 'Parafuso de ancoragem com sinais de afrouxamento manual — marcas de ferramenta de cabeça plana',
+    fullReveal: `<div style="font-family:Georgia,serif;background:#f5f0e8;color:#1a1005;padding:20px 22px;border:1px solid #8a7a5a;line-height:1.7;">
+  <div style="text-align:center;border-bottom:2px double #1a1005;padding-bottom:10px;margin-bottom:14px;">
+    <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#5a4a2a;font-family:'Courier New',monospace;">Carabinieri di Como — Sezione Criminalistica</div>
+    <div style="font-size:10px;margin-top:3px;color:#5a4a2a;font-style:italic;">Perícia Técnica da Estrutura · Villa Meridiana</div>
+  </div>
+  <div style="background:#e8e0cc;border:2px solid #8a7a5a;padding:14px;margin-bottom:14px;">
+    <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#8b1a1a;font-weight:bold;font-family:'Courier New',monospace;margin-bottom:6px;">PARAFUSO PRINCIPAL DE ANCORAGEM</div>
+    <div style="font-size:12px;font-weight:bold;margin-bottom:4px;">Balaustrada da Varanda — Andar Principal</div>
+  </div>
+  <div style="font-family:'Courier New',monospace;font-size:11px;line-height:2;margin-bottom:12px;">
+    <div style="display:grid;grid-template-columns:180px 1fr;gap:2px;">
+      <span style="color:#5a4a2a;">Status de Inspeção:</span><span>Íntegra em 12 de junho · Afrouxada em 14 de junho</span>
+      <span style="color:#5a4a2a;">Tipo de Afrouxamento:</span><span>Manual · ferramenta de cabeça plana</span>
+      <span style="color:#5a4a2a;">Marcas de Ferramenta:</span><span>Padrão consistente com chave inglesa ajustável</span>
+      <span style="color:#5a4a2a;">Conclusion:</span><span>Afrouxamento deliberado · não desgaste natural</span>
+    </div>
+  </div>
+  <div style="background:#f5ede0;border:1px solid #8a7a5a;border-left:4px solid #8b1a1a;padding:10px;font-size:11px;line-height:1.7;">
+    O parafuso foi deliberadamente afrouxado, não retirado. Falha estrutural ocorreu ao impacto direto contra a balaustrada.
+  </div>
+  <div style="background:#1a0505;color:#e8c0b0;font-family:'Courier New',monospace;font-size:11px;text-align:center;padding:11px;letter-spacing:1px;margin-top:12px;">&#9670; EVIDÊNCIA CRÍTICA — Afrouxamento ocorreu entre 12 e 14 de junho &#9670;</div>
+</div>`
+  },
+  'CONT-01': {
+    title: 'Acordo de Dissolução Ferrari-Conti',
+    location: 'Sala Grande / Documentos',
+    shortDesc: 'Acordo assinado por Carlo: liquidação de 2.800.000 liras para Conti (≈4% do valor real)',
+    fullReveal: `<div style="font-family:Georgia,serif;background:#f5f0e8;color:#1a1005;padding:20px 22px;border:1px solid #8a7a5a;line-height:1.7;">
+  <div style="text-align:center;border-bottom:2px double #1a1005;padding-bottom:10px;margin-bottom:14px;">
+    <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#5a4a2a;font-family:'Courier New',monospace;">Ferrari Tessile S.p.A.</div>
+    <div style="font-size:11px;margin-top:4px;font-weight:bold;">Acordo de Dissolução de Parceria</div>
+  </div>
+  <div style="background:#e8e0cc;border:1px solid #8a7a5a;padding:12px;margin-bottom:14px;">
+    <div style="font-size:11px;line-height:1.8;font-family:'Courier New',monospace;">
+      <strong>Liquidação a Marco Conti:</strong><br>
+      2.800.000 liras<br>
+      <span style="color:#5a4a2a;font-size:10px;">(Equivalente a aproximadamente 4% do valor estimado da empresa)</span>
+    </div>
+  </div>
+  <div style="background:#f5ede0;border:1px solid #8a7a5a;border-left:4px solid #8b1a1a;padding:10px;font-size:11px;line-height:1.7;">
+    Nota à margem, escrita a caneta por Carlo Ferrari: <em>"Definitivo. Nenhuma negociação."</em>
+  </div>
+  <div style="background:#1a0505;color:#e8c0b0;font-family:'Courier New',monospace;font-size:11px;text-align:center;padding:11px;letter-spacing:1px;margin-top:12px;">&#9670; Assinado por Carlo Ferrari em 13 de junho de 1953 &#9670;</div>
+</div>`
+  },
+  'TEST-01': {
+    title: 'Rascunho de Testamento — C. Ferrari',
+    location: 'Biblioteca / Documentos',
+    shortDesc: 'Testamento exclui Luca, deixa quota industrial a Giulia — "a ser assinado segunda-feira"',
+    fullReveal: `<div style="font-family:Georgia,serif;background:#f5f0e8;color:#1a1005;padding:20px 22px;border:1px solid #8a7a5a;line-height:1.7;">
+  <div style="text-align:center;border-bottom:2px double #1a1005;padding-bottom:10px;margin-bottom:14px;">
+    <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#5a4a2a;font-family:'Courier New',monospace;">Documento Testamentário — Rascunho</div>
+  </div>
+  <div style="background:#e8e0cc;border:1px solid #8a7a5a;padding:12px;margin-bottom:14px;font-size:12px;line-height:1.8;">
+    Testamento datilografado com correções a caneta:<br><br>
+    <strong>Cláusula Principal:</strong> Deixa quota industrial inteiramente a Giulia Ferrari sob condição de não se casar novamente dentro de cinco anos.<br><br>
+    <strong>Exclusão:</strong> Luca Ferrari é expressamente excluído da herança.
+  </div>
+  <div style="background:#f5ede0;border:1px solid #8a7a5a;border-left:4px solid #8b1a1a;padding:10px;font-size:11px;line-height:1.7;">
+    Nota à lápis na margem: <em>"A ser assinado segunda-feira com o Notário Cattaneo."</em>
+  </div>
+  <div style="background:#1a0505;color:#e8c0b0;font-family:'Courier New',monospace;font-size:11px;text-align:center;padding:11px;letter-spacing:1px;margin-top:12px;">&#9670; Data presumida: 14 de junho de 1953, tarde &#9670;</div>
+</div>`
+  },
+  'FERR-01': {
+    title: 'Ausência da Chave Inglesa — Rimessa',
+    location: 'Rimessa / Ferramentas',
+    shortDesc: 'Suporte nº7 vazio — chave inglesa grande ausente desde 14 de junho',
+    fullReveal: `<div style="font-family:Georgia,serif;background:#f5f0e8;color:#1a1005;padding:20px 22px;border:1px solid #8a7a5a;line-height:1.7;">
+  <div style="text-align:center;border-bottom:2px double #1a1005;padding-bottom:10px;margin-bottom:14px;">
+    <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#5a4a2a;font-family:'Courier New',monospace;">Inventário do Galpão de Ferramentas</div>
+  </div>
+  <div style="background:#e8e0cc;border:1px solid #8a7a5a;padding:12px;margin-bottom:14px;">
+    <div style="font-size:11px;line-height:1.8;"><strong>Suporte Nº7:</strong> Vazio</div>
+    <div style="font-size:10px;color:#5a4a2a;margin-top:6px;">Ferramenta designada: Chave Inglesa Ajustável Grande</div>
+    <div style="font-size:10px;color:#5a4a2a;">Status 13 de junho: Presente</div>
+    <div style="font-size:10px;color:#5a4a2a;">Status 14 de junho: Ausente</div>
+  </div>
+  <div style="background:#f5ede0;border:1px solid #8a7a5a;border-left:4px solid #8b1a1a;padding:10px;font-size:11px;line-height:1.7;">
+    Inventário manuscrito afixado na parede indica ferramenta presente em 13 de junho. A chave não está no galpão nem em qualquer outro local público da villa.
+  </div>
+  <div style="background:#1a0505;color:#e8c0b0;font-family:'Courier New',monospace;font-size:11px;text-align:center;padding:11px;letter-spacing:1px;margin-top:12px;">&#9670; Ferramenta removida — possível envolvimento em sabotagem estrutural &#9670;</div>
+</div>`
+  },
+  'RASA-01': {
+    title: 'Botão de Jaqueta — Corredor do 1º Andar',
+    location: 'Corredor / Ambiente',
+    shortDesc: 'Botão sartorial de tecido escuro com fio de seda — encontrado a 3m da porta da varanda',
+    fullReveal: `<div style="font-family:Georgia,serif;background:#f5f0e8;color:#1a1005;padding:20px 22px;border:1px solid #8a7a5a;line-height:1.7;">
+  <div style="text-align:center;border-bottom:2px double #1a1005;padding-bottom:10px;margin-bottom:14px;">
+    <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#5a4a2a;font-family:'Courier New',monospace;">Relatório de Campo — Achado em Cena</div>
+  </div>
+  <div style="background:#e8e0cc;border:1px solid #8a7a5a;padding:12px;margin-bottom:14px;">
+    <div style="font-size:11px;line-height:1.8;">
+      <strong>Botão:</strong> Sartorial, tecido preto, fio de seda ainda preso<br>
+      <strong>Localização:</strong> Assoalho do corredor do 1º andar, 3 metros da porta da varanda<br>
+      <strong>Condição:</strong> Arrancado bruscamente · indicativo de conflito físico<br>
+      <strong>Tipo de Peça:</strong> Smoking ou jaqueta de noite
+    </div>
+  </div>
+  <div style="background:#f5ede0;border:1px solid #8a7a5a;border-left:4px solid #8b1a1a;padding:10px;font-size:11px;line-height:1.7;">
+    Próximo ao botão, uma arranhadura na pintura da parede consistente com alguém colidindo apressadamente contra a parede.
+  </div>
+  <div style="background:#1a0505;color:#e8c0b0;font-family:'Courier New',monospace;font-size:11px;text-align:center;padding:11px;letter-spacing:1px;margin-top:12px;">&#9670; Sugere conflito e saída apressada em torno de 22h40–22h42 &#9670;</div>
+</div>`
+  },
+  'JACA-01': {
+    title: 'Jaqueta de Noite — Marco Conti',
+    location: 'Quarto Marco / Pertences',
+    shortDesc: 'Jaqueta preta pendurada apressadamente — botão faltante no pulso esquerdo, abrasão na manga direita',
+    fullReveal: `<div style="font-family:Georgia,serif;background:#f5f0e8;color:#1a1005;padding:20px 22px;border:1px solid #8a7a5a;line-height:1.7;">
+  <div style="text-align:center;border-bottom:2px double #1a1005;padding-bottom:10px;margin-bottom:14px;">
+    <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#5a4a2a;font-family:'Courier New',monospace;">Análise de Pertence — Quarto de Marco Conti</div>
+  </div>
+  <div style="background:#e8e0cc;border:1px solid #8a7a5a;padding:12px;margin-bottom:14px;">
+    <div style="font-size:11px;line-height:1.8;">
+      <strong>Jaqueta:</strong> Preta, de noite, pendurada apressadamente<br>
+      <strong>Botão Faltante:</strong> Pulso esquerdo · mesmo modelo sartorial do botão encontrado no corredor<br>
+      <strong>Abrasão:</strong> Manga direita próximo ao punho · coerente com contato contra superfície metálica
+    </div>
+  </div>
+  <div style="background:#f5ede0;border:1px solid #8a7a5a;border-left:4px solid #8b1a1a;padding:10px;font-size:11px;line-height:1.7;">
+    A jaqueta foi colocada no armário rapidamente, sugerindo ação apressada. A abrasão na manga é consistente com contato com a balaustrada de ferro.
+  </div>
+  <div style="background:#1a0505;color:#e8c0b0;font-family:'Courier New',monospace;font-size:11px;text-align:center;padding:11px;letter-spacing:1px;margin-top:12px;">&#9670; EVIDÊNCIA CRÍTICA — Liga Marco Conti ao evento da varanda &#9670;</div>
+</div>`,
+    isKeyEvidence: true
+  },
+  'NOTA-01': {
+    title: 'Bloco de Notas — Marco Conti',
+    location: 'Quarto Marco / Documentos',
+    shortDesc: '"Se ele não mudar de ideia esta noite, farei o que devo fazer" — 14 jun, 21h15',
+    fullReveal: `<div style="font-family:Georgia,serif;background:#f5f0e8;color:#1a1005;padding:20px 22px;border:1px solid #8a7a5a;line-height:1.7;">
+  <div style="text-align:center;border-bottom:2px double #1a1005;padding-bottom:10px;margin-bottom:14px;">
+    <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#5a4a2a;font-family:'Courier New',monospace;">Bloco de Notas Pessoal — Marco Conti</div>
+  </div>
+  <div style="background:#e8e0cc;border:1px solid #8a7a5a;padding:14px;margin-bottom:14px;">
+    <div style="font-style:italic;font-size:13px;line-height:1.8;">
+      "Carlo assinou. Dezesseis anos de trabalho — e me oferece 4%. Pedi um encontro à noite na varanda. Se ele não mudar de ideia esta noite, farei o que devo fazer. Não tenho outra escolha."
+    </div>
+  </div>
+  <div style="background:#f5ede0;border:1px solid #8a7a5a;border-left:4px solid #8b1a1a;padding:10px;font-size:11px;line-height:1.7;">
+    Data: 14 de junho de 1953 · Hora: 21h15 · Escrita a caneta em caligrafia tensa
+  </div>
+  <div style="background:#1a0505;color:#e8c0b0;font-family:'Courier New',monospace;font-size:11px;text-align:center;padding:11px;letter-spacing:1px;margin-top:12px;">&#9670; EVIDÊNCIA CRÍTICA — Premeditação implícita · encontro agendado &#9670;</div>
+</div>`,
+    isKeyEvidence: true
+  },
+  'CHAV-01': {
+    title: 'Chave Inglesa — Bagagem de Giulia',
+    location: 'Quarto Giulia / Pertences',
+    shortDesc: 'Chave inglesa do galpão com limalha do parafuso da balaustrada e impressão digital parcial',
+    fullReveal: `<div style="font-family:Georgia,serif;background:#f5f0e8;color:#1a1005;padding:20px 22px;border:1px solid #8a7a5a;line-height:1.7;">
+  <div style="text-align:center;border-bottom:2px double #1a1005;padding-bottom:10px;margin-bottom:14px;">
+    <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#5a4a2a;font-family:'Courier New',monospace;">Análise de Achado — Quarto de Giulia Ferrari</div>
+  </div>
+  <div style="background:#e8e0cc;border:1px solid #8a7a5a;padding:12px;margin-bottom:14px;">
+    <div style="font-size:11px;line-height:1.8;">
+      <strong>Ferramenta:</strong> Chave inglesa ajustável grande (Suporte Nº7 do galpão)<br>
+      <strong>Localização:</strong> Enrolada em lenço de seda dentro da mala de Giulia<br>
+      <strong>Análise Metalúrgica:</strong> Cabeça com limalha cinzenta compatível com parafuso de aço da balaustrada<br>
+      <strong>Datiloscopia:</strong> Impressão digital parcial compatível com mão feminina
+    </div>
+  </div>
+  <div style="background:#f5ede0;border:1px solid #8a7a5a;border-left:4px solid #8b1a1a;padding:10px;font-size:11px;line-height:1.7;">
+    A ferramenta foi ocultada com cuidado, sugerindo consciência de culpa. A limalha é evidência direta de uso em afrouxamento do parafuso.
+  </div>
+  <div style="background:#1a0505;color:#e8c0b0;font-family:'Courier New',monospace;font-size:11px;text-align:center;padding:11px;letter-spacing:1px;margin-top:12px;">&#9670; EVIDÊNCIA CRÍTICA — Liga Giulia ao sabotage estrutural &#9670;</div>
+</div>`,
+    isKeyEvidence: true
+  },
+  'DIAR-01': {
+    title: 'Diário de Giulia Ferrari',
+    location: 'Quarto Giulia / Documentos',
+    shortDesc: 'Entrada de 14 jun: "Afrouxei o parafuso principal da balaustrada" — sem entradas posteriores',
+    fullReveal: `<div style="font-family:Georgia,serif;background:#f5f0e8;color:#1a1005;padding:20px 22px;border:1px solid #8a7a5a;line-height:1.7;">
+  <div style="text-align:center;border-bottom:2px double #1a1005;padding-bottom:10px;margin-bottom:14px;">
+    <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#5a4a2a;font-family:'Courier New',monospace;">Diário Pessoal — Giulia Ferrari</div>
+  </div>
+  <div style="background:#e8e0cc;border:1px solid #8a7a5a;padding:14px;margin-bottom:14px;">
+    <div style="font-style:italic;font-size:12px;line-height:1.9;">
+      "Afrouxei o parafuso principal da balaustrada da varanda. À noite falarei com Carlo sobre o divórcio lá. Se ele se recusar novamente, a natureza fará seu curso. Apenas quero que ele entenda como é fácil perder algo — ou alguém. Não sei ainda o que farei. Só sei que preciso fazer algo."
+    </div>
+  </div>
+  <div style="background:#f5ede0;border:1px solid #8a7a5a;border-left:4px solid #8b1a1a;padding:10px;font-size:11px;line-height:1.7;">
+    Data: 14 de junho de 1953, tarde · Nenhuma entrada posterior registada neste diário.
+  </div>
+  <div style="background:#1a0505;color:#e8c0b0;font-family:'Courier New',monospace;font-size:11px;text-align:center;padding:11px;letter-spacing:1px;margin-top:12px;">&#9670; EVIDÊNCIA CRÍTICA — Intenção de sabotagem confessada &#9670;</div>
+</div>`,
+    isKeyEvidence: true
+  },
+  'LUCA-01': {
+    title: 'Cartas de Sofia Mancini',
+    location: 'Quarto Luca / Pertences',
+    shortDesc: 'Última carta (14 jun, 18h00): "Ti aspetto alla Trattoria Belvedere a Bellagio alle 21h00"',
+    fullReveal: `<div style="font-family:Georgia,serif;background:#f5f0e8;color:#1a1005;padding:20px 22px;border:1px solid #8a7a5a;line-height:1.7;">
+  <div style="text-align:center;border-bottom:2px double #1a1005;padding-bottom:10px;margin-bottom:14px;">
+    <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#5a4a2a;font-family:'Courier New',monospace;">Cartas de Amor — Sofia Mancini</div>
+  </div>
+  <div style="background:#e8e0cc;border:1px solid #8a7a5a;padding:14px;margin-bottom:14px;">
+    <div style="font-style:italic;font-size:12px;line-height:1.8;">
+      "Ti aspetto alla Trattoria Belvedere a Bellagio alle 21h00. Non fare tardi."
+    </div>
+  </div>
+  <div style="background:#f5ede0;border:1px solid #8a7a5a;border-left:4px solid #8b1a1a;padding:10px;font-size:11px;line-height:1.7;">
+    Última carta datada 14 de junho de 1953, 18h00.<br><br>
+    <strong>Anotação no verso do envelope (escrita por Luca):</strong> "Arrivato 21h10. Partito 22h55."
+  </div>
+  <div style="background:#1a0505;color:#e8c0b0;font-family:'Courier New',monospace;font-size:11px;text-align:center;padding:11px;letter-spacing:1px;margin-top:12px;">&#9670; Confirma presença de Luca em Bellagio durante o crime &#9670;</div>
+</div>`
+  }
+};
+
+const SUSP_STATUS_LABELS = ['Não Interrogado(a)','Interrogado(a)','Suspeito(a) Principal'];
+const SUSP_STATUS_CLASSES = ['status-nao','status-interrogado','status-suspeito'];
+const TEST_STATUS_LABELS = ['Não Entrevistado(a)','Entrevistado(a)','Testemunha-Chave'];
+const TEST_STATUS_CLASSES = ['status-nao','status-entrevistado','status-chave'];
+
+const PERSONAGENS_REAL = PERSONAGENS;
+const TESTEMUNHAS_REAL = TESTEMUNHAS;
+const EVIDENCIAS_REAL = EVIDENCIAS;
+const FASE_GUIA_REAL = FASE_GUIA;
+
+const PERSONAGENS_TESTE = [
+  { id: 'suspect-a', name: 'Suspeito A', age: 58, role: 'Diretor de Operações', desc: 'Cunhado da vítima. Alibi com lacuna de 20 minutos.', trait: 'Documentos suspeitos encontrados nos seus pertences.', img: '' },
+  { id: 'suspect-b', name: 'Suspeito B', age: 31, role: 'Engenheiro-Chefe', desc: 'Sobrinho adoptivo. Calmo em excesso.', trait: 'Visto no corredor às 20h40.', img: '' },
+  { id: 'suspect-c', name: 'Suspeita C', age: 52, role: 'Amiga da Família', desc: 'Vista saindo da sala do crime às 20h35.', trait: 'Comportamento culpado. Nega envolvimento.', img: '' },
+  { id: 'suspect-d', name: 'Suspeita D', age: 28, role: 'Secretária', desc: 'Conhece segredos da empresa. Alibi confirmado.', trait: 'Máquina de escrever ouvida às 21h30 e 22h00.', img: '' }
+];
+const TESTEMUNHAS_TESTE = [
+  { id: 'witness-1', name: 'Testemunha 1', age: 61, role: 'Maître do Hotel', desc: 'Trabalha no hotel há 22 anos. Ve tudo.', personality: 'Leal ao hotel. Só fala se isso protege o estabelecimento.', img: '' },
+  { id: 'witness-2', name: 'Testemunha 2', age: 24, role: 'Arrumadeira', desc: 'Jovem funcionária. Memória fotográfica.', personality: 'Ansiosa. Hesita em implicar quem foi gentil com ela.', img: '' },
+  { id: 'witness-3', name: 'Testemunha 3', age: 47, role: 'Médico do Hotel', desc: 'Clínico. Reservado. Teme consequências políticas.', personality: 'Profissional. Revela a verdade apenas com pressão adequada.', img: '' },
+  { id: 'witness-4', name: 'Testemunha 4', age: 38, role: 'Oficial da Gestapo', desc: 'Controlo político. Quer o caso fechado rápido.', personality: 'Informa selectivamente. Tudo tem preço ou agenda.', img: '' }
+];
+const EVIDENCIAS_TESTE = {
+  'CIAN-KB01': { title: '[TESTE] Frasco de laboratório — pertences do Suspeito B', location: 'Aposento do Suspeito B', shortDesc: '[Conteúdo ocultado no modo teste]', fullReveal: 'MODO TESTE ATIVO\nFrasco industrial com etiqueta rastreável. Sistema de desbloqueio funcionando.' },
+  'NOTA-KB01': { title: '[TESTE] Nota manuscrita — Suspeito B', location: 'Aposento do Suspeito B — documentos', shortDesc: '[Conteúdo ocultado]', fullReveal: 'MODO TESTE ATIVO\nNota com instruções técnicas. Evidência-chave.', isKeyEvidence: true },
+  'TEST-KB01': { title: '[TESTE] Documento legal — Suspeito B', location: 'Aposento do Suspeito B — ambiente', shortDesc: '[Conteúdo ocultado]', fullReveal: 'MODO TESTE ATIVO\nDocumento legal roubado. Prova de motivo.' },
+  'LAUDO-01': { title: '[TESTE] Laudo médico — arquivo do hotel', location: 'Escritório do gerente', shortDesc: '[Conteúdo ocultado — combinação funciona]', fullReveal: 'MODO TESTE ATIVO\nLaudo com causa da morte corrigida. Sistema de combinação funcionando.', hasCombination: true, combination: '1943' },
+  'VERO-MH01': { title: '[TESTE] Medicamento — pertences da Suspeita C', location: 'Aposento da Suspeita C', shortDesc: '[Conteúdo ocultado]', fullReveal: 'MODO TESTE ATIVO\nMedicamento com receita suspeita.' },
+  'NOTA-MH01': { title: '[TESTE] Recibo farmácia', location: 'Escritório do gerente', shortDesc: '[Conteúdo ocultado]', fullReveal: 'MODO TESTE ATIVO\nRecibo de farmácia liga suspeita à compra do medicamento.' },
+  'DOCS-IB01': { title: '[TESTE] Documentos históricos — Suspeita D', location: 'Aposento da Suspeita D', shortDesc: '[Conteúdo ocultado]', fullReveal: 'MODO TESTE ATIVO\nDocumentos comprometedores sobre a vítima.' },
+  'CARTA-EH01': { title: '[TESTE] Carta inacabada — Suspeito A', location: 'Aposento do Suspeito A', shortDesc: '[Conteúdo ocultado]', fullReveal: 'MODO TESTE ATIVO\nCarta ao advogado. Motivo aparente mas sem acção criminosa.' },
+  'ALIBI-IB01': { title: '[TESTE] Papel de máquina de escrever — Suspeita D', location: 'Aposento da Suspeita D', shortDesc: '[Conteúdo ocultado]', fullReveal: 'MODO TESTE ATIVO\nAlibi confirmado por texto datado.' },
+  'RONDA-OS01': { title: '[TESTE] Livro de rondas', location: 'Escritório do gerente', shortDesc: '[Conteúdo ocultado]', fullReveal: 'MODO TESTE ATIVO\nRegistro de rondas. Estreita janela de morte.' }
+};
+const FASE_GUIA_TESTE = [
+  'MODO TESTE — Fase 1: Chegada. Primeiras entrevistas. [Detalhes ocultados]',
+  'MODO TESTE — Fase 2: Contradições nos alibis. Dois compostos detectados. [Detalhes ocultados]',
+  'MODO TESTE — Fase 3: Laudo completo. Combinação 1943. [Detalhes ocultados]',
+  'MODO TESTE — Fase 4: Acusação final disponível. [Detalhes ocultados]'
+];
+
+const DEPOIMENTOS = {
+  rosa: {
+    marco: "Rosa Marini pega um tom mais formal. 'Signor Conti esteve no corredor às 22h37, em direção à porta da varanda. Eu o vi claramente. Estava apressado, o rosto tenso. Mas não posso dizer exatamente para onde estava indo...'",
+    giulia: "Sua face endurece ligeiramente. 'A Signora Ferrari esteve na varanda com o Signor Carlo às 22h20. Ela disse para ele: Dovresti stare attento su questa terrazza, Carlo. As palavras dela foram claras. Depois saiu.'",
+    elena: "Rosa nega com um aceno de cabeça. 'Não, Signora Russo estava na varanda antes do Signor Conti chegar. Vi-a sair perto de 22h35, muito perturbada.'",
+    luca: "Rosa confirma. 'O Signor Luca saiu no início da noite, com dor de cabeça. Não o vi mais após isso, até o caos começar.'",
+    default: "Rosa observa com precisão. 'O que posso contar é o que vi e ouvi. As pessoas em movimento, as vozes, os horários. O resto é para os investigadores decidir.'"
+  },
+  ferretti: {
+    marco: "Dr. Ferretti mantém tom profissional. 'O Signor Ferrari caiu com força horizontal significativa. Não foi um tropeço. A velocidade foi consistente com alguém sendo empurrado, não caindo acidentalmente. A balaustrada, enfraquecida, cedeu sob o impacto.'",
+    giulia: "O médico observa com cuidado. 'A balaustrada foi claramente sabotada — o parafuso foi afrouxado antes do evento. Mas a morte foi causada pelo impacto da queda, que requereu uma força significativa.'",
+    elena: "Ferretti mantém sua análise técnica. 'A morte foi por contusão maciça e aspiração de sangue. Consistente com um homem caindo de sete metros. A direção da força foi horizontal — de trás para frente.'",
+    luca: "O médico confirma. 'O Signor Luca não estava aqui quando Carlo caiu. Seu alibi é verificável. A morte ocorreu aproximadamente às 22h42.'",
+    default: "Dr. Ferretti permanece nos fatos técnicos. 'O corpo mostra evidências de queda de altura, impacto lateral, e uma balaustrada que cedeu sob pressão. Isso é o que posso confirmar cientificamente.'"
+  },
+  aldo: {
+    marco: "Aldo é direto. 'Encontrei a chave inglesa. Faltava do galpão. A balaustrada foi afrouxada — vi as marcas de ferramenta no parafuso. E o botão no corredor perto da porta... estava ali quando cheguei.'",
+    giulia: "Aldo assente. 'Vi a Signora Ferrari perto da varanda no final da tarde. Perto de 14h30. Não vi o que ela estava fazendo, mas estava lá.'",
+    elena: "Aldo é claro. 'A Signora Russo não tinha ferramentas. Não a vi perto do galpão. Mas vi Marco — era apressado, tenso.'",
+    luca: "Aldo confirma. 'O Signor Luca não estava na villa quando tudo aconteceu. Ele saiu cedo para a noite.'",
+    default: "Aldo relata o que sabe. 'Encontrei o corpo às 22h50. A balaustrada já estava quebrada. A chave grande estava desaparecida. O resto é mistério para mim.'"
+  },
+  concetta: {
+    marco: "Concetta fica tensa, mas é honesta. 'Eu o vi, Signor Conti, no corredor por volta de 22h35. Estava correndo, quase, em direção à varanda. E depois... ouvi o estrondo. O vidro quebrando. Eu não queria dizer, porque ele foi gentil comigo, mas é a verdade.'",
+    giulia: "Concetta torna-se mais confiante. 'Sim, a Signora Ferrari estava na varanda. Vi-a entrar às 22h20. Saiu alguns minutos depois. Parecia agitada, mas não assustada. Como se estivesse esperando algo.'",
+    elena: "Concetta fala com simpatia. 'A Signora Russo também estava lá, na varanda, mas em momento diferente. Parecia muito preocupada, como se tivesse más notícias para contar ao Signor Ferrari.'",
+    luca: "Concetta confirma nervosamente. 'O Signor Luca não estava aqui. Ele saiu antes do jantar com uma desculpa. Não o vi mais até depois do... depois do incidente.'",
+    default: "Concetta está perturbada, mas tenta falar claramente. 'Ouvi o barulho às 22h42. Um estrondo enorme, vidro quebrando, algo caindo de cima. Corri para baixo e encontrei Rosa gritando.'"
+  }
+};
+
+
+const COMODO_FASE = {
+  'terrazza': 1, 'sala-grande': 1,
+  'biblioteca': 2, 'rimessa': 2, 'corredor': 2,
+  'quarto-marco': 3, 'quarto-giulia': 3, 'quarto-elena': 3, 'quarto-luca': 3
+};
+
+const CUSTO_FASE = { 1: 1, 2: 2, 3: 3 };
+
+// Fases 1-2: 2 categorias (ambiente, documentos) · Fase 3: 3 categorias (pertences, documentos, ambiente)
+const COMODOS_BUSCA = {
+  /* ── FASE 1 ── */
+  'terrazza|ambiente':      { found: true,  code: 'TERR-01', descricao: 'Perícia Estrutural da Balaustrada' },
+  'terrazza|documentos':    { found: false, code: null,      descricao: null },
+  'sala-grande|ambiente':   { found: false, code: null,      descricao: null },
+  'sala-grande|documentos': { found: true,  code: 'CONT-01', descricao: 'Acordo de Dissolução Ferrari-Conti' },
+  /* ── FASE 2 ── */
+  'biblioteca|ambiente':    { found: false, code: null,      descricao: null },
+  'biblioteca|documentos':  { found: true,  code: 'TEST-01', descricao: 'Rascunho de Testamento — C. Ferrari' },
+  'rimessa|ambiente':       { found: true,  code: 'FERR-01', descricao: 'Ausência da Chave Inglesa — Rimessa' },
+  'rimessa|documentos':     { found: false, code: null,      descricao: null },
+  'corredor|ambiente':      { found: true,  code: 'RASA-01', descricao: 'Botão de Jaqueta — Corredor do 1º Andar' },
+  'corredor|documentos':    { found: false, code: null,      descricao: null },
+  /* ── FASE 3 ── */
+  'quarto-marco|pertences': { found: true,  code: 'JACA-01', descricao: 'Jaqueta de Noite — Marco Conti' },
+  'quarto-marco|documentos':{ found: true,  code: 'NOTA-01', descricao: 'Bloco de Notas — Marco Conti' },
+  'quarto-marco|ambiente':  { found: false, code: null,      descricao: null },
+  'quarto-giulia|pertences':{ found: true,  code: 'CHAV-01', descricao: 'Chave Inglesa — Bagagem de Giulia' },
+  'quarto-giulia|documentos':{ found: true, code: 'DIAR-01', descricao: 'Diário de Giulia Ferrari' },
+  'quarto-giulia|ambiente': { found: false, code: null,      descricao: null },
+  'quarto-elena|pertences': { found: false, code: null,      descricao: null },
+  'quarto-elena|documentos':{ found: false, code: null,      descricao: null },
+  'quarto-elena|ambiente':  { found: false, code: null,      descricao: null },
+  'quarto-luca|pertences':  { found: true,  code: 'LUCA-01', descricao: 'Cartas de Sofia Mancini' },
+  'quarto-luca|documentos': { found: false, code: null,      descricao: null },
+  'quarto-luca|ambiente':   { found: false, code: null,      descricao: null }
+};
+
+let testMode = false;
+
+function toggleTestMode() {
+  testMode = !testMode;
+  PERSONAGENS = testMode ? PERSONAGENS_TESTE : PERSONAGENS_REAL;
+  TESTEMUNHAS = testMode ? TESTEMUNHAS_TESTE : TESTEMUNHAS_REAL;
+  EVIDENCIAS = testMode ? EVIDENCIAS_TESTE : EVIDENCIAS_REAL;
+  FASE_GUIA = testMode ? FASE_GUIA_TESTE : FASE_GUIA_REAL;
+  const btn = document.getElementById('btn-toggle-teste');
+  const badge = document.getElementById('badge-teste');
+  if (btn) { btn.textContent = testMode ? '\u25c6 SAIR DO MODO TESTE' : '\u25c6 MODO TESTE'; btn.style.borderColor = testMode ? 'var(--gold)' : 'var(--border)'; btn.style.color = testMode ? 'var(--gold)' : '#888'; }
+  if (badge) badge.style.display = testMode ? 'block' : 'none';
+  const container = document.getElementById('setup-fields');
+  if (container) { container.innerHTML = ''; for (let i = 0; i < 4; i++) { const row = document.createElement('div'); row.className = 'jogador-row'; row.innerHTML = `<input type="text" placeholder="Nome do Jogador ${i+1}" data-idx="${i}" oninput="validarSetup()"><select data-idx="${i}" onchange="validarSetup()"><option value="">-- Personagem --</option>${PERSONAGENS.map(p => `<option value="${p.id}">${p.name} (${p.role})</option>`).join('')}</select>`; container.appendChild(row); } validarSetup(); }
+}
+
+const EVENTOS_CRONOMETRO = [
+  { at: 5390, title: 'COMMISSARIO LANZA — APERTURA', msg: 'Signore e Signori. Sono il Commissario Bruno Lanza, Carabinieri di Como. Carlo Ferrari è stato trovato morto alle 22:50 ai piedi della terrazza della Villa Meridiana. Venticinque gettoni di indagine a vostra disposizione. Novanta minuti per scoprire la verità. Cominciamo adesso.' },
+  { at: 5100, title: 'COMMISSARIO LANZA', msg: 'La Terrazza e la Sala Grande sono accessibili in questa prima fase. Ogni testimone ha osservato angoli diversi di quella notte. Scegliete con cura chi interroga chi — alcune informazioni emergono solo con l\'interlocutore giusto.' },
+  { at: 4500, title: 'ALDO BIANCHI — GUARDIANO DELLA VILLA', msg: 'Ho trovato il corpo alle 22:50. La balaustra era già rotta — e posso affermare con certezza che era intatta quando l\'ho ispezionata due giorni fa. Qualcuno l\'ha danneggiata tra il 12 e il 14 giugno.' },
+  { at: 3600, title: 'COMMISSARIO LANZA — FASE 2', msg: 'Fase 2 attivata. Biblioteca, Rimessa e Corridoio ora accessibili. Ogni ricerca costa due gettoni. Il dottor Ferretti ha presentato il referto preliminare — la caduta non è stata accidentale. La direzione della forza era orizzontale.' },
+  { at: 3000, title: 'DOTTOR FERRETTI — REFERTO TECNICO', msg: 'La balaustra è stata sabotata — allentata deliberatamente prima dell\'evento. Ma la morte ha richiesto forza applicata — qualcuno ha spinto Carlo contro di essa. Due atti distinti: il sabotaggio strutturale e la spinta. Due autori, forse. O complicità.' },
+  { at: 2700, title: 'COMMISSARIO LANZA', msg: 'I testimoni hanno visto persone nel corridoio tra le 22:20 e le 22:42. Hanno visto discussioni sulla terrazza. La linea temporale è quasi completa — manca solo il pezzo che collega chi ha sabotato a chi ha spinto.' },
+  { at: 1800, title: 'COMMISSARIO LANZA — FASE 3', msg: 'Fase 3 attivata. Le camere private sono aperte. Ogni ricerca costa tre gettoni. Cercate prove fisiche — effetti personali, documenti, qualsiasi cosa che colleghi un sospettato alla terrazza quella notte.' },
+  { at: 1200, title: 'COMMISSARIO LANZA', msg: 'Le camere custodiscono segreti. Un taccuino. Una chiave inglese. Un diario. Una giacca con un bottone mancante. Ogni oggetto racconta parte della storia. Cercate con attenzione.' },
+  { at: 600, title: 'COMMISSARIO LANZA — AVVISO FINALE', msg: 'Dieci minuti rimangono. Consolidate ciò che avete trovato. Due domande fondamentali: chi ha allentato la balaustra? E chi ha spinto Carlo Ferrari?' },
+  { at: 0, title: 'COMMISSARIO LANZA — TEMPO SCADUTO', msg: 'Il tempo dell\'indagine formale è terminato. È l\'ora della verità. Chi è responsabile della morte di Carlo Ferrari alla Villa Meridiana?' }
+];
+
+const DCI_PRESSAO = {
+  marco: [
+    "Signor Conti — Rosa Marini a vide nel corridoio del primo piano alle 22h37, in direzione della terrazza. Carlo Ferrari era lì. Dove stava andando esattamente?",
+    "Signor Conti — abbiamo trovato il suo taccuino. Ha scritto: 'Se non cambierà idea stasera, farò quello che devo fare.' Cosa intendeva fare, signor Conti?",
+    "Signor Conti — il suo giacchetto da sera ha un bottone mancante al polso sinistro. Lo stesso bottone è stato trovato a tre metri dalla porta della terrazza, con un filo di seta ancora attaccato. Strappato di forza. Parliamo di questo adesso."
+  ],
+  giulia: [
+    "Signora Ferrari — alle 22h20 lei era sulla terrazza con Carlo e gli disse: 'Dovresti stare attento su questa terrazza, Carlo.' Cosa sapeva della ringhiera in quel momento?",
+    "Signora Ferrari — la chiave inglese del deposito attrezzi è scomparsa il 14 giugno. Aldo Bianchi l'ha vista vicino alla terrazza nel pomeriggio. Sa dove si trova ora?",
+    "Signora Ferrari — abbiamo trovato nel suo bagaglio una chiave inglesa con limatura metallica compatibile con il bullone della ringhiera. E un diario. Ho già letto la pagina del 14 giugno. Vuole dirmi lei cosa c'è scritto, o devo leggerlo ad alta voce?"
+  ],
+  elena: [
+    "Signorina Russo — è stata l'ultima persona vista viva con Carlo Ferrari sulla terrazza, alle 22h35. Cosa si sono detti in quell'incontro?",
+    "Signorina Russo — Carlo Ferrari l'aveva convocata a Villa Meridiana per un accordo di silenzio. Ha accettato o rifiutato?",
+    "Signorina Russo — capisco che abbia scoperto documenti compromettenti su Carlo Ferrari. Capisco che lei fosse arrabbiata. Ma la direzione della caduta — orizzontale, da dietro — non corrisponde a nessuna posizione che lei avrebbe potuto occupare alle 22h35 quando se n'è andata. Il suo alibi è il corpo stesso di Carlo Ferrari. Cosa sa degli altri presenti quella notte?"
+  ],
+  luca: [
+    "Signor Ferrari — ha lasciato la villa alle 21h05 dicendo di avere mal di testa. Dove è andato veramente?",
+    "Signor Ferrari — Bellagio è a 40 minuti di macchina. Se era lì alle 21h10, non poteva essere sulla terrazza alle 22h40. Ha testimoni?",
+    "Signor Ferrari — la Trattoria Belvedere a Bellagio ha confermato la sua presenza dalle 21h10 alle 22h55. Lei non è sospettato per la morte di suo zio. Ma la sua storia con Sofia Mancini — questo è un altro problema. Ci dica cosa sa degli altri quella sera — è la migliore cosa che possa fare adesso."
+  ]
+};
+
+const ACUSACAO_DESFECHOS = {
+  marco: {
+    title: 'ASSASSINO IDENTIFICADO',
+    text: 'Marco Conti. Você empurrou Carlo Ferrari para trás, com força, no pico da raiva e desespero. A balaustrada, que havia sido sabotada por Giulia Ferrari naquela tarde, cedeu sob o impacto. Carlo caiu sete metros até a pedra abaixo. A morte foi imediata.<br><br>Você é responsável pela morte de Carlo Ferrari. Não importa que a balaustrada tenha sido enfraquecida — você aplicou a força com intenção. Você o levou até a balaustrada sabendo que poderia morrer.<br><br>Caso CC-1953-06-089: RESOLVIDO. Marco Conti — culpado de homicídio.<br><br><em>Commissario Lanza: "A ira é uma companheira perigosa. Você permitiu que destruísse trinta anos de trabalho. Agora destruirá o resto de sua vida."</em>',
+    color: '#6a1010'
+  },
+  giulia: {
+    title: 'SEGUNDO CULPADO IDENTIFICADO',
+    text: 'Giulia Ferrari. Você afrouxou deliberadamente o parafuso de ancoragem da balaustrada naquela tarde. Você a deixou enfraquecida, sabotada, pronta para falhar sob pressão. Seu plano era assustar Carlo, forçá-lo a ser mais razoável sobre o divórcio.<br><br>Mas você não previa que Marco Conti o empurraria. Você não sabia que a raiva de um homem por três semanas de impossibilidade poderia culminar em violência naquela noite.<br><br>Carlo Ferrari morreu não por sua ação direta, mas porque você criou a condição para que ele pudesse morrer. Você é cúmplice de homicídio — e sabotagem estrutural.<br><br><em>Commissario Lanza: "Você quis assustar. A vida é mais frágil do que você pensava. Todos nós somos."</em>',
+    color: '#8a7a5a'
+  },
+  elena: {
+    title: 'INOCENTE — MAS A VERDADE PERMANECE',
+    text: 'Elena Russo, você é inocente da morte de Carlo Ferrari. Você estava na varanda com ele, sim, mas saiu às 22h35 — cinco minutos antes de Marco Conti entrar e empurrá-lo.<br><br>MAS Marco Conti permanece culpado. Ele empurrou Carlo Ferrari com força, intencionalmente, sabendo que a balaustrada poderia ceder. Você não matou ninguém. Mas a justiça para Carlo Ferrari ainda não foi cumprida enquanto Marco permanece livre.<br><br>Você será liberada. Mas o assassino de Carlo Ferrari — Marco Conti — ainda caminha entre nós, em negação sobre o que fez.<br><br><em>Commissario Lanza: "Investigação incompleta. O assassino certo foi acusado... mas a investigação continua aberta se mais evidências emergirem."</em>',
+    color: '#5a8fd4'
+  },
+  luca: {
+    title: 'INOCENTE — MAS A VERDADE PERMANECE',
+    text: 'Luca Ferrari, você é completamente inocente da morte de seu tio. Seu alibi é verificável: estava em Bellagio com Sofia Mancini de 21h10 a 22h55 — bem depois que Carlo morreu às 22h42. Múltiplas testemunhas podem confirmar sua presença.<br><br>MAS o assassino de Carlo Ferrari — Marco Conti — permanece culpado. Ele empurrou seu tio, intencionalmente, sabendo que poderia matá-lo. Você será liberado. Mas a justiça ainda não foi feita enquanto Marco nega seu crime.<br><br>Você herdará menos do que esperava. Mas você sobreviverá a isso. Carlo não sobreviveu ao que Marco lhe fez.<br><br><em>Commissario Lanza: "Seu segredo é sua própria questão agora. Mas em relação ao crime de Carlo Ferrari — você é completamente livre."</em>',
+    color: '#5a8fd4'
+  }
+};
+
+const gameState = {
+  players: [], currentPhase: 0, timeRemaining: TOTAL_TIME, timerActive: false, timerInterval: null,
+  evidence: Object.fromEntries(Object.keys(EVIDENCIAS_REAL).map(k => [k, { unlocked: false }])),
+  suspects: PERSONAGENS.map(p => ({ id: p.id, status: 0, notes: '', pressaoUsada: false, pressaoTexto: '' })),
+  witnesses: TESTEMUNHAS.map(t => ({ id: t.id, status: 0, notes: '' })),
+  clues: [], clueCounter: 0,
+  finalAccusation: { suspect: null, method: '', motive: '' },
+  senhaContexto: null, pendingEvidenceCode: null,
+  log: [], firedEvents: new Set(),
+  tokensRestantes: 25, fichasInterrogacao: 4, buscasRealizadas: [],
+  journal: [], journalStartReal: null
+};
+
+function addJournal(tipo, dados) {
+  const elapsed = TOTAL_TIME - gameState.timeRemaining;
+  gameState.journal.push({ tempo_jogo: `${String(Math.floor(elapsed/60)).padStart(2,'0')}:${String(elapsed%60).padStart(2,'0')}`, tempo_real: new Date().toISOString(), tipo, dados });
+}
+
+function exportarDiario() {
+  if (gameState.journal.length === 0) { alert('Nenhuma acção registada ainda.'); return; }
+  const jogadores = gameState.players.map(p => { const char = PERSONAGENS_REAL.find(c => c.id === p.characterId); return { jogador: p.playerName, personagem: char ? char.name : p.characterId }; });
+  const blob = new Blob([JSON.stringify({ partida: { inicio_real: gameState.journalStartReal, jogadores, duracao_total_segundos: TOTAL_TIME - gameState.timeRemaining }, diario: gameState.journal }, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `como_sessao_${new Date().toISOString().slice(0,10)}.json`; a.click(); URL.revokeObjectURL(url);
+}
+
+function init() {
+  const container = document.getElementById('setup-fields');
+  for (let i = 0; i < 4; i++) {
+    const row = document.createElement('div'); row.className = 'jogador-row';
+    row.innerHTML = `<input type="text" placeholder="Nome do Jogador ${i+1}" data-idx="${i}" oninput="validarSetup()"><select data-idx="${i}" onchange="validarSetup()"><option value="">-- Personagem --</option>${PERSONAGENS.map(p => `<option value="${p.id}">${p.name} (${p.role})</option>`).join('')}</select>`;
+    container.appendChild(row);
+  }
+}
+
+function validarSetup() {
+  const inputs = document.querySelectorAll('#setup-fields input');
+  const selects = document.querySelectorAll('#setup-fields select');
+  const btn = document.getElementById('btn-iniciar');
+  let valid = true; let chars = [];
+  inputs.forEach(inp => { if (!inp.value.trim()) valid = false; });
+  selects.forEach(sel => { if (!sel.value) valid = false; else chars.push(sel.value); });
+  const dup = chars.filter((c, i) => chars.indexOf(c) !== i);
+  if (dup.length > 0) { valid = false; document.getElementById('setup-erro').textContent = 'Cada personagem só pode ser escolhido uma vez'; } else { document.getElementById('setup-erro').textContent = ''; }
+  btn.disabled = !valid; btn.classList.toggle('disabled', !valid);
+}
+
+function iniciarJogo() {
+  const inputs = document.querySelectorAll('#setup-fields input');
+  const selects = document.querySelectorAll('#setup-fields select');
+  gameState.players = [];
+  for (let i = 0; i < 4; i++) gameState.players.push({ playerName: inputs[i].value.trim(), characterId: selects[i].value });
+  gameState.suspects = PERSONAGENS.map(p => ({ id: p.id, status: 0, notes: '', pressaoUsada: false, pressaoTexto: '' }));
+  gameState.witnesses = TESTEMUNHAS.map(t => ({ id: t.id, status: 0, notes: '' }));
+  gameState.evidence = Object.fromEntries(Object.keys(EVIDENCIAS).map(k => [k, { unlocked: false }]));
+  gameState.journal = []; gameState.journalStartReal = new Date().toISOString();
+  addJournal('inicio', { jogadores: gameState.players.map(p => { const c = PERSONAGENS.find(x => x.id === p.characterId); return { jogador: p.playerName, personagem: c ? c.name : p.characterId }; }), modo: testMode ? 'teste' : 'real' });
+  trocarTela('tela-setup', 'tela-painel'); renderPainel();
+}
+
+function trocarTela(de, para) {
+  const a = document.getElementById(de); const b = document.getElementById(para);
+  a.classList.add('fade-out');
+  setTimeout(() => { a.classList.remove('active','fade-out'); b.classList.add('active'); window.scrollTo(0,0); }, 400);
+}
+function voltarPainel() { const a = document.querySelector('.tela.active'); if (a) trocarTela(a.id,'tela-painel'); }
+function irParaSuspeitos() { renderSuspeitos(); trocarTela('tela-painel','tela-suspeitos'); }
+function irParaTestemunhas() { renderTestemunhas(); trocarTela('tela-painel','tela-testemunhas'); }
+function irParaBusca() { renderBusca(); const a = document.querySelector('.tela.active'); if (a) trocarTela(a.id,'tela-busca'); }
+
+function renderBusca() {
+  const countEl = document.getElementById('busca-token-count');
+  const dotsEl = document.getElementById('busca-token-dots');
+  if (countEl) countEl.textContent = gameState.tokensRestantes;
+  if (dotsEl) dotsEl.innerHTML = Array.from({length:25},(_,i)=>`<div style="width:14px;height:14px;border-radius:50%;border:2px solid ${i<gameState.tokensRestantes?'var(--gold)':'var(--border)'};background:${i<gameState.tokensRestantes?'var(--gold)':'transparent'};transition:all 0.3s;"></div>`).join('');
+  const btn = document.getElementById('btn-executar-busca');
+  if (btn) { btn.disabled = gameState.tokensRestantes<=0; btn.classList.toggle('disabled',gameState.tokensRestantes<=0); }
+  renderTokensPainel(); renderHistoricoBusca();
+}
+
+function renderTokensPainel() {
+  const dotsEl = document.getElementById('tok-dots-painel');
+  const countEl = document.getElementById('tok-count-painel');
+  if (dotsEl) dotsEl.innerHTML = Array.from({length:25},(_,i)=>`<div class="tok-dot${i>=gameState.tokensRestantes?' used':''}"></div>`).join('');
+  if (countEl) countEl.textContent = gameState.tokensRestantes;
+  renderFichasInterrogacao();
+}
+
+function renderFichasInterrogacao() {
+  const total = 4; const restantes = gameState.fichasInterrogacao;
+  ['tok-dots-interrog','tok-dots-interrog-painel'].forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = Array.from({length:total},(_,i)=>`<div class="tok-dot${i>=restantes?' used':''}"></div>`).join(''); });
+  ['tok-count-interrog','tok-count-interrog-painel'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = restantes; });
+  const btn = document.getElementById('btn-interrogar-exec'); if (btn) { btn.disabled = restantes<=0; btn.classList.toggle('disabled',restantes<=0); }
+}
+
+function resetarResultadoBusca() { const res = document.getElementById('busca-resultado'); if (res) { res.style.display='none'; res.className='busca-resultado'; } }
+
+function atualizarCategoriasBusca() {
+  const comodo = document.getElementById('busca-comodo').value;
+  const sel = document.getElementById('busca-categoria');
+  const fase3 = ['quarto-marco','quarto-giulia','quarto-elena','quarto-luca'];
+  sel.innerHTML = '';
+  if (!comodo) {
+    sel.innerHTML = '<option value="">-- Selecione o aposento primeiro --</option>';
+    return;
+  }
+  sel.innerHTML = '<option value="">-- Selecione a categoria --</option>';
+  if (fase3.includes(comodo)) {
+    sel.innerHTML += '<option value="pertences">Pertences Pessoais</option>';
+    sel.innerHTML += '<option value="documentos">Documentos e Escritos</option>';
+    sel.innerHTML += '<option value="ambiente">Ambiente e Esconderijos</option>';
+  } else {
+    sel.innerHTML += '<option value="ambiente">Ambiente e Superfícies</option>';
+    sel.innerHTML += '<option value="documentos">Documentos e Registros</option>';
+  }
+}
+
+function executarBusca() {
+  const comodo = document.getElementById('busca-comodo').value;
+  const categoria = document.getElementById('busca-categoria').value;
+  if (!comodo||!categoria) { alert('Selecione o aposento e a categoria.'); return; }
+  if (gameState.buscasRealizadas.find(b=>b.comodo===comodo&&b.categoria===categoria)) { alert('Este aposento e categoria já foram pesquisados.'); return; }
+  const fase = COMODO_FASE[comodo] || 1;
+  const custo = CUSTO_FASE[fase] || 1;
+  if (gameState.tokensRestantes < custo) { alert(`Fichas insuficientes — esta busca requer ${custo} ficha(s). Fichas disponíveis: ${gameState.tokensRestantes}.`); return; }
+  gameState.tokensRestantes -= custo;
+  const chave = `${comodo}|${categoria}`;
+  const resultado = COMODOS_BUSCA[chave] || { found: false, code: null, descricao: null };
+  const comodoNomes = {
+    'terrazza':'Terrazza (Cena do Crime)', 'sala-grande':'Sala Grande',
+    'biblioteca':'Biblioteca', 'rimessa':'Rimessa (Depósito)', 'corredor':'Corredor Interno',
+    'quarto-marco':'Quarto — Marco Conti', 'quarto-giulia':'Quarto — Giulia Ferrari',
+    'quarto-elena':'Quarto — Elena Russo', 'quarto-luca':'Quarto — Luca Ferrari'
+  };
+  const fase3 = ['quarto-marco','quarto-giulia','quarto-elena','quarto-luca'];
+  const catNomes = fase3.includes(comodo)
+    ? { 'pertences':'Pertences Pessoais','documentos':'Documentos e Escritos','ambiente':'Ambiente e Esconderijos' }
+    : { 'ambiente':'Ambiente e Superfícies','documentos':'Documentos e Registros' };
+  const entrada = { comodo, categoria, comodoNome: comodoNomes[comodo], categoriaNome: catNomes[categoria], found: resultado.found, code: resultado.code };
+  gameState.buscasRealizadas.push(entrada);
+  addJournal('busca_comodo', { comodo: entrada.comodoNome, categoria: entrada.categoriaNome, encontrado: entrada.found, codigo: entrada.code||null });
+  const res = document.getElementById('busca-resultado');
+  if (res) {
+    res.style.display='block';
+    if (resultado.found) { res.className='busca-resultado found'; res.innerHTML=`<div style="color:var(--green);margin-bottom:8px;font-weight:700;letter-spacing:1px;">&#9670; EVIDÊNCIA ENCONTRADA</div><div style="margin-bottom:10px;">${resultado.descricao}</div><div style="color:var(--gold);font-size:11px;">&#8594; Insira o código <strong>${resultado.code}</strong> na secção de Evidências para revelar o conteúdo.</div>`; addLog('evidencia',`Busca: ${comodoNomes[comodo]} × ${catNomes[categoria]} → ENCONTRADO [${resultado.code}]`); }
+    else { res.className='busca-resultado empty'; res.innerHTML=`<div style="margin-bottom:4px;letter-spacing:1px;">&#9671; NENHUMA EVIDÊNCIA RELEVANTE</div><div style="font-size:10px;margin-top:4px;">Esta área foi examinada. A ficha foi consumida.</div>`; addLog('evidencia',`Busca: ${comodoNomes[comodo]} × ${catNomes[categoria]} → Sem resultado`); }
+  }
+  renderBusca();
+}
+
+function renderHistoricoBusca() {
+  const card = document.getElementById('busca-historico-card'); const lista = document.getElementById('busca-historico-lista');
+  if (!lista||!card) return;
+  if (gameState.buscasRealizadas.length===0) { card.style.display='none'; return; }
+  card.style.display='block';
+  lista.innerHTML = gameState.buscasRealizadas.map(b=>`<div class="busca-historico-item"><span style="color:${b.found?'var(--green)':'var(--border)'};flex-shrink:0;">${b.found?'&#9670;':'&#9671;'}</span><span style="flex:1;">${b.comodoNome} &times; ${b.categoriaNome}</span><span style="color:${b.found?'var(--green)':'var(--border)'};flex-shrink:0;">${b.found?b.code:'—'}</span></div>`).join('');
+}
+
+function renderPainel() { renderJogadores(); renderEvidencias(); renderNPCResumo(); renderPistas(); atualizarFaseDisplay(); renderCronograma(); renderTokensPainel(); }
+function atualizarFaseDisplay() {
+  document.getElementById('fase-atual').textContent = FASES[gameState.currentPhase];
+  const ml = document.getElementById('mestre-fase-label'); if (ml) ml.textContent = FASES[gameState.currentPhase];
+  const guia = document.getElementById('mestre-guia'); if (guia) guia.textContent = FASE_GUIA[gameState.currentPhase];
+}
+
+function atualizarTimerDisplay() {
+  const min = Math.floor(gameState.timeRemaining/60); const sec = gameState.timeRemaining%60;
+  const display = document.getElementById('timer-display');
+  display.textContent = `${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+  const warning = gameState.timeRemaining>0&&gameState.timeRemaining<=600;
+  display.classList.toggle('timer-warning',warning);
+  if (gameState.timeRemaining<=0) { display.textContent='TEMPO ESGOTADO'; display.style.color='var(--red)'; timerParar(); }
+  else if (gameState.timeRemaining<=600) { display.style.color='var(--red)'; display.classList.add('pulse'); }
+  else if (gameState.timeRemaining<=1200) { display.style.color='var(--gold)'; }
+  else { display.style.color='#4a7a4a'; }
+}
+
+function timerIniciar() { if (gameState.timerActive||gameState.timeRemaining<=0) return; gameState.timerActive=true; document.getElementById('btn-pausar').textContent='PAUSAR'; gameState.timerInterval=setInterval(()=>{ gameState.timeRemaining--; atualizarTimerDisplay(); verificarEventosCronometro(); if(gameState.timeRemaining<=0)timerParar(); },1000); }
+function timerPausar() { if (!gameState.timerActive) { timerIniciar(); return; } timerParar(); document.getElementById('btn-pausar').textContent='RETOMAR'; }
+function timerParar() { gameState.timerActive=false; clearInterval(gameState.timerInterval); }
+function timerReiniciar() {
+  timerParar(); gameState.timeRemaining=TOTAL_TIME; gameState.firedEvents=new Set(); gameState.tokensRestantes=25; gameState.fichasInterrogacao=4; gameState.buscasRealizadas=[];
+  document.getElementById('btn-pausar').textContent='PAUSAR';
+  const d = document.getElementById('timer-display'); if(d){d.classList.remove('timer-warning');d.style.color='#4a7a4a';}
+  atualizarTimerDisplay(); renderCronograma(); renderTokensPainel();
+}
+
+function renderJogadores() {
+  const grid = document.getElementById('jogadores-grid'); grid.innerHTML='';
+  gameState.players.forEach(p => {
+    const char = PERSONAGENS.find(c=>c.id===p.characterId); if (!char) return;
+    const card = document.createElement('div'); card.className='card jog-card';
+    card.innerHTML=`<div class="jog-retrato"><div style="width:100%;height:100%;background-image:url('${char.img}');background-size:cover;background-position:${char.bgPos};background-repeat:no-repeat;"></div></div><div class="jog-nome">${escapeHtml(p.playerName)}</div><div class="jog-personagem">${char.name}, ${char.age}</div><div class="jog-papel">${char.role}</div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderEvidencias() {
+  const lista = document.getElementById('evidencias-lista'); lista.innerHTML='';
+  const desbloqueadas = Object.keys(EVIDENCIAS).filter(code=>gameState.evidence[code]?.unlocked);
+  if (desbloqueadas.length===0) { lista.innerHTML='<div style="font-family:\'Courier New\',monospace;font-size:12px;color:var(--border);text-align:center;padding:12px 0;">&#9671; Nenhuma evidência encontrada ainda</div>'; return; }
+  desbloqueadas.forEach(code => {
+    const ev = EVIDENCIAS[code]; const item = document.createElement('div'); item.className='evidencia-item'; item.style.borderLeftColor='var(--green)';
+    item.innerHTML=`<span class="ev-badge ev-desbloqueado">[ABERTO]</span><span style="flex:1;"><strong>${code}</strong> — ${ev.shortDesc}</span><button class="btn btn-small btn-green" onclick="mostrarReveal('${code}')">VER</button>`;
+    lista.appendChild(item);
+  });
+}
+
+function abrirModalEvidencia() { document.getElementById('evidencia-code-input').value=''; document.getElementById('evidencia-erro').textContent=''; abrirModal('modal-evidencia'); document.getElementById('evidencia-code-input').focus(); }
+
+function tentarDesbloquear() {
+  const input = document.getElementById('evidencia-code-input'); const code = input.value.trim().toUpperCase(); const erroDiv = document.getElementById('evidencia-erro');
+  if (!code) { erroDiv.textContent='Digite um código'; return; }
+  if (!EVIDENCIAS[code]) { erroDiv.textContent='Código inválido'; input.value=''; input.focus(); return; }
+  if (gameState.evidence[code]?.unlocked) { erroDiv.textContent='Esta evidência já foi desbloqueada'; return; }
+  if (EVIDENCIAS[code].hasCombination) { gameState.pendingEvidenceCode=code; fecharModal('modal-evidencia'); document.getElementById('combinacao-input').value=''; document.getElementById('combinacao-erro').textContent=''; abrirModal('modal-combinacao'); document.getElementById('combinacao-input').focus(); return; }
+  fecharModal('modal-evidencia'); desbloquearEvidencia(code);
+}
+
+function verificarCombinacao() {
+  const input = document.getElementById('combinacao-input'); const combo = input.value.trim(); const code = gameState.pendingEvidenceCode;
+  if (!code||!EVIDENCIAS[code]) return;
+  if (combo===EVIDENCIAS[code].combination) { fecharModal('modal-combinacao'); desbloquearEvidencia(code); gameState.pendingEvidenceCode=null; }
+  else { document.getElementById('combinacao-erro').textContent='Combinação incorrecta'; input.value=''; input.focus(); }
+}
+
+function desbloquearEvidencia(code) {
+  if (!gameState.evidence[code]) gameState.evidence[code]={unlocked:false};
+  gameState.evidence[code].unlocked=true; renderEvidencias(); mostrarNotificacao(`&#10022; EVIDÊNCIA DESBLOQUEADA: ${code} &#10022;`);
+  addJournal('evidencia_desbloqueada',{codigo:code,titulo:EVIDENCIAS[code].title,local:EVIDENCIAS[code].location});
+  setTimeout(()=>mostrarReveal(code),600);
+}
+
+function mostrarReveal(code) { const ev=EVIDENCIAS[code]; document.getElementById('reveal-titulo').textContent=ev.title; document.getElementById('reveal-location').textContent=ev.location; document.getElementById('reveal-conteudo').innerHTML=ev.fullReveal; abrirModal('modal-reveal'); }
+
+function renderNPCResumo() {
+  const container = document.getElementById('npc-resumo'); container.innerHTML='';
+  TESTEMUNHAS.forEach((t,idx) => { const state=gameState.witnesses[idx]; const colors=['var(--border)','var(--blue)','var(--gold)']; const item=document.createElement('div'); item.className='npc-resumo-item'; item.innerHTML=`<span class="npc-dot" style="background:${colors[state.status]};"></span><span>${t.name} — <em style="color:${colors[state.status]}">${TEST_STATUS_LABELS[state.status]}</em></span>`; container.appendChild(item); });
+}
+
+function renderTestemunhas() {
+  const grid=document.getElementById('testemunhas-grid'); grid.innerHTML='';
+  TESTEMUNHAS.forEach((t,idx) => {
+    const state=gameState.witnesses[idx]; const card=document.createElement('div'); card.className='card test-card';
+    card.innerHTML=`<div class="test-retrato"><div style="width:100%;height:100%;background-image:url('${t.img}');background-size:cover;background-position:${t.bgPos};background-repeat:no-repeat;"></div></div><div class="test-nome">${t.name}, ${t.age}</div><div class="test-desc">${t.role}</div><div style="text-align:center;"><span class="test-status-badge ${TEST_STATUS_CLASSES[state.status]}" onclick="event.stopPropagation();ciclarStatusTest(${idx})">${TEST_STATUS_LABELS[state.status]}</span></div><div class="test-expandido" id="test-exp-${idx}"><div class="test-personalidade">${t.desc}</div><div style="text-align:center;margin-top:12px;"><button class="btn btn-small" onclick="event.stopPropagation();abrirInterrogatorio(${idx})">&#9670; INTERROGAR</button></div><div style="font-family:'Courier New',monospace;font-size:13px;color:var(--gold);margin-bottom:6px;margin-top:12px;">Notas da Investigação:</div><textarea placeholder="Suas observações..." oninput="gameState.witnesses[${idx}].notes=this.value">${escapeHtml(state.notes)}</textarea><div style="text-align:center;margin-top:10px;"><button class="btn btn-small" onclick="event.stopPropagation();toggleTestemunha(${idx})">RECOLHER &#94;</button></div></div>`;
+    card.onclick=()=>toggleTestemunha(idx); grid.appendChild(card);
+  });
+}
+function toggleTestemunha(idx) { document.getElementById(`test-exp-${idx}`).classList.toggle('show'); }
+function ciclarStatusTest(idx) { gameState.witnesses[idx].status=(gameState.witnesses[idx].status+1)%3; renderTestemunhas(); renderNPCResumo(); }
+
+function renderSuspeitos() {
+  const grid=document.getElementById('suspeitos-grid'); grid.innerHTML='';
+  PERSONAGENS.forEach((p,idx) => {
+    const state=gameState.suspects[idx]; const player=gameState.players.find(pl=>pl.characterId===p.id); const playerLabel=player?` (${escapeHtml(player.playerName)})`:'';
+    const card=document.createElement('div'); card.className='card susp-card';
+    card.innerHTML=`<div class="susp-retrato"><div style="width:100%;height:100%;background-image:url('${p.img}');background-size:cover;background-position:${p.bgPos};background-repeat:no-repeat;"></div></div><div class="susp-nome">${p.name}, ${p.age}</div><div class="susp-desc">${p.role}${playerLabel}</div><div style="text-align:center;"><span class="susp-status-badge ${SUSP_STATUS_CLASSES[state.status]}" onclick="event.stopPropagation();ciclarStatusSusp(${idx})">${SUSP_STATUS_LABELS[state.status]}</span></div><div class="susp-expandido" id="susp-exp-${idx}"><div class="susp-depoimento">${p.desc}<br><br>${p.trait}</div><div style="text-align:center;margin-top:12px;">${state.pressaoUsada?`<button class="btn btn-small btn-red disabled" disabled>! KESSLER PRESSIONOU</button><div style="font-family:'Courier New',monospace;font-size:11px;color:var(--gold);margin-top:10px;padding:10px;border-left:2px solid var(--gold);background:var(--input-bg);text-align:left;line-height:1.6;">${escapeHtml(state.pressaoTexto)}</div>`:gameState.currentPhase<1?`<button class="btn btn-small btn-red disabled" disabled title="Disponível a partir da Fase 2">! KESSLER PRESSIONA</button><div style="font-family:'Courier New',monospace;font-size:10px;color:var(--border);margin-top:6px;">Disponível a partir da Fase 2</div>`:`<button class="btn btn-small btn-red" onclick="event.stopPropagation();abrirPressao(${idx})">! KESSLER PRESSIONA</button>`}</div><div style="font-family:'Courier New',monospace;font-size:13px;color:var(--gold);margin-bottom:6px;margin-top:12px;">Notas da Investigação:</div><textarea placeholder="Suas observações..." oninput="gameState.suspects[${idx}].notes=this.value">${escapeHtml(state.notes)}</textarea><div style="text-align:center;margin-top:10px;"><button class="btn btn-small" onclick="event.stopPropagation();toggleSuspeito(${idx})">RECOLHER &#94;</button></div></div>`;
+    card.onclick=()=>toggleSuspeito(idx); grid.appendChild(card);
+  });
+}
+function toggleSuspeito(idx) { document.getElementById(`susp-exp-${idx}`).classList.toggle('show'); }
+function ciclarStatusSusp(idx) { gameState.suspects[idx].status=(gameState.suspects[idx].status+1)%3; renderSuspeitos(); }
+
+function renderPistas() {
+  const catLabels={alibi:'Alibi',evidencia:'Evidência',testemunho:'Testemunho',suspeita:'Suspeita',outro:'Outro'};
+  const lista=document.getElementById('pistas-lista'); lista.innerHTML='';
+  if (gameState.clues.length===0) { lista.innerHTML='<p style="font-size:13px;color:var(--border);font-family:\'Courier New\',monospace;">Nenhuma pista registada ainda.</p>'; return; }
+  gameState.clues.forEach(c=>{ const cat=c.categoria||'outro'; const item=document.createElement('div'); item.className='pista-item'; item.innerHTML=`<span class="pista-cat pista-cat-${cat}">${catLabels[cat]}</span><span class="pista-text" style="flex:1;">${escapeHtml(c.text)}</span><button class="pista-del" onclick="deletarPista(${c.id})" style="color:var(--red);cursor:pointer;background:none;border:none;font-size:18px;padding:0 4px;">&times;</button>`; lista.appendChild(item); });
+}
+function abrirModalPista() { abrirModal('modal-pista'); document.getElementById('pista-input').value=''; document.getElementById('pista-categoria').value='testemunho'; document.getElementById('pista-input').focus(); }
+function adicionarPista() { const input=document.getElementById('pista-input'); const text=input.value.trim(); if(!text)return; const categoria=document.getElementById('pista-categoria').value; gameState.clueCounter++; gameState.clues.unshift({id:gameState.clueCounter,text,categoria}); addJournal('pista_registada',{categoria,texto:text}); renderPistas(); fecharModal('modal-pista'); }
+function deletarPista(id) { gameState.clues=gameState.clues.filter(c=>c.id!==id); renderPistas(); }
+
+function abrirModal(id) { document.getElementById(id).classList.add('active'); }
+function fecharModal(id) { document.getElementById(id).classList.remove('active'); }
+
+function abrirSenha(contexto) { gameState.senhaContexto=contexto; document.getElementById('senha-input').value=''; document.getElementById('senha-erro').textContent=''; abrirModal('modal-senha'); document.getElementById('senha-input').focus(); }
+function verificarSenha() { const input=document.getElementById('senha-input'); if(input.value===SENHA_MESTRE){fecharModal('modal-senha');if(gameState.senhaContexto==='mestre'){atualizarModalMestre();abrirModal('modal-mestre');}}else{document.getElementById('senha-erro').textContent='Senha incorrecta';input.value='';input.focus();} }
+
+function atualizarModalMestre() {
+  atualizarFaseDisplay();
+  const evContainer=document.getElementById('mestre-evidencias'); evContainer.innerHTML='';
+  Object.keys(EVIDENCIAS).forEach(code=>{ const ev=EVIDENCIAS[code]; const state=gameState.evidence[code]||{unlocked:false}; const item=document.createElement('div'); item.className='mestre-ev-item'; const statusText=state.unlocked?'<span style="color:var(--green);">DESBLOQUEADO</span>':'<span style="color:var(--border);">TRANCADO</span>'; item.innerHTML=`<span><strong>${code}</strong> — ${ev.title} [${statusText}]</span><button class="${state.unlocked?'btn btn-small btn-red':'btn btn-small btn-green'}" onclick="toggleEvidenciaMestre('${code}')">${state.unlocked?'TRANCAR':'DESTRANCAR'}</button>`; evContainer.appendChild(item); });
+}
+function toggleEvidenciaMestre(code) { if(!gameState.evidence[code])gameState.evidence[code]={unlocked:false}; gameState.evidence[code].unlocked=!gameState.evidence[code].unlocked; if(gameState.evidence[code].unlocked)mostrarNotificacao(`&#10022; EVIDÊNCIA DESBLOQUEADA: ${code} &#10022;`); renderEvidencias(); atualizarModalMestre(); }
+function mudarFase(dir) { let nova=gameState.currentPhase+dir; if(nova<0)nova=0; if(nova>=FASES.length)nova=FASES.length-1; gameState.currentPhase=nova; atualizarFaseDisplay(); if(dir!==0){addJournal('fase',{fase:FASES[nova],origem:'manual_mestre'});mostrarNotificacao(`&#9670; ${FASES[nova].toUpperCase()} &#9670;`);} }
+
+function iniciarAcusacao() {
+  const sel=document.getElementById('acus-suspeito'); sel.innerHTML='<option value="">-- Selecione o suspeito --</option>';
+  PERSONAGENS.forEach(p=>{ sel.innerHTML+=`<option value="${p.id}">${p.name}</option>`; });
+  document.getElementById('acus-metodo').value=''; document.getElementById('acus-motivo').value='';
+  document.getElementById('acus-form-area').style.display=''; document.getElementById('acus-resultado').style.display='none';
+  document.getElementById('btn-acusar').disabled=true; document.getElementById('btn-acusar').classList.add('disabled');
+  const tituloEl=document.getElementById('acus-titulo'); tituloEl.textContent='';
+  trocarTela('tela-painel','tela-acusacao'); typewriter(tituloEl,'O MOMENTO DA VERDADE CHEGOU.',50);
+}
+function validarAcusacao() { const sus=document.getElementById('acus-suspeito').value; const met=document.getElementById('acus-metodo').value.trim(); const mot=document.getElementById('acus-motivo').value.trim(); const temEv=Object.values(gameState.evidence).some(e=>e.unlocked); const valid=sus&&met&&mot&&temEv; document.getElementById('btn-acusar').disabled=!valid; document.getElementById('btn-acusar').classList.toggle('disabled',!valid); const aviso=document.getElementById('acus-aviso-ev'); if(aviso)aviso.style.display=(!temEv)?'block':'none'; }
+
+function registrarAcusacao() {
+  gameState.finalAccusation.suspect=document.getElementById('acus-suspeito').value;
+  gameState.finalAccusation.method=document.getElementById('acus-metodo').value.trim();
+  gameState.finalAccusation.motive=document.getElementById('acus-motivo').value.trim();
+  const susChar=PERSONAGENS.find(c=>c.id===gameState.finalAccusation.suspect);
+  addJournal('acusacao_final',{acusado:susChar?susChar.name:gameState.finalAccusation.suspect,acusado_id:gameState.finalAccusation.suspect,metodo:gameState.finalAccusation.method,motivo:gameState.finalAccusation.motive,evidencias_desbloqueadas:Object.keys(gameState.evidence).filter(k=>gameState.evidence[k].unlocked)});
+  document.getElementById('acus-form-area').style.display='none'; document.getElementById('acus-resultado').style.display='';
+  const msgEl=document.getElementById('acus-msg'); const submsgEl=document.getElementById('acus-submsg'); msgEl.textContent=''; submsgEl.textContent='';
+  typewriter(msgEl,'ACUSAÇÃO REGISTADA.',60,()=>{
+    setTimeout(()=>{
+      if(testMode){typewriter(submsgEl,'MODO TESTE: O resultado real não é exibido durante o teste.',35);return;}
+      const accused=gameState.finalAccusation.suspect;
+      const desfecho=ACUSACAO_DESFECHOS[accused];
+      if(desfecho){
+        const el=document.getElementById('acus-resultado');
+        if(el){el.style.borderColor=desfecho.color||'var(--gold)';}
+        typewriter(submsgEl,desfecho.title+'\n\n'+desfecho.text.replace(/<br>/g,'\n').replace(/<[^>]+>/g,''),25);
+      } else {
+        const ac=PERSONAGENS.find(p=>p.id===accused);
+        typewriter(submsgEl,`${ac?ac.name.toUpperCase():'DESCONHECIDO'}: Acusação registada. O Commissario Lanza analisará as evidências apresentadas.`,35);
+      }
+    },800);
+  });
+  setTimeout(()=>{ document.getElementById('acus-voltar').style.display=''; },6000);
+}
+
+function typewriter(el,text,speed,callback){el.style.whiteSpace='pre-line';let i=0;const iv=setInterval(()=>{el.textContent+=text[i];i++;if(i>=text.length){clearInterval(iv);if(callback)callback();}},speed);}
+function escapeHtml(str){const d=document.createElement('div');d.textContent=str;return d.innerHTML;}
+function mostrarNotificacao(html){const el=document.getElementById('notificacao');el.innerHTML=html;el.className='show';el.style.display='';setTimeout(()=>{el.className='hide';},3000);setTimeout(()=>{el.className='';el.style.display='none';},3500);}
+
+function addLog(type,text){const elapsed=TOTAL_TIME-gameState.timeRemaining;const time=`${String(Math.floor(elapsed/60)).padStart(2,'0')}:${String(elapsed%60).padStart(2,'0')}`;const icons={dci:'◆',interrogacao:'◎',evidencia:'⬡',fase:'▶',pressao:'!'};gameState.log.unshift({time,type,text,icon:icons[type]||'◆'});renderLog();}
+function renderLog(){const lista=document.getElementById('log-lista');const vazio=document.getElementById('log-vazio');if(!lista)return;if(gameState.log.length===0){lista.innerHTML='';if(vazio)vazio.style.display='block';return;}if(vazio)vazio.style.display='none';lista.innerHTML=gameState.log.slice(0,30).map(e=>`<div style="padding:4px 0;border-bottom:1px solid var(--border);color:${e.type==='pressao'?'var(--red)':e.type==='evidencia'?'var(--green)':'var(--text)'}">[${e.time}] ${e.icon} ${e.text}</div>`).join('');}
+function limparLog(){gameState.log=[];renderLog();}
+
+function renderCronograma(){const lista=document.getElementById('cronograma-lista');if(!lista)return;const TOTAL=5400;lista.innerHTML=EVENTOS_CRONOMETRO.map(ev=>{const minuto=Math.round((TOTAL-ev.at)/60);const fired=gameState.firedEvents.has(ev.at);return`<div class="crono-item${fired?' fired':''}"><span class="crono-check">${fired?'&#10003;':'&#9675;'}</span><span class="crono-min">Min ${String(minuto).padStart(2,'0')}</span><span class="crono-label">${ev.title}</span></div>`;}).join('');}
+
+function verificarEventosCronometro(){EVENTOS_CRONOMETRO.forEach(ev=>{if(gameState.timeRemaining===ev.at&&!gameState.firedEvents.has(ev.at)){gameState.firedEvents.add(ev.at);dispararEventoDCI(ev);renderCronograma();}});}
+function dispararEventoDCI(ev){document.getElementById('dci-titulo').textContent=ev.title;const msgEl=document.getElementById('dci-msg');msgEl.textContent='';abrirModal('modal-dci');typewriter(msgEl,ev.msg,25);addLog('dci',ev.title.split('—')[0].trim());addJournal('evento_dci',{titulo:ev.title,mensagem:ev.msg});if(gameState.timeRemaining===3600&&gameState.currentPhase<1){gameState.currentPhase=1;atualizarFaseDisplay();}if(gameState.timeRemaining===1800&&gameState.currentPhase<2){gameState.currentPhase=2;atualizarFaseDisplay();}if(gameState.timeRemaining===600&&gameState.currentPhase<3){gameState.currentPhase=3;atualizarFaseDisplay();}}
+
+let currentInterrogacaoIdx=null;
+function abrirInterrogatorio(idx){if(gameState.fichasInterrogacao<=0){mostrarNotificacao('&#9671; Sem fichas de interrogação disponíveis');return;}currentInterrogacaoIdx=idx;const t=TESTEMUNHAS[idx];document.getElementById('interrogar-nome').textContent=t.name;document.getElementById('interrogar-role').textContent=t.role;const retrato=document.getElementById('interrogar-retrato');if(t.img){retrato.innerHTML=`<div style="width:100%;height:100%;background-image:url('${t.img}');background-size:cover;background-position:${t.bgPos};background-repeat:no-repeat;"></div>`;}const sel=document.getElementById('interrogar-quem');sel.innerHTML='<option value="">-- Selecione quem interroga --</option>';gameState.players.forEach(p=>{const char=PERSONAGENS.find(c=>c.id===p.characterId);if(char)sel.innerHTML+=`<option value="${p.characterId}">${p.playerName} como ${char.name}</option>`;});document.getElementById('interrogar-resultado').style.display='none';document.getElementById('btn-marcar-entrevistada').style.display='none';abrirModal('modal-interrogar');}
+
+function executarInterrogatorio(){const idx=currentInterrogacaoIdx;const t=TESTEMUNHAS[idx];const sel=document.getElementById('interrogar-quem');const questioner=sel.value;if(!questioner){alert('Selecione quem está interrogando.');return;}const deps=DEPOIMENTOS[t.id];const texto=(deps&&(deps[questioner]||deps.default))||'A testemunha não tem nada a declarar.';gameState.fichasInterrogacao--;renderFichasInterrogacao();const resultDiv=document.getElementById('interrogar-resultado');const textoEl=document.getElementById('interrogar-texto');textoEl.textContent='';resultDiv.style.display='block';typewriter(textoEl,texto,20);document.getElementById('btn-marcar-entrevistada').style.display='inline-block';const btnExec=document.getElementById('btn-interrogar-exec');if(btnExec&&gameState.fichasInterrogacao<=0){btnExec.disabled=true;btnExec.classList.add('disabled');}const questChar=PERSONAGENS.find(c=>c.id===questioner);const questName=questChar?questChar.name:questioner;addLog('interrogacao',`${questName} interrogou ${t.name} [${gameState.fichasInterrogacao} fichas restantes]`);addJournal('interrogacao',{interrogador:questName,interrogador_id:questioner,testemunha:t.name,testemunha_id:t.id,resposta:texto});}
+
+function marcarEntrevistada(){if(currentInterrogacaoIdx!==null){const state=gameState.witnesses[currentInterrogacaoIdx];if(state.status===0)state.status=1;renderNPCResumo();}fecharModal('modal-interrogar');}
+
+function abrirPressao(idx){const p=PERSONAGENS[idx];const state=gameState.suspects[idx];const pressoes=DCI_PRESSAO[p.id];if(!pressoes||state.pressaoUsada)return;const fase=Math.min(gameState.currentPhase,pressoes.length-1);const texto=pressoes[fase];state.pressaoUsada=true;state.pressaoTexto=texto;document.getElementById('pressao-suspeito-nome').textContent=p.name.toUpperCase();const textoEl=document.getElementById('pressao-texto');textoEl.textContent='';abrirModal('modal-pressao');typewriter(textoEl,texto,25);addLog('pressao',`Lanza pressionou ${p.name}`);addJournal('pressao_dci',{suspeito:p.name,suspeito_id:p.id,fase:gameState.currentPhase,pergunta:texto});renderSuspeitos();}
+
+init();
+atualizarTimerDisplay();
+</script>
+</body>
+</html>

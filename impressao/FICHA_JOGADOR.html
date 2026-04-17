@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<title>Ficha do Investigador — Carabinieri di Como</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Special+Elite&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Libre Baskerville', Georgia, serif; background: #fff; color: #111; font-size: 9pt; width: 100%; min-height: 100vh; margin: 0; padding: 10mm 12mm 10mm; }
+  @page { size: A4 portrait; margin: 10mm 12mm; }
+
+  .header { display: flex; align-items: center; gap: 10px; border-top: 3px solid #111; border-bottom: 2px solid #111; padding: 6px 0 5px; margin-bottom: 7px; }
+  .crest { width: 38px; height: 38px; border: 2px solid #111; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; font-family: 'Special Elite', monospace; color: #111; }
+  .header-text { flex: 1; }
+  .header-text .org { font-size: 7pt; text-transform: uppercase; letter-spacing: 2px; color: #555; }
+  .header-text .title { font-family: 'Special Elite', monospace; font-size: 14pt; letter-spacing: 1px; line-height: 1; }
+  .header-text .subtitle { font-size: 7pt; font-style: italic; color: #444; }
+  .header-meta { text-align: right; font-size: 7.5pt; }
+  .header-meta .field-label { font-size: 6.5pt; text-transform: uppercase; letter-spacing: 1px; color: #777; }
+  .header-meta .field-line { border-bottom: 1px solid #999; width: 90px; display: inline-block; margin-left: 4px; vertical-align: middle; }
+  .header-meta > div { margin-bottom: 3px; }
+
+  .crono-row { display: flex; gap: 3px; }
+  .crono-box { flex: 1; border: 1.5px solid #bbb; padding: 4px 2px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  .crono-circle { width: 11px; height: 11px; border: 1.5px solid #888; border-radius: 50%; display: block; }
+  .crono-min { font-family: 'Special Elite', monospace; font-size: 7.5pt; color: #444; line-height: 1; }
+  .crono-fase { border-color: #111; border-width: 2px; }
+  .crono-fase .crono-min { font-weight: bold; color: #111; }
+  .crono-fim { border-color: #999; border-style: dashed; }
+
+  .main-grid { display: grid; grid-template-columns: 1fr 76mm; gap: 10px; }
+  .section { margin-bottom: 7px; }
+  .section-title { font-family: 'Special Elite', monospace; font-size: 7.5pt; text-transform: uppercase; letter-spacing: 1.5px; background: #111; color: #fff; padding: 2px 5px; margin-bottom: 4px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 7.5pt; }
+  th { background: #eee; border: 1px solid #bbb; padding: 2px 3px; text-align: center; font-weight: bold; font-size: 6.5pt; text-transform: uppercase; letter-spacing: 0.5px; }
+  td { border: 1px solid #ccc; padding: 0 3px; height: 14px; vertical-align: middle; }
+  .col-nome { width: 28%; }
+  .col-press { width: 16%; text-align: center; }
+  .col-fase { width: 18%; text-align: center; }
+  .col-check { width: 9%; text-align: center; }
+  .col-alibi { width: 18%; text-align: center; }
+  .col-obs { width: 11%; }
+  .fase-circles { display: flex; justify-content: center; gap: 3px; }
+  .fc { width: 9px; height: 9px; border: 1px solid #888; border-radius: 50%; display: inline-block; }
+  .fc-label { font-size: 5.5pt; color: #777; display: block; text-align: center; line-height: 1; }
+  .alibi-opts { display: flex; justify-content: space-around; font-size: 7pt; }
+  .ao { width: 12px; height: 12px; border: 1px solid #999; display: inline-block; }
+
+  /* Evidências — 4 colunas: código / como obtida / descrição / check */
+  .ev-grid { display: grid; grid-template-columns: 20mm 18mm 1fr 8mm; gap: 0; }
+  .ev-header, .ev-row { display: contents; }
+  .ev-header > div { background: #eee; border: 1px solid #bbb; padding: 2px 3px; font-size: 6pt; text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; }
+  .ev-row > div { border: 1px solid #ccc; border-top: none; height: 14px; padding: 0 3px; font-size: 7pt; }
+  .ev-row:first-of-type > div { border-top: 1px solid #ccc; }
+  .ev-center { text-align: center; }
+
+  /* Tokens / fichas */
+  .tokens-row { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; margin-bottom: 5px; }
+  .token { width: 15px; height: 15px; border: 2px solid #111; border-radius: 50%; }
+
+  /* Tabela de buscas por fase */
+  .fase-bloco { margin-bottom: 5px; }
+  .fase-bloco-title {
+    font-family: 'Special Elite', monospace;
+    font-size: 6.5pt;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: #444;
+    color: #fff;
+    padding: 1px 5px;
+    margin-bottom: 2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .fase-bloco-title .custo { font-size: 6pt; font-style: italic; font-family: 'Libre Baskerville', serif; color: #ddd; letter-spacing: 0; text-transform: none; }
+  .fase-bloco-title.f1 { background: #555; }
+  .fase-bloco-title.f2 { background: #333; }
+  .fase-bloco-title.f3 { background: #111; }
+  .room-row { display: flex; gap: 3px; font-size: 7pt; align-items: center; margin-bottom: 2px; }
+  .room-label { flex: 1; font-size: 7pt; }
+  .room-cats { display: flex; gap: 2px; }
+  .cat-box { width: 14px; height: 14px; border: 1px solid #aaa; font-size: 5.5pt; display: flex; align-items: center; justify-content: center; color: #666; }
+
+  /* Trava de fase */
+  .trava-nota {
+    font-size: 6pt;
+    color: #666;
+    font-style: italic;
+    border: 1px dashed #bbb;
+    padding: 2px 5px;
+    margin: 3px 0 4px;
+    line-height: 1.4;
+  }
+
+  /* Minha evidência (revelação voluntária) */
+  .minha-ev-grid { display: grid; grid-template-columns: 18mm 1fr 8mm; gap: 0; margin-top: 2px; }
+  .minha-ev-grid .mh { background: #eee; border: 1px solid #bbb; padding: 2px 3px; font-size: 6pt; text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; }
+  .minha-ev-grid .mr { border: 1px solid #ccc; border-top: none; height: 16px; padding: 0 3px; font-size: 7pt; }
+  .minha-ev-grid .mr:first-of-type { border-top: 1px solid #ccc; }
+  .minha-ev-grid .mc { text-align: center; }
+
+  .action-block { margin-bottom: 4px; padding: 3px 5px; border: 1px solid #ddd; background: #fafafa; }
+  .action-name { font-family: 'Special Elite', monospace; font-size: 7.5pt; font-weight: bold; margin-bottom: 2px; }
+  .action-path { font-size: 6.5pt; color: #555; font-style: italic; }
+  .action-cost { font-size: 6pt; color: #888; float: right; font-family: 'Special Elite', monospace; }
+
+  .accus-block { border: 2px solid #111; padding: 5px; margin-top: 4px; }
+  .accus-field { margin-bottom: 4px; font-size: 7pt; }
+  .accus-label { font-size: 6pt; text-transform: uppercase; letter-spacing: 1px; color: #666; display: block; margin-bottom: 2px; }
+  .accus-line { border-bottom: 1px solid #aaa; height: 12px; display: block; }
+  .accus-lines { display: flex; flex-direction: column; gap: 3px; }
+  .accus-lines .accus-line { height: 12px; border-bottom: 1px solid #aaa; }
+
+  .notas-lines { display: flex; flex-direction: column; gap: 4px; }
+  .nota-line { border-bottom: 1px solid #ccc; height: 13px; display: block; }
+
+  .fases-row { display: flex; gap: 4px; }
+  .fase-box { flex: 1; border: 1.5px solid #111; padding: 3px 2px; text-align: center; }
+  .fase-num { font-family: 'Special Elite', monospace; font-size: 9pt; font-weight: bold; }
+  .fase-desc { font-size: 5.5pt; color: #555; line-height: 1.2; }
+
+  @media print {
+    body { padding: 0; font-size: 8.5pt; }
+    .main-grid { grid-template-columns: 1fr 73mm; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CABEÇALHO -->
+<div class="header">
+  <div class="crest">⚖</div>
+  <div class="header-text">
+    <div class="org">Carabinieri di Como · Sezione Investigativa · Giugno 1953</div>
+    <div class="title">MORTE ALLA VILLA MERIDIANA</div>
+    <div class="subtitle">Ficha de Investigação — Villa Meridiana, Lago di Como · Case CC-1953-06-089</div>
+  </div>
+  <div class="header-meta">
+    <div><span class="field-label">Investigador:</span><span class="field-line"></span></div>
+    <div><span class="field-label">Personagem:</span><span class="field-line"></span></div>
+    <div><span class="field-label">Data:</span><span class="field-line"></span></div>
+  </div>
+</div>
+
+<!-- FASES DO CASO -->
+<div class="section">
+  <div class="section-title">Fases do Caso</div>
+  <div class="fases-row">
+    <div class="fase-box"><div class="fase-num">I</div><div class="fase-desc">Chegada<br>0–30 min</div></div>
+    <div class="fase-box"><div class="fase-num">II</div><div class="fase-desc">Contradições<br>30–60 min</div></div>
+    <div class="fase-box"><div class="fase-num">III</div><div class="fase-desc">Evidências<br>60–90 min</div></div>
+    <div class="fase-box" style="border-color:#888;"><div class="fase-num" style="color:#888;">IV</div><div class="fase-desc" style="color:#888;">Confronto<br>90+ min</div></div>
+  </div>
+</div>
+
+<!-- CRONOGRAMA -->
+<div class="section">
+  <div class="section-title">Cronograma de Comunicados do Commissario Lanza</div>
+  <div class="crono-row">
+    <div class="crono-box crono-fase"><div class="crono-circle"></div><div class="crono-min">Min 0</div></div>
+    <div class="crono-box"><div class="crono-circle"></div><div class="crono-min">Min 05</div></div>
+    <div class="crono-box"><div class="crono-circle"></div><div class="crono-min">Min 15</div></div>
+    <div class="crono-box"><div class="crono-circle"></div><div class="crono-min">Min 27</div></div>
+    <div class="crono-box crono-fase"><div class="crono-circle"></div><div class="crono-min">Min 30</div></div>
+    <div class="crono-box"><div class="crono-circle"></div><div class="crono-min">Min 40</div></div>
+    <div class="crono-box"><div class="crono-circle"></div><div class="crono-min">Min 50</div></div>
+    <div class="crono-box crono-fase"><div class="crono-circle"></div><div class="crono-min">Min 60</div></div>
+    <div class="crono-box"><div class="crono-circle"></div><div class="crono-min">Min 70</div></div>
+    <div class="crono-box"><div class="crono-circle"></div><div class="crono-min">Min 80</div></div>
+    <div class="crono-box crono-fim"><div class="crono-circle"></div><div class="crono-min">Min 90</div></div>
+  </div>
+</div>
+
+<!-- TABELA DE SUSPEITOS -->
+<div class="section">
+  <div class="section-title">Registo de Suspeitos &nbsp;<span style="font-weight:normal;font-size:6pt;">[Interrogação livre e ilimitada · Lanza Pressiona: só Fase 2+, uma vez por suspeito]</span></div>
+  <table>
+    <tr>
+      <th class="col-nome">Nome / Suspeito</th>
+      <th class="col-press">Lanza Pressionou?</th>
+      <th class="col-fase">Pressionado (II·III)</th>
+      <th class="col-check">Alibi?</th>
+      <th class="col-alibi">Alibi Verificado</th>
+      <th class="col-obs">Observações</th>
+    </tr>
+    <tr>
+      <td class="col-nome">Marco Conti <span style="font-size:6pt;color:#888;">(55, Sócio)</span></td>
+      <td class="col-press"><span class="ao"></span></td>
+      <td class="col-fase"><div class="fase-circles"><div><span class="fc-label">II</span><span class="fc"></span></div><div><span class="fc-label">III</span><span class="fc"></span></div></div></td>
+      <td class="col-check"><span class="ao"></span></td>
+      <td class="col-alibi"></td>
+      <td class="col-obs"></td>
+    </tr>
+    <tr>
+      <td class="col-nome">Giulia Ferrari <span style="font-size:6pt;color:#888;">(32, Esposa)</span></td>
+      <td class="col-press"><span class="ao"></span></td>
+      <td class="col-fase"><div class="fase-circles"><div><span class="fc-label">II</span><span class="fc"></span></div><div><span class="fc-label">III</span><span class="fc"></span></div></div></td>
+      <td class="col-check"><span class="ao"></span></td>
+      <td class="col-alibi"></td>
+      <td class="col-obs"></td>
+    </tr>
+    <tr>
+      <td class="col-nome">Elena Russo <span style="font-size:6pt;color:#888;">(44, Ex-Secret.)</span></td>
+      <td class="col-press"><span class="ao"></span></td>
+      <td class="col-fase"><div class="fase-circles"><div><span class="fc-label">II</span><span class="fc"></span></div><div><span class="fc-label">III</span><span class="fc"></span></div></div></td>
+      <td class="col-check"><span class="ao"></span></td>
+      <td class="col-alibi"></td>
+      <td class="col-obs"></td>
+    </tr>
+    <tr>
+      <td class="col-nome">Luca Ferrari <span style="font-size:6pt;color:#888;">(24, Sobrinho)</span></td>
+      <td class="col-press"><span class="ao"></span></td>
+      <td class="col-fase"><div class="fase-circles"><div><span class="fc-label">II</span><span class="fc"></span></div><div><span class="fc-label">III</span><span class="fc"></span></div></div></td>
+      <td class="col-check"><span class="ao"></span></td>
+      <td class="col-alibi"></td>
+      <td class="col-obs"></td>
+    </tr>
+  </table>
+</div>
+
+<!-- GRID PRINCIPAL -->
+<div class="main-grid">
+
+  <!-- COLUNA ESQUERDA -->
+  <div>
+
+    <!-- EVIDÊNCIAS ENCONTRADAS -->
+    <div class="section">
+      <div class="section-title">Evidências — 10 no total &nbsp;<span style="font-weight:normal;font-size:6pt;">[Busca = B · Revelada pelo personagem = R]</span></div>
+      <div class="ev-grid">
+        <div class="ev-header">
+          <div>Código</div>
+          <div>Obtida via</div>
+          <div>Descrição / O que prova</div>
+          <div class="ev-center">✓</div>
+        </div>
+        <div class="ev-row"><div></div><div></div><div></div><div class="ev-center"></div></div>
+        <div class="ev-row"><div></div><div></div><div></div><div class="ev-center"></div></div>
+        <div class="ev-row"><div></div><div></div><div></div><div class="ev-center"></div></div>
+        <div class="ev-row"><div></div><div></div><div></div><div class="ev-center"></div></div>
+        <div class="ev-row"><div></div><div></div><div></div><div class="ev-center"></div></div>
+        <div class="ev-row"><div></div><div></div><div></div><div class="ev-center"></div></div>
+        <div class="ev-row"><div></div><div></div><div></div><div class="ev-center"></div></div>
+        <div class="ev-row"><div></div><div></div><div></div><div class="ev-center"></div></div>
+        <div class="ev-row"><div></div><div></div><div></div><div class="ev-center"></div></div>
+        <div class="ev-row"><div></div><div></div><div></div><div class="ev-center"></div></div>
+      </div>
+    </div>
+
+    <!-- MINHA EVIDÊNCIA — revelação voluntária -->
+    <div class="section">
+      <div class="section-title">Minha Evidência Pessoal — Revelar Libera uma Busca do Grupo</div>
+      <div style="font-size:6pt; color:#555; font-style:italic; margin-bottom:3px; line-height:1.5;">
+        A sua ficha pessoal indica o código <em>e a localização exata</em> da evidência que conhece.
+        Ao revelar voluntariamente — anunciando o código em voz alta — o grupo economiza a busca dessa combinação.
+        Se a evidência está num quarto (Fase 3), isso vale <strong>3 fichas economizadas</strong>.
+        Quem não revela nada quando todos já revelaram torna-se o único ponto de opacidade do grupo.
+      </div>
+      <div class="minha-ev-grid">
+        <div class="mh">Código</div><div class="mh">Cômodo / Categoria</div><div class="mh mc">Rev.?</div>
+        <div class="mr"></div><div class="mr"></div><div class="mr mc"></div>
+        <div class="mr"></div><div class="mr"></div><div class="mr mc"></div>
+      </div>
+    </div>
+
+    <!-- NOTAS RÁPIDAS -->
+    <div class="section">
+      <div class="section-title">Notas Rápidas</div>
+      <div class="notas-lines">
+        <span class="nota-line"></span><span class="nota-line"></span>
+        <span class="nota-line"></span><span class="nota-line"></span>
+        <span class="nota-line"></span><span class="nota-line"></span>
+        <span class="nota-line"></span>
+      </div>
+    </div>
+
+    <!-- ACUSAÇÃO FINAL -->
+    <div class="section">
+      <div class="section-title">Acusação Final</div>
+      <div class="accus-block">
+        <div class="accus-field">
+          <span class="accus-label">O responsável é:</span>
+          <span class="accus-line"></span>
+        </div>
+        <div class="accus-field">
+          <span class="accus-label">Método (como ocorreu a morte):</span>
+          <div class="accus-lines">
+            <span class="accus-line"></span>
+            <span class="accus-line"></span>
+          </div>
+        </div>
+        <div class="accus-field">
+          <span class="accus-label">Motivo:</span>
+          <div class="accus-lines">
+            <span class="accus-line"></span>
+            <span class="accus-line"></span>
+          </div>
+        </div>
+        <div style="margin-top:5px; font-size:6pt; color:#777; font-style:italic; text-align:center;">Painel → ACUSAÇÃO FINAL (ao menos 1 evidência desbloqueada)</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COLUNA DIREITA -->
+  <div>
+
+    <!-- AÇÕES NO APP -->
+    <div class="section">
+      <div class="section-title">Ações no App</div>
+
+      <div class="action-block">
+        <div class="action-name"><span class="action-cost">25 fichas · custo variável</span>Buscar Aposento</div>
+        <div class="action-path">Painel → BUSCAR APOSENTO → selecionar cômodo + categoria</div>
+        <div style="font-size:5.5pt;color:#999;margin-top:2px;">Fase 1 = 1 ficha · Fase 2 = 2 fichas · Fase 3 = 3 fichas/busca</div>
+      </div>
+
+      <div class="action-block">
+        <div class="action-name"><span class="action-cost">4 fichas</span>Interrogar Testemunha</div>
+        <div class="action-path">Painel → TESTEMUNHAS → card → INTERROGAR → selecionar quem pergunta</div>
+      </div>
+
+      <div class="action-block">
+        <div class="action-name">Inserir Código de Evidência</div>
+        <div class="action-path">Painel → [+] INSERIR CÓDIGO → digitar código encontrado ou revelado</div>
+      </div>
+
+      <div class="action-block">
+        <div class="action-name">Lanza Pressiona Suspeito</div>
+        <div class="action-path">Painel → SUSPEITOS → card → ! LANZA PRESSIONA<br>
+        <span style="font-size:5.5pt;color:#999;">Disponível a partir da Fase 2 · Uma vez por suspeito</span></div>
+      </div>
+
+      <div class="action-block">
+        <div class="action-name">Registrar Pista</div>
+        <div class="action-path">Painel → [+] ADICIONAR PISTA → categoria + descrição</div>
+      </div>
+    </div>
+
+    <!-- BUSCAS DE APOSENTOS -->
+    <div class="section">
+      <div class="section-title">Buscas de Aposentos — 25 fichas</div>
+      <div class="tokens-row">
+        <!-- 25 tokens: 5 linhas de 5 -->
+        <div class="token"></div><div class="token"></div><div class="token"></div><div class="token"></div><div class="token"></div>
+        <div class="token"></div><div class="token"></div><div class="token"></div><div class="token"></div><div class="token"></div>
+        <div class="token"></div><div class="token"></div><div class="token"></div><div class="token"></div><div class="token"></div>
+        <div class="token"></div><div class="token"></div><div class="token"></div><div class="token"></div><div class="token"></div>
+        <div class="token"></div><div class="token"></div><div class="token"></div><div class="token"></div><div class="token"></div>
+      </div>
+
+      <div class="trava-nota">
+        ⚠ Para avançar de fase, o grupo deve ter realizado ao menos 1 busca na fase atual.
+        Não é possível guardar todas as fichas para o fim.
+      </div>
+
+      <!-- Fase 1 -->
+      <div class="fase-bloco">
+        <div class="fase-bloco-title f1">
+          <span>Fase 1 — Áreas Comuns</span>
+          <span class="custo">1 ficha / busca</span>
+        </div>
+        <div class="room-row">
+          <div class="room-label" style="font-size:6.5pt;">Terrazza</div>
+          <div class="room-cats">
+            <div class="cat-box">A</div><div class="cat-box">D</div>
+          </div>
+        </div>
+        <div class="room-row">
+          <div class="room-label" style="font-size:6.5pt;">Sala Grande</div>
+          <div class="room-cats">
+            <div class="cat-box">A</div><div class="cat-box">D</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fase 2 -->
+      <div class="fase-bloco">
+        <div class="fase-bloco-title f2">
+          <span>Fase 2 — Dependências</span>
+          <span class="custo">2 fichas / busca</span>
+        </div>
+        <div class="room-row">
+          <div class="room-label" style="font-size:6.5pt;">Biblioteca</div>
+          <div class="room-cats">
+            <div class="cat-box">A</div><div class="cat-box">D</div>
+          </div>
+        </div>
+        <div class="room-row">
+          <div class="room-label" style="font-size:6.5pt;">Rimessa (Depósito)</div>
+          <div class="room-cats">
+            <div class="cat-box">A</div><div class="cat-box">D</div>
+          </div>
+        </div>
+        <div class="room-row">
+          <div class="room-label" style="font-size:6.5pt;">Corredor Interno</div>
+          <div class="room-cats">
+            <div class="cat-box">A</div><div class="cat-box">D</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fase 3 -->
+      <div class="fase-bloco">
+        <div class="fase-bloco-title f3">
+          <span>Fase 3 — Aposentos Privados</span>
+          <span class="custo">3 fichas / busca</span>
+        </div>
+        <div class="room-row">
+          <div class="room-label" style="font-size:6.5pt;">Quarto — Marco Conti</div>
+          <div class="room-cats">
+            <div class="cat-box">P</div><div class="cat-box">D</div><div class="cat-box">A</div>
+          </div>
+        </div>
+        <div class="room-row">
+          <div class="room-label" style="font-size:6.5pt;">Quarto — Giulia Ferrari</div>
+          <div class="room-cats">
+            <div class="cat-box">P</div><div class="cat-box">D</div><div class="cat-box">A</div>
+          </div>
+        </div>
+        <div class="room-row">
+          <div class="room-label" style="font-size:6.5pt;">Quarto — Elena Russo</div>
+          <div class="room-cats">
+            <div class="cat-box">P</div><div class="cat-box">D</div><div class="cat-box">A</div>
+          </div>
+        </div>
+        <div class="room-row">
+          <div class="room-label" style="font-size:6.5pt;">Quarto — Luca Ferrari</div>
+          <div class="room-cats">
+            <div class="cat-box">P</div><div class="cat-box">D</div><div class="cat-box">A</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- INTERROGAÇÕES DE TESTEMUNHAS -->
+    <div class="section">
+      <div class="section-title">Interrogações — 4 fichas</div>
+      <div class="tokens-row" style="margin-bottom:5px;">
+        <div class="token"></div><div class="token"></div>
+        <div class="token"></div><div class="token"></div>
+      </div>
+      <table style="font-size:7pt;">
+        <tr><th>Testemunha</th><th>Interrogada por</th><th>✓</th></tr>
+        <tr><td>Rosa Marini (Governanta)</td><td></td><td style="text-align:center;"><span class="ao"></span></td></tr>
+        <tr><td>Dr. Antonio Ferretti (Médico)</td><td></td><td style="text-align:center;"><span class="ao"></span></td></tr>
+        <tr><td>Aldo Bianchi (Jardineiro)</td><td></td><td style="text-align:center;"><span class="ao"></span></td></tr>
+        <tr><td>Concetta Mele (Camareira)</td><td></td><td style="text-align:center;"><span class="ao"></span></td></tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- RODAPÉ -->
+<div style="border-top:1px solid #ccc; margin-top:8px; padding-top:4px; font-size:6pt; color:#999; display:flex; justify-content:space-between;">
+  <span>Villa Meridiana, Lago di Como · 14 Giugno 1953 · Case CC-1953-06-089</span>
+  <span>Carabinieri di Como — Sezione Investigativa · RISERVATO</span>
+</div>
+
+</body>
+</html>

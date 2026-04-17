@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha do Personagem — Giulia Ferrari</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        @page { size: A4 portrait; margin: 12mm 15mm; }
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            color: #1a1005;
+            background: #ffffff;
+            font-size: 12px;
+            line-height: 1.6;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .page { max-width: 180mm; margin: 0 auto; overflow: visible; page-break-after: always; }
+        .page:last-child { page-break-after: auto; }
+        .header { text-align: center; border-bottom: 3px double #1a1005; padding-bottom: 10px; margin-bottom: 15px; }
+        .header-top { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #5a4a2a; margin-bottom: 4px; }
+        .header h1 { font-size: 20px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+        .header h2 { font-size: 13px; font-weight: normal; font-style: italic; color: #4a4a4a; }
+        .confidential-stamp {
+            border: 3px solid #7a4f6d; display: inline-block; padding: 6px 16px;
+            font-size: 11px; letter-spacing: 3px; color: #7a4f6d; font-weight: bold;
+            transform: rotate(-2deg); margin: 8px 0; background: rgba(122,79,109,0.03);
+        }
+        .portrait-block { float: right; margin: 0 0 15px 15px; border: 3px double #1a1005; padding: 6px; width: 120px; text-align: center; }
+        .portrait-block img { width: 100px; height: 130px; display: block; background: #f0ede5; object-fit: cover; object-position: top; }
+        .portrait-block p { font-size: 9px; margin-top: 5px; font-style: italic; font-weight: bold; }
+        .clearfix::after { content: ''; display: table; clear: both; }
+        .section { margin: 14px 0; overflow: visible; clear: both; }
+        .section h3 { font-size: 13px; border-left: 5px solid #1a1005; padding: 5px 12px; margin-bottom: 8px; background: #f5f2ea; text-transform: uppercase; letter-spacing: 1px; }
+        .section p { margin: 6px 0; text-align: justify; line-height: 1.55; }
+        .secret-box { border: 2px solid #7a4f6d; border-left: 6px solid #7a4f6d; padding: 12px 14px; margin: 12px 0; background: rgba(122,79,109,0.05); }
+        .secret-box strong { color: #7a4f6d; text-transform: uppercase; font-size: 10px; letter-spacing: 2px; display: block; margin-bottom: 6px; }
+        .timeline { border-left: 2px solid #1a1005; padding-left: 14px; margin: 10px 0 10px 4px; }
+        .timeline-item { margin: 8px 0; position: relative; padding-top: 2px; }
+        .timeline-item::before { content: '◆'; position: absolute; left: -20px; font-size: 8px; top: 5px; color: #1a1005; }
+        .timeline-time { font-weight: bold; font-size: 11px; font-family: 'Courier New', monospace; color: #2c2c2c; }
+        .object-card { border: 1px solid #1a1005; padding: 8px 12px; margin: 7px 0; background: #fefdfb; }
+        .object-card .code { font-family: 'Courier New', monospace; font-size: 10px; color: #7a4f6d; font-weight: bold; float: right; }
+        .object-card .name { font-weight: bold; margin-bottom: 4px; }
+        .warning-box { border: 2px solid #8b6d8f; border-left: 6px solid #c291c2; padding: 10px 14px; margin: 10px 0; background: rgba(194,145,194,0.05); font-size: 11px; }
+        .warning-box strong { color: #c291c2; display: block; margin-bottom: 4px; text-transform: uppercase; font-size: 10px; letter-spacing: 1px; }
+        ul, ol { margin-left: 16px; margin-top: 6px; margin-bottom: 6px; }
+        li { margin: 3px 0; line-height: 1.5; }
+        .footer { border-top: 1px solid #d4c4b0; margin-top: 16px; padding-top: 8px; font-size: 10px; color: #6a6a6a; text-align: center; font-style: italic; }
+        @media print { body { font-size: 11px; } .page { page-break-after: always; } .section { overflow: visible !important; } }
+    </style>
+</head>
+<body>
+
+<!-- PÁGINA 1 -->
+<div class="page">
+    <div class="header">
+        <div class="header-top">Carabinieri di Como · Giugno 1953</div>
+        <h1>FICHA DO PERSONAGEM</h1>
+        <h2>Giulia Ferrari</h2>
+    </div>
+    <div style="text-align:center; margin-bottom:12px;">
+        <div class="confidential-stamp">APENAS PARA GIULIA FERRARI</div>
+    </div>
+
+    <div class="section clearfix">
+        <h3>Identidade Pessoal</h3>
+        <p>Nascida a 22 de julho de 1921 em Varese, filha de uma costureira e de um pai que desapareceu na Segunda Guerra Mundial quando Giulia tinha apenas 18 anos. Sua mãe a criou com a ideia de que a beleza era um ativo — uma moeda de troca para escapar da pobreza. Giulia aprendeu a praticar aquele olhar, aquele movimento dos lábios, aquela inclinação da cabeça. Aos 19 anos, entrou em companhias teatrais regionais, jogando personagens menores em produções de Shakespeare e Pirandello.</p>
+        <p>Era atriz amadora em Brescia quando Carlo a viu em 1948. Ele a perseguiu com a intensidade de um colecionador descobrindo uma peça rara. Casaram em 1949. Os primeiros anos foram — bem, foram aquilo que ela sempre imaginou que a vida deveria ser. Mas Carlo era mais possessivo do que apaixonado. E a posse, com o tempo, vira prisão.</p>
+    </div>
+
+    <div class="section">
+        <h3>Quando a Vida Começou a Morrer</h3>
+        <p>Em maio de 1953, Carlo informou Giulia que estava processando um divórcio. Os termos: 200.000 liras. Um ano de vida confortável. Nada depois. Havia uma cláusula de moralidade no pré-nupcial — qualquer indiscreção justificaria eliminação de alimentos. Carlo tinha histórias — algumas verdadeiras, muitas inventadas — de seus comportamentos que ele ameaçava revelar.</p>
+        <p>Você entrou em pânico. Quarenta e oito horas. Você procurou conselho. Nada. A lei era de Carlo. O dinheiro era de Carlo. A vida inteira que ela construiu sobre aquele casamento era de Carlo.</p>
+        <p>Naquela tarde de 14 de junho, enquanto todos estavam em seus quartos ou no jardim, você foi ao galpão de ferramentas. Você sabia o que procurava: a chave inglesa ajustável grande. A mesma ferramenta que vira seu marido usar para afrouxar a roda de um carro semanas antes.</p>
+    </div>
+
+    <div class="footer">Villa Meridiana · Lago di Como · Giugno 1953 · VERTRAULICH</div>
+</div>
+
+<!-- PÁGINA 2 -->
+<div class="page">
+    <div class="section">
+        <h3>O Que Você Fez (Papel Secreto)</h3>
+    </div>
+
+    <div class="secret-box">
+        <strong>Você afrouxou a balaustrada. Não sabe se foi isso que causou a queda de Carlo.</strong>
+        <p>Às 14h30 de 14 de junho, você entrou no galpão de ferramentas. A chave estava na prateleira — designada para o suporte número 7, segundo o inventário manuscrito na parede. Você tirou. Ninguém a viu.</p>
+        <p>Você levou a chave até a varanda do quarto de Carlo. A balaustrada — aquela estrutura de ferro forjado que vista do quarto parecia tão segura — tinha um parafuso de ancoragem principal no ponto onde a mão de um homem em pé descansaria. Você encaixou a chave inglesa no parafuso e girou. Não uma volta completa. Meia volta. Talvez três quartos. Você queria que a balaustrada cedesse — não que caísse inteira. Apenas cedesse. Apenas o suficiente para assustar, para fazer Carlo entender que o mundo não era tão sólido quanto ele acreditava.</p>
+        <p>Você guardou a chave em sua mala de viagem. Enrolou em um lenço de seda. Ninguém soube.</p>
+        <p>Naquela noite, às 22h20, você foi à varanda encontrá-lo. Você disse: "Dovresti stare attento su questa terrazza, Carlo." Você queria que ele entendesse — naquela frase — que algo tinha mudado, que a segurança era ilusória, que talvez ele devesse ser mais razoável sobre os termos. Ele riu. Virou para falar sobre algo sem importância. Você saiu, furiosa.</p>
+        <p>Vinte e dois minutos depois, você ouviu o estrondo. O som de vidro quebrando. O som de metal cedendo. Você correu para a varanda e não viu nada. Desceu correndo.</p>
+    </div>
+
+    <div class="warning-box">
+        <strong>GUIA DE JOGO PARA GIULIA</strong>
+        Você afrouxou a balaustrada e sabe disso. Mas você NÃO sabe o que a derrubou. Você sabe que Carlo caiu — você ouviu o estrondo. O que você não sabe é se a balaustrada cedeu por causa do seu afrouxamento, ou se algo mais aconteceu — algo que você não viu porque saiu. Você jogará com MEDO GENUNINO e CULPA GENUÍNA, mas sem saber se é culpada de morte ou apenas de sabotagem fracassada. Você pode negar, pode chorar, pode confessar o afrouxamento — mas não conseguirá responder se matou, porque genuinamente não sabe.
+    </div>
+
+    <div class="section">
+        <h3>Evidências na Ficha</h3>
+    </div>
+
+    <div class="object-card">
+        <div class="code">CHAV-01</div>
+        <div class="name">Chave Inglesa</div>
+        <p>Na mala de viagem em seu quarto, enrolada em um lenço de seda: a chave inglesa ajustável grande. A cabeça mostra limalha metálica cinzenta — coerente com o aço do parafuso da balaustrada. O cabo carrega uma impressão digital parcial compatível com uma mão feminina.</p>
+        <p style="font-size:10px; margin-top:6px; color:#666;"><strong>Localização:</strong> Quarto de Giulia Ferrari / Pertences</p>
+    </div>
+
+    <div class="object-card">
+        <div class="code">DIAR-01</div>
+        <div class="name">Diário Pessoal</div>
+        <p>Seu diário pessoal. Entrada de 14 de junho, tarde: "Afrouxei o parafuso principal da balaustrada da varanda. À noite falarei com Carlo sobre o divórcio lá. Se ele se recusar novamente, a natureza fará seu curso. Apenas quero que ele entenda como é fácil perder algo — ou alguém. Não sei ainda o que farei. Só sei que preciso fazer algo." Nenhuma entrada após a noite de 14 de junho.</p>
+        <p style="font-size:10px; margin-top:6px; color:#666;"><strong>Localização:</strong> Quarto de Giulia Ferrari / Documentos</p>
+    </div>
+
+    <div class="footer">Villa Meridiana · Lago di Como · Giugno 1953 · VERTRAULICH</div>
+</div>
+
+</body>
+</html>

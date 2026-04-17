@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personagens — Villa Meridiana, Lago di Como</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        @page { size: A4 portrait; margin: 12mm 15mm; }
+        body { font-family: Georgia, 'Times New Roman', serif; color: #1a1005; background: #ffffff; font-size: 12px; line-height: 1.6; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .page { max-width: 180mm; margin: 0 auto; padding: 5mm; overflow: visible; }
+        .header-top { text-align: center; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #5a4a2a; margin-bottom: 5px; }
+        h1 { font-size: 22px; text-align: center; border-bottom: 3px double #1a1005; padding-bottom: 10px; margin-bottom: 8px; letter-spacing: 1px; }
+        .subtitle { text-align: center; font-size: 11px; font-style: italic; color: #3a3a3a; margin-bottom: 18px; }
+        h2 { font-size: 14px; border-left: 5px solid #1a1005; padding-left: 10px; margin-top: 20px; margin-bottom: 12px; }
+        .character { border: 1px solid #1a1005; padding: 12px 14px; margin-bottom: 12px; overflow: hidden; page-break-inside: avoid; break-inside: avoid; }
+        .character-header { font-weight: bold; font-size: 13px; margin-bottom: 4px; border-bottom: 1px dotted #1a1005; padding-bottom: 4px; }
+        .character-meta { font-size: 11px; color: #3a3a3a; margin-bottom: 6px; }
+        .character-description { font-size: 11px; line-height: 1.5; margin-bottom: 6px; text-align: justify; }
+        .character-trait { font-size: 11px; font-weight: bold; color: #5a3a1a; margin-top: 6px; }
+        .note { border: 2px solid #1a1005; border-left: 6px solid #8b1a1a; padding: 10px 14px; margin: 18px 0; font-size: 11px; page-break-inside: avoid; break-inside: avoid; }
+        .stamp { display: inline-block; border: 2px solid #8b1a1a; color: #8b1a1a; padding: 3px 10px; font-size: 9px; letter-spacing: 2px; font-weight: bold; transform: rotate(-1deg); margin-bottom: 10px; }
+        .witness-section { background: #f9f7f2; border: 1px solid #d4c4a0; padding: 12px 14px; margin-bottom: 10px; overflow: hidden; page-break-inside: avoid; break-inside: avoid; }
+        h2 { page-break-after: avoid; break-after: avoid; }
+        .page-break { page-break-after: always; break-after: always; }
+        .suspects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+        @media print { body { font-size: 11px; } .suspects-grid { grid-template-columns: 1fr 1fr; } }
+    </style>
+</head>
+<body>
+<div class="page">
+    <div class="header-top">Carabinieri di Como · Sezione Investigativa · Giugno 1953</div>
+    <h1>PERSONAGENS</h1>
+    <p class="subtitle">Morte alla Villa Meridiana · Lago di Como · 14 de Junho de 1953</p>
+
+    <h2>A VÍTIMA</h2>
+    <div class="character" style="border-color: #8b1a1a;">
+        <div style="overflow:hidden;">
+            <img src="../imagem_4.png" alt="Cena do Crime" style="float:right;width:130px;height:80px;object-fit:cover;object-position:center top;margin:0 0 8px 14px;border:1px solid #8b1a1a;opacity:0.88;">
+            <div class="stamp">FALECIDO</div>
+            <div class="character-header" style="color:#8b1a1a;">Carlo Ferrari</div>
+            <div class="character-meta">62 anos — Masculino — Industrial têxtil / Fundador da Ferrari Tessile S.p.A.</div>
+            <div class="character-description">
+                Fundador e presidente da Ferrari Tessile S.p.A., uma das maiores manufaturas de seda e algodão da Lombardia. Construiu o seu império desde os anos 1920 em parceria com Marco Conti — uma parceria que ele foi sistematicamente liquidando ao longo das décadas. Homem de poucos gestos e muitos cálculos, Carlo Ferrari chegou à Villa Meridiana no fim de semana de 14 de junho para resolver questões legais relativas à dissolução da empresa. Viúvo desde 1943 — a primeira esposa morreu durante a guerra. Casou pela segunda vez em 1949 com Giulia Marchetti. Encontrado morto às 22h42 na base da varanda da suite principal, após queda de sete metros.
+            </div>
+            <div class="character-trait" style="color:#8b1a1a;">Causa da morte: sob investigação do Commissario Bruno Lanza.</div>
+        </div>
+    </div>
+
+    <h2>OS SUSPEITOS PRINCIPAIS</h2>
+
+    <div class="suspects-grid">
+        <div class="character">
+            <img src="retratos/marco_conti.png" alt="Marco Conti" style="float:right;width:68px;height:74px;object-fit:cover;object-position:center top;margin:0 0 6px 10px;border:1px solid #1a1005;">
+            <div class="character-header">Marco Conti</div>
+            <div class="character-meta">55 anos — Masculino — Sócio Fundador</div>
+            <div class="character-description">Homem de meia-idade de porte sóbrio, cabelos escuros com grisalho nas têmporas, mãos de quem trabalhou com máquinas de tear. Sócio fundador da Ferrari Tessile S.p.A. há trinta anos — o arquiteto técnico da empresa, o homem que desenhou as primeiras máquinas, que treinou os operários, que acreditou durante décadas que o que construía era também seu. Presente na Villa Meridiana a convite — ou exigência — de Carlo, para discutir os termos finais da dissolução da empresa.</div>
+            <div class="character-trait">Traço Visível: Tenso e econômico nas palavras; uma raiva contida que aparece nos momentos de silêncio.</div>
+        </div>
+
+        <div class="character">
+            <img src="retratos/giulia_ferrari.png" alt="Giulia Ferrari" style="float:right;width:68px;height:74px;object-fit:cover;object-position:center top;margin:0 0 6px 10px;border:1px solid #1a1005;">
+            <div class="character-header">Giulia Ferrari</div>
+            <div class="character-meta">32 anos — Feminino — Esposa de Carlo</div>
+            <div class="character-description">Mulher jovem de beleza evidente e postura que aprendeu a usar como proteção. Atriz de teatro amador antes de conhecer Carlo em 1948 — casaram em 1949. Os primeiros dois anos foram fáceis; depois Carlo tornou-se controlador, ciumento, ameaçador. Em maio de 1953, Carlo comunicou-lhe que pretendia o divórcio em termos que ela considerava ruinosos. Presente na villa como esposa — sem outra justificativa legal para estar ali.</div>
+            <div class="character-trait">Traço Visível: Composta e calculada; mas há algo que ela está monitorando com demasiada atenção.</div>
+        </div>
+
+        <div class="character">
+            <img src="retratos/elena_russo.png" alt="Elena Russo" style="float:right;width:68px;height:74px;object-fit:cover;object-position:center top;margin:0 0 6px 10px;border:1px solid #1a1005;">
+            <div class="character-header">Elena Russo</div>
+            <div class="character-meta">44 anos — Feminino — Ex-Secretária Pessoal</div>
+            <div class="character-description">Mulher de meia-idade de postura discreta e atenção aguçada, olhos que processam detalhes antes de falar. Secretária pessoal de Carlo Ferrari durante 16 anos — a pessoa que conhecia cada detalhe administrativo da Ferrari Tessile. Foi demitida quatro meses atrás, após descobrir documentos que comprometiam Carlo. Presente na Villa Meridiana a pedido de Carlo — que a convidou para uma conversa sobre termos de acordo de sigilo. Ela aceitar ou não aceitar é uma questão que ainda estava em aberto quando Carlo morreu.</div>
+            <div class="character-trait">Traço Visível: Extremamente cautelosa; mede cada palavra antes de dizê-la.</div>
+        </div>
+
+        <div class="character">
+            <img src="retratos/luca_ferrari.png" alt="Luca Ferrari" style="float:right;width:68px;height:74px;object-fit:cover;object-position:center top;margin:0 0 6px 10px;border:1px solid #1a1005;">
+            <div class="character-header">Luca Ferrari</div>
+            <div class="character-meta">24 anos — Masculino — Sobrinho / Funcionário</div>
+            <div class="character-description">Jovem de expressão aberta e nervosa, filho do irmão mais velho de Carlo (Matteo, falecido em 1942). Carlo criou-o nominalmente — escola privada, futuro garantido — mas nunca com afeto genuíno. Luca trabalha numa posição administrativa da Ferrari Tessile e esperava herdar uma parte da empresa. O que herdará, afinal, é uma questão que o testamento de Carlo teria respondido. Presente na villa por convocação familiar, tal como todos os demais.</div>
+            <div class="character-trait">Traço Visível: Ansioso e inquieto; evita o olhar direto quando perguntado sobre onde estava à noite.</div>
+        </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>AS TESTEMUNHAS</h2>
+
+    <div class="witness-section" style="overflow:hidden;">
+        <img src="retratos/rosa_marini.png" alt="Rosa Marini" style="float:left;width:62px;height:68px;object-fit:cover;object-position:center top;margin:0 12px 6px 0;border:1px solid #d4c4a0;">
+        <div class="character-header">Rosa Marini — Governanta da Villa</div>
+        <div class="character-meta">61 anos — Feminina — Governanta residente há 20 anos</div>
+        <div class="character-description">Rosa conhece cada recanto da Villa Meridiana há duas décadas — desde antes de Carlo casar com Giulia. Discreta por profissão e por caráter, altamente observadora. Foi a primeira a gritar por socorro quando Aldo encontrou Carlo. Conhece os hábitos de todos que estiveram na villa e recorda movimentos e horários com precisão que surpreende.</div>
+    </div>
+
+    <div class="witness-section" style="overflow:hidden;">
+        <img src="retratos/ferretti.png" alt="Dr. Ferretti" style="float:left;width:62px;height:68px;object-fit:cover;object-position:center top;margin:0 12px 6px 0;border:1px solid #d4c4a0;">
+        <div class="character-header">Dr. Antonio Ferretti — Médico Local</div>
+        <div class="character-meta">49 anos — Masculino — Clínico Geral, Como</div>
+        <div class="character-description">Médico de Como convocado para examinar o corpo e emitir o laudo inicial. Certificou a morte e examinou os ferimentos. Conhece a física da queda — a trajetória, a força horizontal, o ângulo de impacto. Reservado e preciso; hesita em especular além das suas descobertas técnicas até ser pressionado a fazê-lo.</div>
+    </div>
+
+    <div class="witness-section" style="overflow:hidden;">
+        <img src="retratos/aldo_bianchi.png" alt="Aldo Bianchi" style="float:left;width:62px;height:68px;object-fit:cover;object-position:center top;margin:0 12px 6px 0;border:1px solid #d4c4a0;">
+        <div class="character-header">Aldo Bianchi — Jardineiro e Guarda</div>
+        <div class="character-meta">38 anos — Masculino — Guarda e jardineiro da villa</div>
+        <div class="character-description">Aldo mantém os terrenos e a segurança da Villa Meridiana. Foi ele quem encontrou o corpo de Carlo às 22h50 durante as rondas noturnas regulares. Conhece cada ferramenta do galpão, cada canto dos jardins, e inspecionou a varanda dois dias antes do crime. Observador direto, sem filtros.</div>
+    </div>
+
+    <div class="witness-section" style="overflow:hidden;">
+        <img src="retratos/concetta_mele.png" alt="Concetta Mele" style="float:left;width:62px;height:68px;object-fit:cover;object-position:center top;margin:0 12px 6px 0;border:1px solid #d4c4a0;">
+        <div class="character-header">Concetta Mele — Camareira</div>
+        <div class="character-meta">23 anos — Feminina — Camareira residente</div>
+        <div class="character-description">Jovem de uma família local, no seu primeiro ano na villa. Nervosa, ansiosa por agradar, com memória involuntária para detalhes que não deveria ter notado. Arrumava quartos no segundo andar na noite do crime. Ouviu e viu coisas — e está dividida entre a obrigação de falar e o desconforto de o fazer.</div>
+    </div>
+
+    <div class="note" style="overflow:hidden;">
+        <img src="retratos/lanza.png" alt="Commissario Lanza" style="float:left;width:58px;height:64px;object-fit:cover;object-position:center top;margin:0 14px 6px 0;border:2px solid #5a3a1a;">
+        <strong style="text-transform:uppercase; letter-spacing:1px; font-size:10px;">Nota do Commissario Bruno Lanza — Carabinieri di Como:</strong>
+        <p style="margin-top:6px; font-size:11px;">Todos os presentes na Villa Meridiana na noite de 14 de junho permanecem sob ordem de não abandonar o estabelecimento. O período de investigação é de 90 minutos. Qualquer informação relevante deve ser comunicada directamente ao Commissario antes do encerramento da sessão. — <em>B. Lanza, Carabinieri di Como, Giugno 1953</em></p>
+    </div>
+</div>
+</body>
+</html>

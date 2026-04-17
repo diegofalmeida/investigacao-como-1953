@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha do Personagem — Elena Russo</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        @page { size: A4 portrait; margin: 12mm 15mm; }
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            color: #1a1005;
+            background: #ffffff;
+            font-size: 12px;
+            line-height: 1.6;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .page { max-width: 180mm; margin: 0 auto; overflow: visible; page-break-after: always; }
+        .page:last-child { page-break-after: auto; }
+        .header { text-align: center; border-bottom: 3px double #1a1005; padding-bottom: 10px; margin-bottom: 15px; }
+        .header-top { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #5a4a2a; margin-bottom: 4px; }
+        .header h1 { font-size: 20px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+        .header h2 { font-size: 13px; font-weight: normal; font-style: italic; color: #4a4a4a; }
+        .confidential-stamp {
+            border: 3px solid #2c5f8d; display: inline-block; padding: 6px 16px;
+            font-size: 11px; letter-spacing: 3px; color: #2c5f8d; font-weight: bold;
+            transform: rotate(-2deg); margin: 8px 0; background: rgba(44,95,141,0.03);
+        }
+        .portrait-block { float: right; margin: 0 0 15px 15px; border: 3px double #1a1005; padding: 6px; width: 120px; text-align: center; }
+        .portrait-block img { width: 100px; height: 130px; display: block; background: #f0ede5; object-fit: cover; object-position: top; }
+        .portrait-block p { font-size: 9px; margin-top: 5px; font-style: italic; font-weight: bold; }
+        .clearfix::after { content: ''; display: table; clear: both; }
+        .section { margin: 14px 0; overflow: visible; clear: both; }
+        .section h3 { font-size: 13px; border-left: 5px solid #1a1005; padding: 5px 12px; margin-bottom: 8px; background: #f5f2ea; text-transform: uppercase; letter-spacing: 1px; }
+        .section p { margin: 6px 0; text-align: justify; line-height: 1.55; }
+        .secret-box { border: 2px solid #2c5f8d; border-left: 6px solid #2c5f8d; padding: 12px 14px; margin: 12px 0; background: rgba(44,95,141,0.05); }
+        .secret-box strong { color: #2c5f8d; text-transform: uppercase; font-size: 10px; letter-spacing: 2px; display: block; margin-bottom: 6px; }
+        .timeline { border-left: 2px solid #1a1005; padding-left: 14px; margin: 10px 0 10px 4px; }
+        .timeline-item { margin: 8px 0; position: relative; padding-top: 2px; }
+        .timeline-item::before { content: '◆'; position: absolute; left: -20px; font-size: 8px; top: 5px; color: #1a1005; }
+        .timeline-time { font-weight: bold; font-size: 11px; font-family: 'Courier New', monospace; color: #2c2c2c; }
+        .warning-box { border: 2px solid #4a7f9d; border-left: 6px solid #5a9fbf; padding: 10px 14px; margin: 10px 0; background: rgba(90,159,191,0.05); font-size: 11px; }
+        .warning-box strong { color: #5a9fbf; display: block; margin-bottom: 4px; text-transform: uppercase; font-size: 10px; letter-spacing: 1px; }
+        ul, ol { margin-left: 16px; margin-top: 6px; margin-bottom: 6px; }
+        li { margin: 3px 0; line-height: 1.5; }
+        .footer { border-top: 1px solid #d4c4b0; margin-top: 16px; padding-top: 8px; font-size: 10px; color: #6a6a6a; text-align: center; font-style: italic; }
+        @media print { body { font-size: 11px; } .page { page-break-after: always; } .section { overflow: visible !important; } }
+    </style>
+</head>
+<body>
+
+<!-- PÁGINA 1 -->
+<div class="page">
+    <div class="header">
+        <div class="header-top">Carabinieri di Como · Giugno 1953</div>
+        <h1>FICHA DO PERSONAGEM</h1>
+        <h2>Elena Russo</h2>
+    </div>
+    <div style="text-align:center; margin-bottom:12px;">
+        <div class="confidential-stamp">APENAS PARA ELENA RUSSO</div>
+    </div>
+
+    <div class="section clearfix">
+        <h3>Identidade Pessoal</h3>
+        <p>Nascida a 9 de fevereiro de 1909 em Como, filha de um advogado e de uma professora. Estudou secretarialato e linguas estrangeiras no início dos anos 1930. Começou a trabalhar para Carlo Ferrari em 1937 — o ano em que a empresa estava expandindo para mercados franceses e suíços. Elena foi exatamente o que Carlo precisava: discreta, incisiva, invisível até o ponto em que a invisibilidade era útil.</p>
+        <p>Por 16 anos, Elena foi o sistema nervoso operacional da Ferrari Tessile. Conhecia cada contrato, cada negociação, cada comunicação com fornecedores, bancos, funcionários. Carlo confiava nela — ou pelo menos, confiava que ela compreenderia que o silêncio era a moeda mais valiosa.</p>
+    </div>
+
+    <div class="section">
+        <h3>Quando Você Descobriu</h3>
+        <p>Quatro meses atrás, reorganizando arquivos antigos conforme solicitado por Carlo, você abriu uma caixa com documentação datada de 1935-1945. Nela havia dossiês completos de aquisições de fábricas "arianizadas" — propriedades de cidadãos judeus italianos e austríacos confiscadas durante a ocupação fascista e vendidas a preços ridículos. Nomes. Valores. Datas. Documentação que prova que parte da riqueza de Carlo foi construída sobre expropriação legalizada.</p>
+        <p>Você não disse nada. Mas sua maneira mudou. Carlo percebeu. Ele o sempre percebia. E foi por isso que o chamou para esta viagem — para oferecer-lhe uma quantia generosa de dinheiro em troca dos documentos e uma assinatura de acordo de sigilo. Um suborno. Uma transação. Fique em silêncio e viva confortavelmente.</p>
+    </div>
+
+    <div class="footer">Villa Meridiana · Lago di Como · Giugno 1953 · VERTRAULICH</div>
+</div>
+
+<!-- PÁGINA 2 -->
+<div class="page">
+    <div class="section">
+        <h3>Seu Segredo</h3>
+    </div>
+
+    <div class="secret-box">
+        <strong>Você descobriu crimes financeiros de Carlo. Você foi a última pessoa vista viva com ele.</strong>
+        <p>Você possui uma fotografia — tirada com uma câmera que trouxe — dos documentos de expropriação. Você trouxe a fotografia com você a Villa Meridiana. Na noite de 14 de junho, primeiro em torno de 21h30, você se aproximou de Carlo na varanda. Mostrou a fotografia. Disse a verdade: "Eu tenho estes documentos. Se você recusar um acordo justo, levarei isto às autoridades."</p>
+        <p>Carlo a ameaçou. Disse que a destruiria — que contaria histórias que fariam parecer que você era cúmplice em todas as ações. Que sua reputação seria destruída. Que nenhuma família a contrataria novamente. Que morreria pobre e desgraçada.</p>
+        <p>Você deixou. Esperou. Esperou uma hora. Às 22h25, você retornou à varanda encontrá-lo sozinho de novo. Ofereceu os termos finais: entrega dos documentos, acordo de confidencialidade, e uma quantia que permitisse sua aposentadoria. Carlo recusou novamente. Ameaçou novamente. Você saiu, abalada, às 22h35.</p>
+        <p>Vinte minutos depois, você ouviu o estrondo. Carlo havia caído.</p>
+    </div>
+
+    <div class="warning-box">
+        <strong>GUIA DE JOGO PARA ELENA</strong>
+        Você é COMPLETAMENTE INOCENTE. Você não matou Carlo Ferrari. Mas você foi a última pessoa vista viva com ele — você estava na varanda duas vezes, a última a 22h35. Você tinha motivo verdadeiro e aparente. Você vai ter CULPA pelo que sabe e pelo silêncio que manteve. Você vai estar assustada. Mas você não fez nada além de tentar negociar com um homem corrupto. Jogue isso. Jogue o medo genuíno de ser acusada de algo que não fez.
+    </div>
+
+    <div class="footer">Villa Meridiana · Lago di Como · Giugno 1953 · VERTRAULICH</div>
+</div>
+
+</body>
+</html>

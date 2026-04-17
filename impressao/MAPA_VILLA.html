@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa — Villa Meridiana</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        @page { size: A4 landscape; margin: 10mm 12mm; }
+        body { font-family: Georgia, 'Times New Roman', serif; color: #1a1005; background: #ffffff; font-size: 11px; line-height: 1.5; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .page { max-width: 267mm; margin: 0 auto; }
+        .header { text-align: center; border-bottom: 3px double #1a1005; padding-bottom: 8px; margin-bottom: 10px; }
+        .header-top { font-size: 8px; letter-spacing: 3px; text-transform: uppercase; color: #5a4a2a; margin-bottom: 3px; }
+        .header h1 { font-size: 18px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 3px; }
+        .header p { font-size: 10px; font-style: italic; color: #4a4a4a; }
+
+        .map-container { display: flex; gap: 14px; margin-top: 10px; }
+        .map-drawing-area { flex: 1; }
+        .legend-area { width: 60mm; flex-shrink: 0; }
+
+        /* ---- PLANTA DESENHADA EM CSS ---- */
+        .floorplan { position: relative; width: 100%; border: 2px solid #5a4a2a; background: #fdf9f0; padding: 6px; }
+        .floor-label { font-size: 7px; text-transform: uppercase; letter-spacing: 2px; color: #888; margin-bottom: 4px; font-family: 'Courier New', monospace; }
+
+        .floor { margin-bottom: 6px; }
+        .floor-row { display: flex; gap: 4px; }
+        .room {
+            border: 1.5px solid #5a4a2a;
+            padding: 4px 5px;
+            font-size: 8px;
+            text-align: center;
+            background: #fff;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 30px;
+        }
+        .room .room-name { font-weight: bold; line-height: 1.2; }
+        .room .room-fase { font-size: 6px; color: #888; font-family: 'Courier New', monospace; margin-top: 2px; }
+        .room.crime { border-color: #8b1a1a; border-width: 2px; background: #fff5f5; }
+        .room.crime .room-name { color: #8b1a1a; }
+        .room.f1 { background: #f5f9f5; border-color: #4a7a4a; }
+        .room.f2 { background: #f5f5f9; border-color: #4a4a7a; }
+        .room.f3 { background: #faf5f0; border-color: #8a5a2a; }
+        .room.corridor { background: #f5f3ee; border-style: dashed; border-color: #aaa; }
+        .fase-badge {
+            position: absolute;
+            top: 2px;
+            right: 3px;
+            font-size: 5px;
+            font-family: 'Courier New', monospace;
+            color: #666;
+        }
+        .crime-marker {
+            display: inline-block;
+            color: #8b1a1a;
+            font-size: 9px;
+            margin-bottom: 1px;
+        }
+        .search-marker {
+            display: inline-block;
+            color: #4a7a4a;
+            font-size: 9px;
+            margin-bottom: 1px;
+        }
+        .floor-divider {
+            border-top: 1px solid #bbb;
+            margin: 4px 0;
+            font-size: 7px;
+            color: #aaa;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            padding-top: 2px;
+        }
+        .lake-strip {
+            background: #d4e8f0;
+            border: 1px solid #90b8c8;
+            text-align: center;
+            font-size: 7px;
+            color: #4a7a9a;
+            padding: 3px;
+            letter-spacing: 3px;
+            font-style: italic;
+            margin-top: 4px;
+        }
+
+        /* ---- LEGENDA ---- */
+        .legend-section { margin-bottom: 12px; }
+        .legend-title { font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; border-left: 4px solid #1a1005; padding-left: 6px; margin-bottom: 6px; }
+        .legend-item { display: flex; gap: 6px; margin: 4px 0; align-items: flex-start; font-size: 10px; }
+        .legend-dot { width: 10px; height: 10px; border: 1.5px solid #5a4a2a; flex-shrink: 0; margin-top: 2px; }
+        .legend-dot.crime { border-color: #8b1a1a; background: rgba(139,26,26,0.2); }
+        .legend-dot.f1 { border-color: #4a7a4a; background: rgba(74,122,74,0.15); }
+        .legend-dot.f2 { border-color: #4a4a7a; background: rgba(74,74,122,0.15); }
+        .legend-dot.f3 { border-color: #8a5a2a; background: rgba(138,90,40,0.15); }
+
+        .room-list-item { border-left: 3px solid #5a4a2a; padding: 3px 7px; margin: 3px 0; background: #fdf9f2; font-size: 9.5px; }
+        .room-list-item.crime { border-color: #8b1a1a; background: #fff5f5; }
+        .room-list-item.f1 { border-color: #4a7a4a; }
+        .room-list-item.f2 { border-color: #4a4a7a; }
+        .room-list-item.f3 { border-color: #8a5a2a; }
+        .room-list-item strong { display: block; font-size: 8.5px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .timeline-row { display: flex; gap: 6px; margin: 3px 0; font-size: 9px; }
+        .timeline-time { font-family: 'Courier New', monospace; font-weight: bold; min-width: 52px; color: #1a1a8b; flex-shrink: 0; }
+        .footer { border-top: 1px solid #d4c4b0; margin-top: 10px; padding-top: 6px; font-size: 9px; color: #6a6a6a; text-align: center; font-style: italic; }
+    </style>
+</head>
+<body>
+<div class="page">
+    <div class="header">
+        <div class="header-top">Carabinieri di Como · Sezione Investigativa · Giugno 1953</div>
+        <h1>VILLA MERIDIANA — PLANTA DOS ANDARES</h1>
+        <p>Lago di Como, Lombardia · Investigação de 14 de Junho de 1953</p>
+    </div>
+
+    <div class="map-container">
+
+        <!-- PLANTA CSS -->
+        <div class="map-drawing-area">
+            <div class="floorplan">
+
+                <!-- ANDAR SUPERIOR -->
+                <div class="floor-label">Andar Superior</div>
+                <div class="floor">
+                    <div class="floor-row">
+                        <div class="room crime" style="flex:1.2;">
+                            <div class="crime-marker">✝</div>
+                            <div class="room-name">TERRAZZA<br><span style="font-size:6px;font-weight:normal;">Varanda / Cena do Crime</span></div>
+                            <div class="room-fase">Fase 1 · ◎</div>
+                        </div>
+                        <div class="room f3" style="flex:1;">
+                            <div class="search-marker">◎</div>
+                            <div class="room-name">Q. MARCO<br><span style="font-size:6px;font-weight:normal;">Quarto Marco Conti</span></div>
+                            <div class="room-fase">Fase 3 · 3 fichas</div>
+                        </div>
+                        <div class="room f3" style="flex:1;">
+                            <div class="search-marker">◎</div>
+                            <div class="room-name">Q. GIULIA<br><span style="font-size:6px;font-weight:normal;">Quarto Giulia Ferrari</span></div>
+                            <div class="room-fase">Fase 3 · 3 fichas</div>
+                        </div>
+                        <div class="room f3" style="flex:1;">
+                            <div class="search-marker">◎</div>
+                            <div class="room-name">Q. ELENA<br><span style="font-size:6px;font-weight:normal;">Quarto Elena Russo</span></div>
+                            <div class="room-fase">Fase 3 · 3 fichas</div>
+                        </div>
+                        <div class="room f3" style="flex:1;">
+                            <div class="search-marker">◎</div>
+                            <div class="room-name">Q. LUCA<br><span style="font-size:6px;font-weight:normal;">Quarto Luca Ferrari</span></div>
+                            <div class="room-fase">Fase 3 · 3 fichas</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:4px;">
+                        <div class="room corridor" style="height:16px;">
+                            <div class="room-name" style="font-size:7px; font-weight:normal; color:#888; letter-spacing:2px;">— CORREDOR DO PRIMEIRO ANDAR —</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="floor-divider">— Escada Principal —</div>
+
+                <!-- ANDAR TÉRREO -->
+                <div class="floor-label" style="margin-top:4px;">Andar Térreo</div>
+                <div class="floor">
+                    <div class="floor-row">
+                        <div class="room f1" style="flex:1.2;">
+                            <div class="search-marker">◎</div>
+                            <div class="room-name">SALA GRANDE<br><span style="font-size:6px;font-weight:normal;">Sala de Estar</span></div>
+                            <div class="room-fase">Fase 1 · 1 ficha</div>
+                        </div>
+                        <div class="room f2" style="flex:1;">
+                            <div class="search-marker">◎</div>
+                            <div class="room-name">BIBLIOTECA<br><span style="font-size:6px;font-weight:normal;">Escritório / Livros</span></div>
+                            <div class="room-fase">Fase 2 · 2 fichas</div>
+                        </div>
+                        <div class="room f2" style="flex:1;">
+                            <div class="search-marker">◎</div>
+                            <div class="room-name">CORREDOR<br><span style="font-size:6px;font-weight:normal;">Hall Interno</span></div>
+                            <div class="room-fase">Fase 2 · 2 fichas</div>
+                        </div>
+                        <div class="room f2" style="flex:1;">
+                            <div class="search-marker">◎</div>
+                            <div class="room-name">RIMESSA<br><span style="font-size:6px;font-weight:normal;">Depósito / Ferramentas</span></div>
+                            <div class="room-fase">Fase 2 · 2 fichas</div>
+                        </div>
+                        <div class="room" style="flex:0.8; border-style:dashed; border-color:#ccc;">
+                            <div class="room-name" style="color:#bbb; font-size:7px;">Cozinha<br><span style="font-weight:normal;">(não buscável)</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lake-strip">~ ~ ~ LAGO DI COMO ~ ~ ~</div>
+
+            </div>
+
+            <!-- FOTO DO CORREDOR — coluna esquerda, abaixo da planta -->
+            <div style="margin-top:6px;">
+                <div style="font-size:7px;text-transform:uppercase;letter-spacing:2px;color:#888;font-family:'Courier New',monospace;margin-bottom:3px;">Corredor Interior — Vista Real</div>
+                <img src="../imagem_7.png" alt="Corredor da Villa Meridiana" style="max-height:80mm;width:auto;max-width:100%;display:block;border:1px solid #5a4a2a;opacity:0.92;">
+                <div style="font-size:7px;color:#888;text-align:right;margin-top:2px;font-style:italic;font-family:'Courier New',monospace;">1.º andar · vista para a Terrazza</div>
+            </div>
+        </div>
+
+        <!-- LEGENDA -->
+        <div class="legend-area">
+            <div class="legend-section">
+                <div class="legend-title">Legenda</div>
+                <div class="legend-item"><div class="legend-dot crime"></div><div>✝ Cena do crime — base da Terrazza</div></div>
+                <div class="legend-item"><div class="legend-dot f1"></div><div>◎ Fase 1 — 1 ficha/busca</div></div>
+                <div class="legend-item"><div class="legend-dot f2"></div><div>◎ Fase 2 — 2 fichas/busca</div></div>
+                <div class="legend-item"><div class="legend-dot f3"></div><div>◎ Fase 3 — 3 fichas/busca</div></div>
+            </div>
+
+            <div class="legend-section">
+                <div class="legend-title">Aposentos Buscáveis</div>
+                <div class="room-list-item crime"><strong>Terrazza (Varanda)</strong>Cena do crime · balaustrada cedida · Carlo</div>
+                <div class="room-list-item f1"><strong>Sala Grande</strong>Sala de estar · bebidas · jantar</div>
+                <div class="room-list-item f2"><strong>Biblioteca</strong>Documentos · testamento · papéis legais</div>
+                <div class="room-list-item f2"><strong>Corredor Interno</strong>Hall do 1º andar · botão de tecido</div>
+                <div class="room-list-item f2"><strong>Rimessa (Depósito)</strong>Ferramentas · chave inglesa</div>
+                <div class="room-list-item f3"><strong>Q. Marco Conti</strong>Bloco de notas · casaco</div>
+                <div class="room-list-item f3"><strong>Q. Giulia Ferrari</strong>Mala de viagem · diário</div>
+                <div class="room-list-item f3"><strong>Q. Elena Russo</strong>Documentos fotografados</div>
+                <div class="room-list-item f3"><strong>Q. Luca Ferrari</strong>Correspondência pessoal</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">Villa Meridiana · Lago di Como · 14 Giugno 1953 · RISERVATO · Carabinieri di Como — Sezione Investigativa</div>
+</div>
+
+<!-- PÁGINA 2 — PLANTA REALISTA -->
+<div class="page" style="page-break-before:always;">
+    <div class="header">
+        <div class="header-top">Carabinieri di Como · Sezione Investigativa · Giugno 1953</div>
+        <h1>VILLA MERIDIANA — PLANTA REALISTA</h1>
+        <p>Referência visual dos ambientes · Lago di Como · 14 de Junho de 1953</p>
+    </div>
+    <div style="margin-top:8px;text-align:center;">
+        <img src="../imagem_6.png" alt="Planta Realista — Villa Meridiana" style="max-width:100%;max-height:148mm;width:auto;display:block;margin:0 auto;border:2px solid #5a4a2a;opacity:0.94;">
+    </div>
+    <div class="footer" style="margin-top:8px;">Planta de referência · Villa Meridiana · Lago di Como · RISERVATO · Carabinieri di Como</div>
+</div>
+</body>
+</html>

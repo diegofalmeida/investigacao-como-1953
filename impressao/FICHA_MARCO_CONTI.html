@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha do Personagem — Marco Conti</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        @page { size: A4 portrait; margin: 12mm 15mm; }
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            color: #1a1005;
+            background: #ffffff;
+            font-size: 12px;
+            line-height: 1.6;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .page { max-width: 180mm; margin: 0 auto; overflow: visible; page-break-after: always; }
+        .page:last-child { page-break-after: auto; }
+        .header { text-align: center; border-bottom: 3px double #1a1005; padding-bottom: 10px; margin-bottom: 15px; }
+        .header-top { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #5a4a2a; margin-bottom: 4px; }
+        .header h1 { font-size: 20px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+        .header h2 { font-size: 13px; font-weight: normal; font-style: italic; color: #4a4a4a; }
+        .confidential-stamp {
+            border: 3px solid #8b4513; display: inline-block; padding: 6px 16px;
+            font-size: 11px; letter-spacing: 3px; color: #8b4513; font-weight: bold;
+            transform: rotate(-2deg); margin: 8px 0; background: rgba(139,69,19,0.03);
+        }
+        .portrait-block { float: right; margin: 0 0 15px 15px; border: 3px double #1a1005; padding: 6px; width: 120px; text-align: center; }
+        .portrait-block img { width: 100px; height: 130px; display: block; background: #f0ede5; object-fit: cover; object-position: top; }
+        .portrait-block p { font-size: 9px; margin-top: 5px; font-style: italic; font-weight: bold; }
+        .clearfix::after { content: ''; display: table; clear: both; }
+        .section { margin: 14px 0; overflow: visible; clear: both; }
+        .section h3 { font-size: 13px; border-left: 5px solid #1a1005; padding: 5px 12px; margin-bottom: 8px; background: #f5f2ea; text-transform: uppercase; letter-spacing: 1px; }
+        .section p { margin: 6px 0; text-align: justify; line-height: 1.55; }
+        .secret-box { border: 2px solid #8b4513; border-left: 6px solid #8b4513; padding: 12px 14px; margin: 12px 0; background: rgba(139,69,19,0.05); }
+        .secret-box strong { color: #8b4513; text-transform: uppercase; font-size: 10px; letter-spacing: 2px; display: block; margin-bottom: 6px; }
+        .timeline { border-left: 2px solid #1a1005; padding-left: 14px; margin: 10px 0 10px 4px; }
+        .timeline-item { margin: 8px 0; position: relative; padding-top: 2px; }
+        .timeline-item::before { content: '◆'; position: absolute; left: -20px; font-size: 8px; top: 5px; color: #1a1005; }
+        .timeline-time { font-weight: bold; font-size: 11px; font-family: 'Courier New', monospace; color: #2c2c2c; }
+        .object-card { border: 1px solid #1a1005; padding: 8px 12px; margin: 7px 0; background: #fefdfb; }
+        .object-card .code { font-family: 'Courier New', monospace; font-size: 10px; color: #8b4513; font-weight: bold; float: right; }
+        .object-card .name { font-weight: bold; margin-bottom: 4px; }
+        .warning-box { border: 2px solid #8b5a3c; border-left: 6px solid #cd853f; padding: 10px 14px; margin: 10px 0; background: rgba(205,133,63,0.05); font-size: 11px; }
+        .warning-box strong { color: #cd853f; display: block; margin-bottom: 4px; text-transform: uppercase; font-size: 10px; letter-spacing: 1px; }
+        ul, ol { margin-left: 16px; margin-top: 6px; margin-bottom: 6px; }
+        li { margin: 3px 0; line-height: 1.5; }
+        .footer { border-top: 1px solid #d4c4b0; margin-top: 16px; padding-top: 8px; font-size: 10px; color: #6a6a6a; text-align: center; font-style: italic; }
+        @media print { body { font-size: 11px; } .page { page-break-after: always; } .section { overflow: visible !important; } }
+    </style>
+</head>
+<body>
+
+<!-- PÁGINA 1 -->
+<div class="page">
+    <div class="header">
+        <div class="header-top">Carabinieri di Como · Giugno 1953</div>
+        <h1>FICHA DO PERSONAGEM</h1>
+        <h2>Marco Conti</h2>
+    </div>
+    <div style="text-align:center; margin-bottom:12px;">
+        <div class="confidential-stamp">APENAS PARA MARCO CONTI</div>
+    </div>
+
+    <div class="section clearfix">
+        <h3>Identidade Pessoal</h3>
+        <p>Nascido a 18 de março de 1898 em Como, filho de um operário têxtil que morreu quando Marco tinha 12 anos. Aprendeu o ofício de tecelagem com a mãe — uma mulher que conhecia cada nó, cada tensão, cada segredo da máquina de tecelagem como se fossem batida do próprio coração. Trabalhou em pequenas fábricas até 1923, quando conheceu Carlo Ferrari num pátio de manutenção em Milão.</p>
+        <p>Carlo era então um homem de 32 anos com visão. Marco era um técnico brilhante com intuição para a máquina. Juntos, construíram algo: Ferrari Tessile começou num galpão alugado em Como, com 12 teares primitivos e uma determinação que ambos juraram ser mútua, eterna, em partes iguais.</p>
+        <p>Por trinta anos, Marco acreditou que esse acordo era verdadeiro.</p>
+    </div>
+
+    <div class="section">
+        <h3>Quando Tudo Desabou</h3>
+        <p>Há três semanas, Marco descobriu — não através de Carlo, mas através de um funcionário da empresa que se sentia culpado — que Carlo tinha assinado papéis de dissolução. Papéis. Sem consultar. Sem discussão. Documentos que reduziam 30 anos de trabalho a 2.800.000 liras. Aproximadamente 4% do que a empresa valia.</p>
+        <p>Marco foi a Milão. Confrontou Carlo no escritório. Disse: "Nós construímos isto. Juntos." Carlo respondeu: "Você tem uma semana para aceitar. Depois não há mais oferta."</p>
+        <p>Marco voltou a Como com a sensação de que as paredes estavam caindo. Não havia paredes. Havia apenas vazio.</p>
+    </div>
+
+    <div class="footer">Villa Meridiana · Lago di Como · Giugno 1953 · VERTRAULICH</div>
+</div>
+
+<!-- PÁGINA 2 -->
+<div class="page">
+    <div class="section">
+        <h3>O Que Você Fez (Papel Secreto)</h3>
+    </div>
+
+    <div class="secret-box">
+        <strong>Você empurrou Carlo. Não sabe se ele teria sobrevivido sem a balaustrada.</strong>
+        <p>Naquela noite, 14 de junho, depois de jantar, você observou Elena Russo deixar a varanda às 22h35. Esperou alguns minutos. Às 22h40, você saiu para a varanda encontrar Carlo sozinho, bebendo Cognac, olhando para o lago escuro.</p>
+        <p>Você disse: "Carlo, temos que conversar." Carlo riu. Riu daquela forma que conhece há 30 anos — a risada de um homem que já decidiu que você não importa. Virou as costas para você. Caminhou em direção à balaustrada para se inclinar sobre a vista.</p>
+        <p>No pico da raiva, em um momento de completa perda de controle, você colocou as mãos nas costas de Carlo e empurrou. Não tentou matá-lo. Tentou fazer-o entender que tinha valor, que importava, que não poderia ser simplesmente apagado. Mas o empurrão foi deliberado. Força. Raiva. Direcionado.</p>
+        <p>Carlo cambaleou para a frente. Seus quadris bateram na balaustrada. Você ouviu um som metálico — não de quebra, mas de cedência. Carlo desapareceu pela borda. O som da queda. Depois, silêncio.</p>
+        <p>Você correu de volta para dentro, tremendo. Desceu pela escada lateral. Seu botão foi arrancado na corrida — você ouviu o rasgar do tecido contra algo na parede.</p>
+    </div>
+
+    <div class="warning-box">
+        <strong>GUIA DE JOGO PARA MARCO</strong>
+        Você sabe que empurrou Carlo. O que você NÃO sabe é se essa ação foi suficiente para matá-lo. Você sabe que ele foi em direção à balaustrada. Você ouviu um som estranho — o metal cedendo? Ou apenas o impacto? Você correu antes de ver o resultado. Para você, há incerteza genuína. Você jogará nessa incerteza — defensivo, assustado, mas sem confessar o empurrão a menos que seja absolutamente forçado. Se pressionado e interrogado, você pode finalmente confessar: "Eu o empurrei. Estava furioso. Mas não— não sei se matei. Eu não matei, ou matei?"
+    </div>
+
+    <div class="section">
+        <h3>Evidências na Ficha</h3>
+    </div>
+
+    <div class="object-card">
+        <div class="code">NOTA-01</div>
+        <div class="name">Bloco de Notas</div>
+        <p>No cassetto do criado do seu quarto: um bloco com anotações pessoais. A última página diz: "Carlo assinou. Amanhã de manhã tudo termina. Dezesseis anos de trabalho — e me oferece 4%. Pedi um encontro à noite na varanda. Se ele não mudar de ideia, farei o que devo fazer. Não tenho outra escolha."</p>
+        <p style="font-size:10px; margin-top:6px; color:#666;"><strong>Localização:</strong> Quarto de Marco Conti / Documentos</p>
+    </div>
+
+    <div class="object-card">
+        <div class="code">JACA-01</div>
+        <div class="name">Jaqueta de Noite</div>
+        <p>No armário do seu quarto: sua jaqueta preta de smoking. Ao polsinho esquerdo falta um botão — arrancado durante a luta na varanda. Na manga direita, perto do punho, há uma pequena abrasão coerente com contato contra metal.</p>
+        <p style="font-size:10px; margin-top:6px; color:#666;"><strong>Localização:</strong> Quarto de Marco Conti / Pertences</p>
+    </div>
+
+    <div class="footer">Villa Meridiana · Lago di Como · Giugno 1953 · VERTRAULICH</div>
+</div>
+
+</body>
+</html>
